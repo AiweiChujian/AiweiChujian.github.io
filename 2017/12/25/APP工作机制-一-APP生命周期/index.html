@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="APP生命周期,Background Modes,">
 
 
 
@@ -96,16 +96,20 @@
 
 
 
-<meta name="description" content="自由源于自信，自信源于自律">
-<meta property="og:type" content="website">
-<meta property="og:title" content="盒子里的猫">
-<meta property="og:url" content="https://hellohezhili.com/archives/index.html">
+<meta name="description" content="Reference:app的生命周期ios background modes  想要知道APP是如何工作的，第一步是弄清楚APP从开始运行到终止有哪些主要的状态，这些状态和状态切换时有哪些需要特别注意的要点。 简述应用程序主要有 Not Running(未运行)，Inactive(未激活)，Active(激活), Background(后台)，Suspended(挂起)五个状态，当状态即将改变或">
+<meta name="keywords" content="APP生命周期,Background Modes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APP工作机制(一) -- APP生命周期">
+<meta property="og:url" content="https://hellohezhili.com/2017/12/25/APP工作机制-一-APP生命周期/index.html">
 <meta property="og:site_name" content="盒子里的猫">
-<meta property="og:description" content="自由源于自信，自信源于自律">
+<meta property="og:description" content="Reference:app的生命周期ios background modes  想要知道APP是如何工作的，第一步是弄清楚APP从开始运行到终止有哪些主要的状态，这些状态和状态切换时有哪些需要特别注意的要点。 简述应用程序主要有 Not Running(未运行)，Inactive(未激活)，Active(激活), Background(后台)，Suspended(挂起)五个状态，当状态即将改变或">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://hellohezhili.com/2017/12/25/APP工作机制-一-APP生命周期/15746809578946.jpg">
+<meta property="og:updated_time" content="2019-11-26T06:09:48.626Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="盒子里的猫">
-<meta name="twitter:description" content="自由源于自信，自信源于自律">
+<meta name="twitter:title" content="APP工作机制(一) -- APP生命周期">
+<meta name="twitter:description" content="Reference:app的生命周期ios background modes  想要知道APP是如何工作的，第一步是弄清楚APP从开始运行到终止有哪些主要的状态，这些状态和状态切换时有哪些需要特别注意的要点。 简述应用程序主要有 Not Running(未运行)，Inactive(未激活)，Active(激活), Background(后台)，Suspended(挂起)五个状态，当状态即将改变或">
+<meta name="twitter:image" content="https://hellohezhili.com/2017/12/25/APP工作机制-一-APP生命周期/15746809578946.jpg">
 
 
 
@@ -135,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="https://hellohezhili.com/archives/">
+  <link rel="canonical" href="https://hellohezhili.com/2017/12/25/APP工作机制-一-APP生命周期/">
 
 
 
 
 
-  <title>Archive | 盒子里的猫</title>
+  <title>APP工作机制(一) -- APP生命周期 | 盒子里的猫</title>
   
 
 
@@ -160,7 +164,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -296,362 +300,274 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2017/12/25/APP工作机制-一-APP生命周期/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">APP工作机制(一) -- APP生命周期</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-25T00:00:00+08:00">
+                2017-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 9 posts in total. Keep on posting.
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS基础/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS基础</span>
+                  </a>
+                </span>
 
-      
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS基础/APP工作机制/" itemprop="url" rel="index">
+                    <span itemprop="name">APP工作机制</span>
+                  </a>
+                </span>
 
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/20/APP架构6-网络/" itemprop="url">
-              
-                <span itemprop="name">APP架构（六）--网络</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-20T00:00:00+08:00" content="2019-01-20">
-          01-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/12/APP架构5-MVC-VS/" itemprop="url">
-              
-                <span itemprop="name">APP架构（五）-- MVC+VS</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-12T00:00:00+08:00" content="2019-01-12">
-          01-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/06/APP架构4-MVVM/" itemprop="url">
-              
-                <span itemprop="name">APP架构（四）-- MVVM+C</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-06T00:00:00+08:00" content="2019-01-06">
-          01-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/22/APP架构3-MVC/" itemprop="url">
-              
-                <span itemprop="name">APP架构（三）-- MVC</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-22T00:00:00+08:00" content="2018-12-22">
-          12-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/16/APP架构2/" itemprop="url">
-              
-                <span itemprop="name">APP架构（二）-- 概览</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-16T00:00:00+08:00" content="2018-12-16">
-          12-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/08/APP架构1/" itemprop="url">
-              
-                <span itemprop="name">APP架构（一）-- 概论</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-08T00:00:00+08:00" content="2018-12-08">
-          12-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/06/iOS三方轮子分类-OC/" itemprop="url">
-              
-                <span itemprop="name">iOS开发中好用的三方轮子</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-06T00:00:00+08:00" content="2018-09-06">
-          09-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
+            
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/25/APP工作机制-一-APP生命周期/" itemprop="url">
-              
-                <span itemprop="name">APP工作机制(一) -- APP生命周期</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-12-25T00:00:00+08:00" content="2017-12-25">
-          12-25
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/18/Markdown语法基础/" itemprop="url">
-              
-                <span itemprop="name">Markdown语法基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-11-18T00:00:00+08:00" content="2017-11-18">
-          11-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <blockquote>
+<p><strong>Reference:</strong><br><a href="https://www.cnblogs.com/EverNight/p/3818570.html" target="_blank" rel="noopener">app的生命周期</a><br><a href="https://www.jianshu.com/p/d92ecfa01012" target="_blank" rel="noopener">ios background modes</a></p>
+</blockquote>
+<p><em>想要知道APP是如何工作的，第一步是弄清楚APP从开始运行到终止有哪些主要的状态，这些状态和状态切换时有哪些需要特别注意的要点。</em></p>
+<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>应用程序主要有 Not Running(未运行)，Inactive(未激活)，Active(激活), Background(后台)，Suspended(挂起)五个状态，当状态即将改变或已经改变时，在AppDelegate中会执行相应的回调，开发中需要视需求，在状态变换的对应回调方法中，添加相应的处理。</p>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><img src="/2017/12/25/APP工作机制-一-APP生命周期/15746809578946.jpg" alt></p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><ul>
+<li>Not Running和Suspended两种状态没有相应的回调</li>
+<li>APP在刚启动和返回前台时都会触发<code>applicationDidBecomeActive:</code></li>
+<li>APP进入后台前会先进入未激活状态</li>
+<li>普通APP进入后台有5s时间执行代码，之后会被挂起</li>
+<li>进入后台后通过<code>beginBackgroundTaskWithExpirationHandler:</code>可申请180s的时间<ul>
+<li>申请后台任务需和结束后台任务<code>endBackgroundTask:</code>成对出现</li>
+</ul>
+</li>
+<li>挂起的APP依然在内存中，但可能被系统终止，系统优先清理内存大的挂起APP</li>
+<li>APP将要被终止时会调用<code>applicationWillTerminate:</code>，有5s的任务执行时间</li>
+</ul>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h3 id="Background-Modes"><a href="#Background-Modes" class="headerlink" title="Background Modes"></a>Background Modes</h3><p>APP进入后台后可以按声明的特殊后台运行模式运行，APP可以拥有多种后台运行模式，但审核时如果被认为APP无需所声明的后台运行模式，则审核会被拒。后台模式可以通过info.plist中的Required background modes进行配置，也可以通过Capabilities-&gt;Background Modes进行配置(推荐方式)，APP的后台模式如下：</p>
+<ol>
+<li><strong>Audio, AirPlay and Picture in Picture</strong><ul>
+<li>info.plist key: App plays audio or streams audio/video using AirPlay</li>
+<li>音频播放、录制、<a href="http://nto.github.io/AirPlay.html" target="_blank" rel="noopener">使用AirPlay投放</a>，<a href="http://www.jianshu.com/p/27ce4ada48da" target="_blank" rel="noopener">画中画(iPad)</a>，此类APP可以后台常驻</li>
+</ul>
+</li>
+<li><strong>Location updates</strong><ul>
+<li>info.plist key: App registers for location updates</li>
+<li><a href="https://github.com/W-King/Location" target="_blank" rel="noopener">后台获取定位更新</a>，此类APP也可以后台常驻</li>
+</ul>
+</li>
+<li><strong>Voice over IP</strong><ul>
+<li>info.plist key: App provides Voice over IP services</li>
+<li>IP电话，此类APP同样会被挂起，但系统会接管其通信socket，当socket中有数据传来时，会唤醒APP并交回socket</li>
+</ul>
+</li>
+<li><strong>Newsstand downloads</strong><ul>
+<li>info.plist key: App processes Newsstand Kit downloads</li>
+<li><a href="http://www.viggiosoft.com/blog/blog/2011/10/17/ios-newsstand-tutorial/" target="_blank" rel="noopener">杂志类应用</a>，此类APP会被挂起和终止，但可使用NKAssetDownload后台下载杂志，并在下载成功后重新唤醒或启动APP</li>
+</ul>
+</li>
+<li><strong>External Accessory communication</strong><ul>
+<li>info.plist key: App communicates with an accessory</li>
+<li>与MFi外设通信类APP，在外设消息到达时APP会被唤醒，有10s的执行时间</li>
+</ul>
+</li>
+<li><strong>Uses Bluetooth LE accessories</strong><ul>
+<li>info.plist key: App communicates using CoreBluetooth</li>
+<li>与Bluetooth LE设备通信类APP，在设备的消息到达时会被唤醒，有10s的执行时间</li>
+</ul>
+</li>
+<li><strong>Acts as a Bluetooth LE accessory</strong><ul>
+<li>info.plist key: App shares data using CoreBluetooth</li>
+<li>自身作为蓝牙外设的应用，此类APP可以后台常驻，但需要用户授权</li>
+</ul>
+</li>
+<li><strong>Background fetch</strong><ul>
+<li>info.plist key: App downloads content from the network</li>
+<li><a href="http://www.jianshu.com/p/82f639012f3e" target="_blank" rel="noopener">后台定时更新</a>，设置时间间隔，在间隔时间内启动应用更新数据，有30s执行时间</li>
+</ul>
+</li>
+<li><strong>Remote notifications</strong> <ul>
+<li>info.plist key: App downloads content in response to push notifications </li>
+<li><a href="http://www.jianshu.com/p/82f639012f3e" target="_blank" rel="noopener">静默推送</a>，在静默推送到底时，回调对应方法下载内容，有30s执行时间</li>
+</ul>
+</li>
+<li><strong>Background processing</strong><ul>
+<li>info.plist key: App processes data in the background</li>
+<li><a href="http://onevcat.com/2013/08/ios7-background-multitask/" target="_blank" rel="noopener">基于NSURLSession的后台传输</a>，任务成功或失败时，APP会被唤醒并执行<code>application:handleEventsForBackgroundURLSession:completionHandler:</code>回调</li>
+</ul>
+</li>
+</ol>
+
+      
     </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/APP生命周期/" rel="tag"># APP生命周期</a>
+          
+            <a href="/tags/Background-Modes/" rel="tag"># Background Modes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/18/Markdown语法基础/" rel="next" title="Markdown语法基础">
+                <i class="fa fa-chevron-left"></i> Markdown语法基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/06/iOS三方轮子分类-OC/" rel="prev" title="iOS开发中好用的三方轮子">
+                iOS开发中好用的三方轮子 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -659,6 +575,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzcyMy8yMDI2Mw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -679,8 +604,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -784,6 +718,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述"><span class="nav-text">简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概览"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-text">要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内容"><span class="nav-text">内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Background-Modes"><span class="nav-text">Background Modes</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -918,6 +868,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -946,6 +900,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 

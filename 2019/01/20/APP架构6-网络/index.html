@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="APP架构,AppArchitecture,网络层,">
 
 
 
@@ -96,16 +96,18 @@
 
 
 
-<meta name="description" content="自由源于自信，自信源于自律">
-<meta property="og:type" content="website">
-<meta property="og:title" content="盒子里的猫">
-<meta property="og:url" content="https://hellohezhili.com/archives/index.html">
+<meta name="description" content="Reference:《AppArchitecture》  添加网络的挑战为程序添加网络支持时，会面临一些额外的挑战，这不是某个架构所特有的问题，也和本节中对于网络层如何架构的讨论无关，但是对于一款需要从网络中获取数据的APP，或多或少都需要清楚对于这些问题的思考：  额外的失败来源：任何从网络获取数据的尝试，都可能由于一系列的理由以失败而告终。我们必须考虑如何优雅地处理这些错误，而且经常还要为展">
+<meta name="keywords" content="APP架构,AppArchitecture,网络层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APP架构（六）--网络">
+<meta property="og:url" content="https://hellohezhili.com/2019/01/20/APP架构6-网络/index.html">
 <meta property="og:site_name" content="盒子里的猫">
-<meta property="og:description" content="自由源于自信，自信源于自律">
+<meta property="og:description" content="Reference:《AppArchitecture》  添加网络的挑战为程序添加网络支持时，会面临一些额外的挑战，这不是某个架构所特有的问题，也和本节中对于网络层如何架构的讨论无关，但是对于一款需要从网络中获取数据的APP，或多或少都需要清楚对于这些问题的思考：  额外的失败来源：任何从网络获取数据的尝试，都可能由于一系列的理由以失败而告终。我们必须考虑如何优雅地处理这些错误，而且经常还要为展">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-12-09T08:22:52.341Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="盒子里的猫">
-<meta name="twitter:description" content="自由源于自信，自信源于自律">
+<meta name="twitter:title" content="APP架构（六）--网络">
+<meta name="twitter:description" content="Reference:《AppArchitecture》  添加网络的挑战为程序添加网络支持时，会面临一些额外的挑战，这不是某个架构所特有的问题，也和本节中对于网络层如何架构的讨论无关，但是对于一款需要从网络中获取数据的APP，或多或少都需要清楚对于这些问题的思考：  额外的失败来源：任何从网络获取数据的尝试，都可能由于一系列的理由以失败而告终。我们必须考虑如何优雅地处理这些错误，而且经常还要为展">
 
 
 
@@ -135,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="https://hellohezhili.com/archives/">
+  <link rel="canonical" href="https://hellohezhili.com/2019/01/20/APP架构6-网络/">
 
 
 
 
 
-  <title>Archive | 盒子里的猫</title>
+  <title>APP架构（六）--网络 | 盒子里的猫</title>
   
 
 
@@ -160,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -296,362 +298,218 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/01/20/APP架构6-网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">APP架构（六）--网络</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-20T00:00:00+08:00">
+                2019-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 9 posts in total. Keep on posting.
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP架构/" itemprop="url" rel="index">
+                    <span itemprop="name">APP架构</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/20/APP架构6-网络/" itemprop="url">
-              
-                <span itemprop="name">APP架构（六）--网络</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-20T00:00:00+08:00" content="2019-01-20">
-          01-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/12/APP架构5-MVC-VS/" itemprop="url">
-              
-                <span itemprop="name">APP架构（五）-- MVC+VS</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-12T00:00:00+08:00" content="2019-01-12">
-          01-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/06/APP架构4-MVVM/" itemprop="url">
-              
-                <span itemprop="name">APP架构（四）-- MVVM+C</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-06T00:00:00+08:00" content="2019-01-06">
-          01-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/22/APP架构3-MVC/" itemprop="url">
-              
-                <span itemprop="name">APP架构（三）-- MVC</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-22T00:00:00+08:00" content="2018-12-22">
-          12-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/16/APP架构2/" itemprop="url">
-              
-                <span itemprop="name">APP架构（二）-- 概览</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-16T00:00:00+08:00" content="2018-12-16">
-          12-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/08/APP架构1/" itemprop="url">
-              
-                <span itemprop="name">APP架构（一）-- 概论</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-08T00:00:00+08:00" content="2018-12-08">
-          12-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/06/iOS三方轮子分类-OC/" itemprop="url">
-              
-                <span itemprop="name">iOS开发中好用的三方轮子</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-06T00:00:00+08:00" content="2018-09-06">
-          09-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
+            
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/25/APP工作机制-一-APP生命周期/" itemprop="url">
-              
-                <span itemprop="name">APP工作机制(一) -- APP生命周期</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-12-25T00:00:00+08:00" content="2017-12-25">
-          12-25
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/18/Markdown语法基础/" itemprop="url">
-              
-                <span itemprop="name">Markdown语法基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-11-18T00:00:00+08:00" content="2017-11-18">
-          11-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <blockquote>
+<p><strong>Reference:</strong><br>《AppArchitecture》</p>
+</blockquote>
+<h2 id="添加网络的挑战"><a href="#添加网络的挑战" class="headerlink" title="添加网络的挑战"></a>添加网络的挑战</h2><p>为程序添加网络支持时，会面临一些额外的挑战，这不是某个架构所特有的问题，也和本节中对于网络层如何架构的讨论无关，但是对于一款需要从网络中获取数据的APP，或多或少都需要清楚对于这些问题的思考：</p>
+<ol>
+<li><strong>额外的失败来源</strong>：任何从网络获取数据的尝试，都可能由于一系列的理由以失败而告终。我们必须考虑如何优雅地处理这些错误，而且经常还要为展示这些错误创建额外的UI。</li>
+<li><strong>获取最新数据副本</strong>：持续从网络监听数据要比观察本地数据困难得多，这往往导致我们需要周期性地手动获取数据。</li>
+<li><strong>多端间的数据冲突</strong>：网络引入了多端更新同一个数据的可能性，这可能导致潜在的冲突。网络上的数据可能会有独立于app的更改、引用的资源可能会在不通知客户端的情况下直接失效、两个客户端有可能更新了同样的对象。</li>
+</ol>
+<blockquote>
+<p>对于两个客户端更新了同样的对象，这必须让服务器从两者间选择出哪一个应该胜出，并且告诉每一个客户端冲突的解决方案，可以参考<a href="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/DocumentBasedAppPGiOS/ResolveVersionConflicts/ResolveVersionConflicts.html" target="_blank" rel="noopener">iCloud关于解决文档冲突的方式</a>和<a href="https://developer.apple.com/library/archive/technotes/tn2336/_index.html" target="_blank" rel="noopener">相关思考</a>。</p>
+</blockquote>
+<h2 id="添加网络层的方式"><a href="#添加网络层的方式" class="headerlink" title="添加网络层的方式"></a>添加网络层的方式</h2><p>为APP添加网络层有两种常见的方式：</p>
+<ol>
+<li><strong>Controller层持有网络</strong>：将model层移除，并让controller来处理网络请求。数据直接从网络获取，从网络获得的数据不会被持久化，而是由controller负责将它们以处理view state相同的方式缓存在内存中。这种方式非常的简单直接，主要问题在于不同的controller之间进行数据共享变得非常麻烦。</li>
+<li><strong>Model层持有网络</strong>：保留model层，并在model的下方加入了一个网络层。model负责触发和管理网络请求，并按照需要用请求的结果来更新model，model的变更依然通过观察者模式传递给controller。在这种方式中，封装的网络服务可以提供接口直接由model层调用，也可以观察model的变更然后进行数据同步的网络活动，后者model层和网络层之间的耦合更低；因为保留了model层，利于不同controller间数据共享的同时，也可以很方便的做离线缓存。</li>
+</ol>
+<h2 id="Controller层持有网络"><a href="#Controller层持有网络" class="headerlink" title="Controller层持有网络"></a>Controller层持有网络</h2><h3 id="1-获取初始数据"><a href="#1-获取初始数据" class="headerlink" title="1.获取初始数据"></a>1.获取初始数据</h3><p>controller发起网络请求，并且在数据返回时对view进行配置，controller只维护前一次请求所获取的数据的内存缓存。因为网络获取数据是一种延时操作，所以需要添加数据获取过程处于不同的状态、已经状态变更的额外逻辑。</p>
+<h3 id="2-更改数据"><a href="#2-更改数据" class="headerlink" title="2.更改数据"></a>2.更改数据</h3><p>数据的更改现在也是一个通过网络执行的异步任务，view action传递到controller中，controller发起数据变更的网络请求，并且在数据返回时更新view。</p>
+<h3 id="3-思考-amp-讨论"><a href="#3-思考-amp-讨论" class="headerlink" title="3.思考&amp;讨论"></a>3.思考&amp;讨论</h3><p>Controller层持有网络将大量的新的职责放到了controller中，包括发起网络请求，处理结果，以及处理网络失败等，这可以通过将这些代码封装为网络服务来减少controller中的代码。不过在这种方式还存在其他弊端：controller负责进行网络请求并持有数据，实际上数据的逻辑已经等同于view state，如果app中没有其他部分依赖这些数据，这种方式也可以良好工作，但如果数据需要在不同controller中进行使用，缺少model层让数据共享变得更加麻烦，而且即使当前不需要共享，也需要考虑到未来可能会有变更，所以从一开始就选择对未来友好的方式可能会更加明智。</p>
+<h2 id="Model层持有网络"><a href="#Model层持有网络" class="headerlink" title="Model层持有网络"></a>Model层持有网络</h2><h3 id="1-加载初始数据"><a href="#1-加载初始数据" class="headerlink" title="1.加载初始数据"></a>1.加载初始数据</h3><p>创建model对象，调用model的数据加载方法，在model的方法中，去触发相应的网络请求，根据请求的结果，model更新自己，而controller则观察model的变更并更新相应的view即可。</p>
+<h3 id="2-更改数据-1"><a href="#2-更改数据-1" class="headerlink" title="2.更改数据"></a>2.更改数据</h3><p>controller与model进行交互，就好像model只是本地数据一样，网络则发生在model层的背后。但对于model如何触发网络请求，则有两种不同的可选方式：</p>
+<ol>
+<li><strong>model直接发起网络请求</strong>：在model数据变更的相应接口中，直接发起网络请求，同步数据的变更。</li>
+<li><strong>网络服务观察model的变更</strong>：封装的网络服务观察model，model在数据变更时触发某种通知，网络服务在接收到信号时，再发起相应的网络请求。</li>
+</ol>
+<p>第二种方式让model层和网络层进一步的解耦，同时因为封装了相应的网络服务，可以使用一个更改队列来对这一类网络请求做统一管理，并对待处理更改队列进行持久化，这样即使APP离线时(断网、退出、崩溃)本地更改也不会丢失。</p>
+<h3 id="3-讨论-amp-思考"><a href="#3-讨论-amp-思考" class="headerlink" title="3.讨论&amp;思考"></a>3.讨论&amp;思考</h3><p>model持有网络为代码增加了一些复杂度，但也具有更多的能力：保留了model，让controller之间的数据共享更加方便，同时也很容易做数据的离线缓存；通过添加网络服务部件来管理数据同步的网络请求，可以在APP中立即更新数据，而不用等服务器的响应，但同时也需要增加额外的代码，来追踪未提交的变更，并对变更提交是可能发生的冲突进行处理。<strong>持有网络是对APP未来变更和扩展更加友好的方式，是更加推荐的网络层架构模式</strong>。</p>
+
+      
     </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/APP架构/" rel="tag"># APP架构</a>
+          
+            <a href="/tags/AppArchitecture/" rel="tag"># AppArchitecture</a>
+          
+            <a href="/tags/网络层/" rel="tag"># 网络层</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/12/APP架构5-MVC-VS/" rel="next" title="APP架构（五）-- MVC+VS">
+                <i class="fa fa-chevron-left"></i> APP架构（五）-- MVC+VS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -659,6 +517,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzcyMy8yMDI2Mw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -679,8 +546,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -784,6 +660,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加网络的挑战"><span class="nav-text">添加网络的挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加网络层的方式"><span class="nav-text">添加网络层的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller层持有网络"><span class="nav-text">Controller层持有网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取初始数据"><span class="nav-text">1.获取初始数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-更改数据"><span class="nav-text">2.更改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-思考-amp-讨论"><span class="nav-text">3.思考&amp;讨论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model层持有网络"><span class="nav-text">Model层持有网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-加载初始数据"><span class="nav-text">1.加载初始数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-更改数据-1"><span class="nav-text">2.更改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-讨论-amp-思考"><span class="nav-text">3.讨论&amp;思考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -918,6 +810,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -946,6 +842,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 

@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="APP架构,App Architecture,MVVM,">
 
 
 
@@ -96,16 +96,20 @@
 
 
 
-<meta name="description" content="自由源于自信，自信源于自律">
-<meta property="og:type" content="website">
-<meta property="og:title" content="盒子里的猫">
-<meta property="og:url" content="https://hellohezhili.com/archives/index.html">
+<meta name="description" content="Reference:《App Architecture》  Model-View-ViewModel(MVVM)是一种基于MVC进行改进的模式，它将所有model相关的任务（观察model变更，将model数据变形，以及更新model）从controller层抽离出来，放到新的叫做view-model的一层对象中。引入view-model层的主要目的有两点：  鼓励将model和view之间的关">
+<meta name="keywords" content="APP架构,App Architecture,MVVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APP架构（四）-- MVVM+C">
+<meta property="og:url" content="https://hellohezhili.com/2019/01/06/APP架构4-MVVM/index.html">
 <meta property="og:site_name" content="盒子里的猫">
-<meta property="og:description" content="自由源于自信，自信源于自律">
+<meta property="og:description" content="Reference:《App Architecture》  Model-View-ViewModel(MVVM)是一种基于MVC进行改进的模式，它将所有model相关的任务（观察model变更，将model数据变形，以及更新model）从controller层抽离出来，放到新的叫做view-model的一层对象中。引入view-model层的主要目的有两点：  鼓励将model和view之间的关">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://hellohezhili.com/2019/01/06/APP架构4-MVVM/15694650751590.jpg">
+<meta property="og:updated_time" content="2019-11-26T08:00:57.120Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="盒子里的猫">
-<meta name="twitter:description" content="自由源于自信，自信源于自律">
+<meta name="twitter:title" content="APP架构（四）-- MVVM+C">
+<meta name="twitter:description" content="Reference:《App Architecture》  Model-View-ViewModel(MVVM)是一种基于MVC进行改进的模式，它将所有model相关的任务（观察model变更，将model数据变形，以及更新model）从controller层抽离出来，放到新的叫做view-model的一层对象中。引入view-model层的主要目的有两点：  鼓励将model和view之间的关">
+<meta name="twitter:image" content="https://hellohezhili.com/2019/01/06/APP架构4-MVVM/15694650751590.jpg">
 
 
 
@@ -135,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="https://hellohezhili.com/archives/">
+  <link rel="canonical" href="https://hellohezhili.com/2019/01/06/APP架构4-MVVM/">
 
 
 
 
 
-  <title>Archive | 盒子里的猫</title>
+  <title>APP架构（四）-- MVVM+C | 盒子里的猫</title>
   
 
 
@@ -160,7 +164,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -296,362 +300,264 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/01/06/APP架构4-MVVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">APP架构（四）-- MVVM+C</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-06T00:00:00+08:00">
+                2019-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 9 posts in total. Keep on posting.
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP架构/" itemprop="url" rel="index">
+                    <span itemprop="name">APP架构</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/20/APP架构6-网络/" itemprop="url">
-              
-                <span itemprop="name">APP架构（六）--网络</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-20T00:00:00+08:00" content="2019-01-20">
-          01-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/12/APP架构5-MVC-VS/" itemprop="url">
-              
-                <span itemprop="name">APP架构（五）-- MVC+VS</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-12T00:00:00+08:00" content="2019-01-12">
-          01-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/06/APP架构4-MVVM/" itemprop="url">
-              
-                <span itemprop="name">APP架构（四）-- MVVM+C</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-06T00:00:00+08:00" content="2019-01-06">
-          01-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/22/APP架构3-MVC/" itemprop="url">
-              
-                <span itemprop="name">APP架构（三）-- MVC</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-22T00:00:00+08:00" content="2018-12-22">
-          12-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/16/APP架构2/" itemprop="url">
-              
-                <span itemprop="name">APP架构（二）-- 概览</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-16T00:00:00+08:00" content="2018-12-16">
-          12-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/08/APP架构1/" itemprop="url">
-              
-                <span itemprop="name">APP架构（一）-- 概论</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-08T00:00:00+08:00" content="2018-12-08">
-          12-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/06/iOS三方轮子分类-OC/" itemprop="url">
-              
-                <span itemprop="name">iOS开发中好用的三方轮子</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-06T00:00:00+08:00" content="2018-09-06">
-          09-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
+            
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/25/APP工作机制-一-APP生命周期/" itemprop="url">
-              
-                <span itemprop="name">APP工作机制(一) -- APP生命周期</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-12-25T00:00:00+08:00" content="2017-12-25">
-          12-25
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/18/Markdown语法基础/" itemprop="url">
-              
-                <span itemprop="name">Markdown语法基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-11-18T00:00:00+08:00" content="2017-11-18">
-          11-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <blockquote>
+<p><strong>Reference:</strong><br>《App Architecture》</p>
+</blockquote>
+<p>Model-View-ViewModel(MVVM)是一种基于MVC进行改进的模式，它将所有model相关的任务（观察model变更，将model数据变形，以及更新model）从controller层抽离出来，放到新的叫做view-model的一层对象中。引入view-model层的主要目的有两点：</p>
+<ol>
+<li>鼓励将model和view之间的关系构建为一系列的变形管道。</li>
+<li>将view应该展示的状态通过一套独立于app框架的接口进行呈现。</li>
+</ol>
+<p>在MVVM中为了保持view与view-model的同步，MVVM强制使用某种形式的绑定，这通常通过响应式编程来完成。MVVM在一定程度上解决了MVC最大的两个问题，首先通过将model观察的代码以及其他显示和交互逻辑移动到围绕着数据流构建的隔离的view-model中，解决了MVC中ViewController里不规则的状态交互所带来的有关问题，在很大程度上缓解了ViewController肥大的问题；然后view-model还为场景的view state提供了一套干净的接口，让它可以独立于app框架进行测试，解决了MVC难以测试的问题。</p>
+<p><strong>MVVM+C中APP的反馈回路</strong>：<br><img src="/2019/01/06/APP架构4-MVVM/15694650751590.jpg" alt>  </p>
+<p>在MVVM+C中，协调器在APP启动完成的最后阶段创建，对于MVVM而言，协调器并非是强制需要的部件，但引入协调器来负责维护ViewController的层级，可以进一步分担ViewController的工作，让其变得更加的简单，这符合MVVM的架构思路，协调器分担的职责主要为：管理其他controller的展示，同时协调model数据和controller之间的通讯。协调器的工作方式有两种：</p>
+<ol>
+<li>作为ViewController的delegate，ViewController把导航行为直接转发给协调器。</li>
+<li>把导航行为先转发给view-model，然后让协调器去观察view-model，以获取导航事件。</li>
+</ol>
+<p>第一种更加简单直接，但如果导航事件是依赖于当前view的状态或者model数据的话，第二种做法将更加合理，同时第二种做法也更利于代码测试。</p>
+<h2 id="一、MVVM的实现"><a href="#一、MVVM的实现" class="headerlink" title="一、MVVM的实现"></a>一、MVVM的实现</h2><h3 id="1-构建"><a href="#1-构建" class="headerlink" title="1.构建"></a>1.构建</h3><p>MVVM构建的方式和MVC很相似：ViewController充分了解程序的结构，并且对其它所有部件进行构建和连接。此外，相比起MVC主要有三点不同：</p>
+<ol>
+<li>必须创建view-model。</li>
+<li>必须建立起view-model和view之间的绑定。</li>
+<li>Model由view-model拥有，而不是由controller所拥有。</li>
+</ol>
+<p>view-model的创建有在ViewController创建时创建默认值、作为参数传递给ViewController的依赖注入、和在ViewController加载后延迟创建三种方式。</p>
+<h3 id="2-将View连接到数据"><a href="#2-将View连接到数据" class="headerlink" title="2.将View连接到数据"></a>2.将View连接到数据</h3><p>在MVVM+C中，将View连接到数据的数据管道：</p>
+<ol>
+<li>协调器为每个ViewController的view-model设置初始的model对象。 </li>
+<li>view-model将设定值和其他model数据及观察量进行合并。</li>
+<li>view-model将数据变形为view所需要的形式。</li>
+<li>ViewController使用响应式编程框架来将准备好的值绑定到各个view上去。</li>
+</ol>
+<h3 id="3-更改Model"><a href="#3-更改Model" class="headerlink" title="3.更改Model"></a>3.更改Model</h3><p>MVVM-C中，View Action的事件回路和在MVC中各层之间的路径相似，不同在于，在ViewController和model之间插入了一层额外的用于协调的view-model：</p>
+<ol>
+<li>view通过target/action机制、delegate、或者响应式编程框架扩展，将View Action传递给ViewController；</li>
+<li>ViewController接收到View Action时调用view-model的相应接口；</li>
+<li>view-model的接口中直接更改model；</li>
+<li>view-model观察model的变更，并在变形后通过可观察值暴露给ViewController；</li>
+<li>ViewController中已经将可观察值和view进行了绑定，将会在这些值变化是更新view。</li>
+</ol>
+<h3 id="4-更改View-State"><a href="#4-更改View-State" class="headerlink" title="4.更改View State"></a>4.更改View State</h3><p>同MVC一样，部分view state依然隐式存储在view中，但原本那些由ViewController通过属性所保存的view state，在MVVM-C中由view-model显式地进行表示。view-model只负责那些会被view行为影响的view state，对于既不依赖于任何的view-model属性，也不是view-model所依赖的view state，并不需要通过view-model管理。</p>
+<p>更改view state的事件回路和更改model的事件回来近似，只是少了view-model更改model，并观察model的变更且变形为可观察值的步骤：</p>
+<ol>
+<li>view通过target/action机制、delegate、或者响应式编程框架扩展，将View Action传递给ViewController；</li>
+<li>ViewController接收到View Action时调用view-model的相应接口；</li>
+<li>view-model的接口中直接更改自己存储的view state可观察值；</li>
+<li>ViewController中已经将可观察值和view进行了绑定，将会在这些值变化是更新view。</li>
+</ol>
+<p>对于影响ViewController层级的view state变更，MVVM+C中根据协调器的工作方式不同，可以由ViewController通过delegate直接将事件传递给协调器处理，也可以将事件处理为view-model的可观察值，协调器订阅这些课观察者，当消息触发时，做相应的视图层级管理。</p>
+<h3 id="5-测试"><a href="#5-测试" class="headerlink" title="5.测试"></a>5.测试</h3><p>MVVM通过引入view-model层，提供了清晰且独立于app框架的接口，所以对于view-model及以下层次的代码，使用接口测试将非常方便，而对ViewController及View中的代码逻辑的测试则依赖于Xcode的UI测试或人工测试。MVC使用的集成测试，更偏向于功能而不是代码，虽然代码覆盖率比接口测试更高，但却难以编写和维护；相比而言，MVVM的接口测试由于只需要关注自己编写的view-model和接口，而且很少需要异步测试，其编写和维护都有方便得多。</p>
+<p>接口测试的经典模式是：构建输入，再构建用来传递输入的接口，然后从接口中读取结果。MVVM中在配置测试环境和数据后，需要做的测试工作主要包括展示测试和行为测试：</p>
+<ul>
+<li><strong>展示测试</strong>：对view-model上所暴露的每一个可观察量，对初始值进行测试然后执行操作，并测试后续的条件。</li>
+<li><strong>行为测试</strong>：测试初始条件，执行操作，然后测试接下来的条件。</li>
+</ul>
+<h2 id="二、MVVM的优缺点"><a href="#二、MVVM的优缺点" class="headerlink" title="二、MVVM的优缺点"></a>二、MVVM的优缺点</h2><p>MVVM的优点主要是低耦合和方便测试，此外的利于分工合作和方便代码迁移和复用，都是低耦合的延伸。MVVM也有一些自身的缺点，它们主要体现在：</p>
+<ol>
+<li><strong>更多的代码</strong>：因为引入view-model层，最直观的感受就是类变得更多，在处理简单的场景时代码量增多，但在处理相对复杂的状态交互时，MVVM更加清晰的逻辑，反而会让编码工作变得更加简单。</li>
+<li><strong>更难以调试的BUG</strong>：MVVM一般选用响应式编程来做数据绑定，这会使得一处的BUG被快速的传递到别的地方，当你在某处发现问题时，定位它是因为数据变形管道上的哪一步出了BUG，将会更加的不容易。</li>
+<li><strong>不利于重用的view</strong>：有的MVVM中对于view采用双向绑定，不仅将model的数据绑定到view上，还将view的action和model进行绑定，这将降低view的可重用性，应避免对view使用双向绑定，而是应该将view的action通过通用的方式传递给ViewController，再由ViewController调用view-model的接口做相应处理。</li>
+<li><strong>基于响应式编程</strong>：MVVM中通常都会使用响应式编程来做数据绑定，这比其它方案更加方便简洁，响应式编程的学习曲线稍加陡峭，但理解响应式编程对编码工作者绝对大有裨益。</li>
+</ol>
+<h2 id="三、MVVM与响应式编程"><a href="#三、MVVM与响应式编程" class="headerlink" title="三、MVVM与响应式编程"></a>三、MVVM与响应式编程</h2><p>响应式编程是一种用来描述数据源和数据消费端之间数据流动的模式，响应式编程将这种流动描述为一个变形管道。MVVM并非必须使用响应式编程，但观察model数据并将其变形为view-model上的一系列可观察值，再在ViewController中将这些可观察值绑定到view上，对于这条路径，在MVVM中通常是推荐使用响应式编程来完成，也可以使用基于KVO等技术的其他方案，但那需要做更多的额外工作，而且使用起来也没有响应式编程这种对口的方案方便。</p>
+<h2 id="四、MVVM架构的优秀经验"><a href="#四、MVVM架构的优秀经验" class="headerlink" title="四、MVVM架构的优秀经验"></a>四、MVVM架构的优秀经验</h2><h3 id="1-引入额外的层"><a href="#1-引入额外的层" class="headerlink" title="1.引入额外的层"></a>1.引入额外的层</h3><p>MVVM在MVC基础上引入view-model这额外的一层抽象来构建数据管道，将抽象的数据(model中的)变形为特定的数据(view里的)，这种模式也可以在程序中的其他部分使用，例如：</p>
+<ul>
+<li><strong>App-model</strong>：构建一个App-model，将用户凭证、系统服务信息(如网络是否可用)等数据合并、变形，然后作为可观察值提供给其他view-model使用，这种model也可以称之为setting-model。</li>
+<li><strong>Session-model</strong>：用于追踪当前登录会话的细节，可能需要在view-model和主 model之间，或者view-model和其他接口之间，进行网络请求的处理。</li>
+<li><strong>数据流-model</strong>：model版本的协调器，用来将导航状态作为数据进行建模，并将导航状态和model数据合并，直接为view-model提供可观察的model数据。</li>
+<li><strong>Use case</strong>：Use case指的是那些用来对主model进行切片准备，并且用来简化所要执行操作的任意类型的接口或者model。Use case和view-model很像，但是它并不被绑定在一个单独的ViewController上，而是可以在view-model之间进行传递或者共享，从而在多个view-model中提供可重用的功能。当一个app有多个view显示同样的底层数据时，我们可以使用共通的Use case对象来对从model获取数据和将数据写回model的操作进行简化。</li>
+</ul>
+<h3 id="2-引入协调器"><a href="#2-引入协调器" class="headerlink" title="2.引入协调器"></a>2.引入协调器</h3><p>协调器是独立于MVVM的模式，它也可以用于其他APP架构中，通过引入协调器可以减轻ViewController的职责，让ViewController无需知道其他ViewController的信息，同时也让页面层级管理的逻辑集中在了一起，方便代码的维护。</p>
+<h3 id="3-分离数据变形"><a href="#3-分离数据变形" class="headerlink" title="3.分离数据变形"></a>3.分离数据变形</h3><p>MVVM中通过view-model将数据变形的逻辑从ViewController中抽离了出来，这种分离让ViewController变得更加整洁，让数据变形的代码更加清晰，同时也更易于测试。如果有需要，即使不是在MVVM中，也可以通过添加辅助对象来同样的对数据变形逻辑进行分离，特别是数据变形牵涉到比较多的数据和逻辑的时候。</p>
+
+      
     </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/APP架构/" rel="tag"># APP架构</a>
+          
+            <a href="/tags/App-Architecture/" rel="tag"># App Architecture</a>
+          
+            <a href="/tags/MVVM/" rel="tag"># MVVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/22/APP架构3-MVC/" rel="next" title="APP架构（三）-- MVC">
+                <i class="fa fa-chevron-left"></i> APP架构（三）-- MVC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/12/APP架构5-MVC-VS/" rel="prev" title="APP架构（五）-- MVC+VS">
+                APP架构（五）-- MVC+VS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -659,6 +565,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzcyMy8yMDI2Mw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -679,8 +594,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -784,6 +708,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、MVVM的实现"><span class="nav-text">一、MVVM的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-构建"><span class="nav-text">1.构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-将View连接到数据"><span class="nav-text">2.将View连接到数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-更改Model"><span class="nav-text">3.更改Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-更改View-State"><span class="nav-text">4.更改View State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-测试"><span class="nav-text">5.测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、MVVM的优缺点"><span class="nav-text">二、MVVM的优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、MVVM与响应式编程"><span class="nav-text">三、MVVM与响应式编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、MVVM架构的优秀经验"><span class="nav-text">四、MVVM架构的优秀经验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-引入额外的层"><span class="nav-text">1.引入额外的层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-引入协调器"><span class="nav-text">2.引入协调器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-分离数据变形"><span class="nav-text">3.分离数据变形</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -918,6 +858,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -946,6 +890,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
