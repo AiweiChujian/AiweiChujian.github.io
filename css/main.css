@@ -558,11 +558,10 @@ pre code {
   background-color: #000e20;
 }
 .highlight .code pre {
+  width: 100%;
   padding-left: 10px;
   padding-right: 10px;
   background-color: #002451;
-  white-space: pre-wrap;
-  word-wrap: break-word;
 }
 .highlight .line {
   height: 20px;
@@ -1876,7 +1875,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e304ad;
+  background: #6039ff;
 }
 .links-of-blogroll {
   font-size: 13px;
