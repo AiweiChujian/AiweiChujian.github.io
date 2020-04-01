@@ -631,7 +631,7 @@ MBProgressHUD：好用易扩展的活动
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/01/07/APP工作机制-三-Runloop/">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2017/12/23/APP工作机制-二-Runloop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AI_Wei">
@@ -650,7 +650,7 @@ MBProgressHUD：好用易扩展的活动
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/07/APP工作机制-三-Runloop/" itemprop="url">APP工作机制(三) -- Runloop</a></h1>
+                <a class="post-title-link" href="/2017/12/23/APP工作机制-二-Runloop/" itemprop="url">APP工作机制(二) -- Runloop</a></h1>
         
 
         <div class="post-meta">
@@ -662,8 +662,8 @@ MBProgressHUD：好用易扩展的活动
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-07T00:00:00+08:00">
-                2018-01-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-23T00:00:00+08:00">
+                2017-12-23
               </time>
             
 
@@ -736,10 +736,14 @@ MBProgressHUD：好用易扩展的活动
         
           
           
-          
+Reference:深入理解RunLoopRunLoop 详解
+
+程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。
+概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在内存中持续工
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/07/APP工作机制-三-Runloop/#more" rel="contents">
+            <a class="btn" href="/2017/12/23/APP工作机制-二-Runloop/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -901,8 +905,8 @@ MBProgressHUD：好用易扩展的活动
           
 Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础Objective-C 中的内存分配iOS中的block是如何持有对象的
 
-程序都是加载到内存中运行，想要清楚APP的工作机制，基础中的基础便是了解iOS中是如何进行内存管理的。
-简述程序加载到内存中运行时，在内存中分静态数据(只读)和动态数据(读写)两部分，其中动态部分中堆的分配与释放由程
+程序都是加载到内存中运行，了解APP工作机制，第一步先了解APP是如何使用内存的。
+简述程序加载到内存中运行时，在内存中分静态数据(只读)和动态数据(读写)两部分，其中动态部分中堆的分配与释放由程序做内存管理，iOS
           ...
           <!--noindex-->
           <div class="post-button text-center">
