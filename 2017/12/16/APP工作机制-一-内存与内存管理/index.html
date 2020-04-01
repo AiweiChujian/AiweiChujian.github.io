@@ -106,7 +106,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://hellohezhili.com/2017/12/16/APP工作机制-一-内存与内存管理/iOS%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.png">
 <meta property="og:image" content="https://hellohezhili.com/2017/12/16/APP工作机制-一-内存与内存管理/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg">
-<meta property="og:updated_time" content="2020-04-01T13:17:39.779Z">
+<meta property="og:updated_time" content="2020-04-01T14:22:05.006Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP工作机制(一) -- 内存与内存管理">
 <meta name="twitter:description" content="Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础Objective-C 中的内存分配iOS中的block是如何持有对象的  程序都是加载到内存中运行，了解APP工作机制，第一步先了解APP是如何使用内存的。 简述程序加载到内存中运行时，在内存中分静态数据(只读)和动态数据(读写)两部分，其中动态部分中堆的分配与释放由程序做内存管理，iOS">
@@ -416,7 +416,7 @@
 
       
         <blockquote>
-<p><strong>Reference:</strong><br><em>Effective Objective-C 2.0</em><br><a href="https://blog.devtang.com/2016/07/30/ios-memory-management/" target="_blank" rel="noopener">理解 iOS 的内存管理</a><br><a href="https://hit-alibaba.github.io/interview/basic/arch/Memory-Management.html" target="_blank" rel="noopener">内存管理基础</a><br><a href="https://hit-alibaba.github.io/interview/basic/arch/Memory-Management.html" target="_blank" rel="noopener">Objective-C 中的内存分配</a><br><a href="https://draveness.me/block-retain-object" target="_blank" rel="noopener">iOS中的block是如何持有对象的</a></p>
+<p><strong>Reference:</strong><br><em>Effective Objective-C 2.0</em><br><a href="https://blog.devtang.com/2016/07/30/ios-memory-management/" target="_blank" rel="noopener">理解 iOS 的内存管理</a><br><a href="https://hit-alibaba.github.io/interview/basic/arch/Memory-Management.html" target="_blank" rel="noopener">内存管理基础</a><br><a href="https://hit-alibaba.github.io/interview/iOS/ObjC-Basic/MM.html" target="_blank" rel="noopener">Objective-C 中的内存分配</a><br><a href="https://draveness.me/block-retain-object" target="_blank" rel="noopener">iOS中的block是如何持有对象的</a></p>
 </blockquote>
 <p><em>程序都是加载到内存中运行，了解APP工作机制，第一步先了解APP是如何使用内存的。</em></p>
 <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>程序加载到内存中运行时，在内存中分静态数据(只读)和动态数据(读写)两部分，其中动态部分中堆的分配与释放由程序做内存管理，iOS中使用引用计数机制配合自动释放池来做内存管理，又使用ARC来简化引用计数和自动释放的编程：</p>
@@ -470,7 +470,7 @@
 <li><strong>__autoreleasing</strong>：自动释放引用，会使引用计数+1，并在自动释放池释放时延迟-1，常用于申明结果参的形参。</li>
 </ul>
 <blockquote>
-<p>NSNotificationCenter对观察者</p>
+<p>NSNotificationCenter对Observer的引用在iOS9之前是unsafe_unretained的，需要在对象dealloc前removeObserver，否则容易出现野指针问题，iOS9之后对Observer的引用改为了weak，在对象dealloc时没有removeObserver也不再有野指针的问题。</p>
 </blockquote>
 <h4 id="ARC与CoreFoundation"><a href="#ARC与CoreFoundation" class="headerlink" title="ARC与CoreFoundation"></a>ARC与CoreFoundation</h4><p>CoreFoundation中的对象不由ARC管理，依然需要手动管理引用计数，ARC中CF对象和OC对象进行相互转换时，需要通过关键字指明转换后对象所有权的变化：</p>
 <ul>
