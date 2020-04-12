@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://hellohezhili.com"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="mh9cQ2yLqXFEC_ZrY3D23g1Cdi1bUYHw4byhld6mqDE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Reference:iOS Runtime详解  简述Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过方法调用来完成函数的动态绑定，进行消息的传递和转发。 概览 要点 类和对象都有个指向类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC的动态特性(一) -- Runtime">
+<meta property="og:url" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/index.html">
+<meta property="og:site_name" content="盒子里的猫">
+<meta property="og:description" content="Reference:iOS Runtime详解  简述Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过方法调用来完成函数的动态绑定，进行消息的传递和转发。 概览 要点 类和对象都有个指向类">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/RuntimePreview.png">
+<meta property="og:image" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/Object-Class.png">
+<meta property="og:image" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/MessageForward.png">
+<meta property="og:updated_time" content="2020-04-12T15:39:26.500Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OC的动态特性(一) -- Runtime">
+<meta name="twitter:description" content="Reference:iOS Runtime详解  简述Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过方法调用来完成函数的动态绑定，进行消息的传递和转发。 概览 要点 类和对象都有个指向类">
+<meta name="twitter:image" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/RuntimePreview.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'AI_Wei'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/">
+
+
+
+
+
+  <title>OC的动态特性(一) -- Runtime | 盒子里的猫</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">盒子里的猫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OC的动态特性(一) -- Runtime</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-23T00:00:00+08:00">
+                2018-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>Reference:</strong><br><a href="https://www.jianshu.com/p/6ebda3cd8052" target="_blank" rel="noopener">iOS Runtime详解</a></p>
+</blockquote>
+<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过方法调用来完成函数的动态绑定，进行消息的传递和转发。</p>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><img src="/2018/06/23/OC的动态特性-一-Runtime/RuntimePreview.png" alt="RuntimePreview"></p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><ul>
+<li>类和对象都有个指向类的<code>isa</code>指针，所以类又称类对象，对象的<code>isa</code>指向所属类，类的<code>isa</code>指向元类；</li>
+<li>所有元类的<code>isa</code>都指向根类（NSObject）的元类，包括它自己；</li>
+<li>类别可以为类添加属性，但不能添加成员变量，可以用关联对象来代替成员变量，保存属性的值；</li>
+<li>消息决策时先在当前类的方法缓存中查找，再去继承链上的方法列表中查找，继承连上找到后，会缓存到当前类的方法缓存中；</li>
+<li>消息转发的系列方法中要注意调用父类的方法，以便处理当前类未处理的消息；</li>
+</ul>
+<h2 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h2><p><a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="noopener">Runtime</a>的代码是开源的，从objc4-493版本开始，Runtime的实现代码逐步用C++进行重写，本文参照的源码是最后一个没有C++的版本objc4-437.3。</p>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><h3 id="1-对象"><a href="#1-对象" class="headerlink" title="1.对象"></a>1.对象</h3><p>源码中对象的定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">objc_object</span> &#123;</span></span><br><span class="line">    Class isa;</span><br><span class="line">&#125; *id;</span><br></pre></td></tr></table></figure>
+<p>对象的定义是一个结构体，内部只有一个指向所属类的<code>isa</code>指针。</p>
+<h3 id="2-类"><a href="#2-类" class="headerlink" title="2.类"></a>2.类</h3><p>源码中类的定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">objc_class</span> *<span class="title">Class</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_class</span> &#123;</span></span><br><span class="line">    Class isa;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !__OBJC2__</span></span><br><span class="line">    Class super_class                       OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name                        OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">long</span> version                            OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">long</span> info                               OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">long</span> instance_size                      OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_ivar_list</span> *<span class="title">ivars</span>            <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_list</span> **<span class="title">methodLists</span>   <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_cache</span> *<span class="title">cache</span>                <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_protocol_list</span> *<span class="title">protocols</span>    <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+<h4 id="Meta-Class"><a href="#Meta-Class" class="headerlink" title="Meta Class"></a>Meta Class</h4><p>类的结构体中也有一个指向所属类的<code>isa</code>指针，还有一个指向父类的<code>super_class</code>指针，类的<code>isa</code>指向的是类的类，被称之为元类；元类的<code>super_class</code>指针指向元类的父类，元类的<code>isa</code>指针则都指向根元类（即NSObject的元类）；值得注意的是<strong>根元类的<code>super_class</code>指向的是根类（即NSObject），<code>isa</code>指针依然指向根元类（即它自己）</strong>。</p>
+<p><strong>对象、类和元类之间的关系如图</strong>：<br><img src="/2018/06/23/OC的动态特性-一-Runtime/Object-Class.png" alt="Object-Class"></p>
+<p><strong>类对象</strong>：对象和类都有<code>isa</code>指针指向所属的类，甚至在C++实现的Runtime版本中，类的结构体直接继承自对象的结构体，所以说类也是对象，称之为类对象，类对象和元类是一一对应的，都是运行时由系统创建的单例。</p>
+<h4 id="objc-ivar-list"><a href="#objc-ivar-list" class="headerlink" title="objc_ivar_list"></a>objc_ivar_list</h4><p>类中<code>struct objc_ivar_list *ivars</code>是成员变量列表，源码中定义的成员变量其结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_ivar</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> *ivar_name                     OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">char</span> *ivar_type                     OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">int</span> ivar_offset                     OBJC2_UNAVAILABLE;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __LP64__</span></span><br><span class="line">    <span class="keyword">int</span> space                           OBJC2_UNAVAILABLE;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中ivar_type存储的是成员变量的数据类型、内存管理、访问权限等信息编码后的结果；提供<code>Ivar *class_copyIvarList(Class cls, unsigned int *outCount)</code>函数来获取一个类的成员变量列表。</p>
+<p>在类中使用<code>@property</code>为类同时添加了属性和成员变量，属性的本质是set和get方法，提供<code>objc_property_t *class_copyPropertyList(Class cls, unsigned int *outCount)</code>函数获取一个类的属性列表。</p>
+<h4 id="objc-method-list"><a href="#objc-method-list" class="headerlink" title="objc_method_list"></a>objc_method_list</h4><p>类中<code>struct objc_method_list **methodLists</code>是对象方法列表，类方法就是类对象的方法，保存在元类的方法列表中，源码中方法的结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_method</span> &#123;</span></span><br><span class="line">    SEL method_name                 OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">char</span> *method_types              OBJC2_UNAVAILABLE;</span><br><span class="line">    IMP method_imp                  OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法中method_name即Selector，method_types是方法的签名，method_imp则是方法的实现，提供<code>Method *class_copyMethodList(Class cls, unsigned int *outCount)</code>来获取一个类的对象方法列表。</p>
+<h4 id="objc-cache"><a href="#objc-cache" class="headerlink" title="objc_cache"></a>objc_cache</h4><p>类中<code>struct objc_cache *cache</code>是Selector的方法缓存，其中保存的数据结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    SEL name;     <span class="comment">// same layout as struct old_method</span></span><br><span class="line">    <span class="keyword">void</span> *unused;</span><br><span class="line">    IMP imp;  <span class="comment">// same layout as struct old_method</span></span><br><span class="line">&#125; cache_entry;</span><br></pre></td></tr></table></figure>
+<p>方法缓存的设计源于一个理念：类的某个方法调用后，接下来会有很大的概率被再次调用。当向一个对象发送消息后，需要查找Selecotr对应的实现（IMP），查找顺序是先查找当前类的方法缓存，如果没有找到，则从当前类开始，沿着继承链在类的方法列表中查找，找到后会将Selector和IMP的映射缓存在当前类的方法缓存中。</p>
+<h4 id="objc-protocol-list"><a href="#objc-protocol-list" class="headerlink" title="objc_protocol_list"></a>objc_protocol_list</h4><p>类中<code>struct objc_protocol_list *protocols</code>是协议列表，源码中协议的结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@interface Object</span><br><span class="line">&#123;</span><br><span class="line">	Class isa;	<span class="comment">/* A pointer to the instance's class structure */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@interface Protocol : Object</span><br><span class="line">&#123;</span><br><span class="line">@<span class="keyword">private</span></span><br><span class="line">    <span class="keyword">char</span> *protocol_name OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_protocol_list</span> *<span class="title">protocol_list</span> <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_description_list</span> *<span class="title">instance_methods</span> <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_description_list</span> *<span class="title">class_methods</span> <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>协议是一个继承自Object的类，其内有该协议遵循的协议列表、对象方法列表、和类方法列表；提供<code>Protocol **class_copyProtocolList(Class cls, unsigned int *outCount)</code>函数来获取一个类的协议列表。</p>
+<h3 id="3-类别"><a href="#3-类别" class="headerlink" title="3.类别"></a>3.类别</h3><p>源码中类别的结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_category</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> *category_name                         OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">char</span> *class_name                            OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_list</span> *<span class="title">instance_methods</span>   <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_list</span> *<span class="title">class_methods</span>      <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_protocol_list</span> *<span class="title">protocols</span>        <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过类别可以为类添加属性，但不能添加成员变量，类别添加属性时，可以通过<code>objc_setAssociatedObject</code>添加关联对象，代替成员变量来保存属性的值。</p>
+<p>类别中的方法、协议会在类别<code>+load</code>时添加到主类的列表中，后添加的方法会在列表前面，所以类别的方法可以覆盖主类中的同名方法，<code>+load</code>的执行顺序总结如下：</p>
+<ul>
+<li>父类的<code>+load</code>执行后子类的<code>+load</code>才执行；</li>
+<li>所有类的<code>+load</code>执行后类别的<code>+load</code>才执行；</li>
+<li>类别之间、没有继承关系的类之间，<code>+load</code>执行的顺序与编译顺序相同（即<code>buildPhases -&gt; Compile Sources</code>中的文件顺序）；</li>
+</ul>
+<h2 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h2><p>Runtime通过方法调用来实现<strong>函数的动态绑定</strong>，即所调用的函数地址不是编译期硬编码在指令中，而是需要在运行期读取。方法调用又叫消息传递，消息由selector及其参数所构成，消息传递的核心是<code>objc_msgSend</code>函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">id <span class="title">objc_msgSend</span><span class="params">(id self, SEL op, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>在<code>objc_msgSend</code>函数中，第一个参数是消息的接收类/对象，第二个参数是selector，后面才是消息的参数，所以在一个方法实现的内部，有两个默认的参数self和_cmd，它们分别代表方法调用者自身和方法的selector。</p>
+<p>消息传递，即对象进行方法调用，到执行对应实现，所执行的步骤大致如下：</p>
+<ol>
+<li>根据对象/类的<code>isa</code>指针找到对象/类所属的类/元类；</li>
+<li>先在当前类/元类的方法缓存中查找selector对应的IMP，找到IMP则去执行对应的函数实现；</li>
+<li>方法缓存中没找到，则沿着继承链在类/元类的方法列表找查找selector对应的方法；</li>
+<li>找到对应方法后，将方法中的IMP和selector的映射添加到<strong>当前类/元类</strong>的方法缓存中，并执行IMP对应的函数实现；</li>
+<li>如果最终沿着继承链没有找到对应的方法，则启动<strong>消息转发</strong>机制；</li>
+</ol>
+<h2 id="消息转发"><a href="#消息转发" class="headerlink" title="消息转发"></a>消息转发</h2><p>当一个消息在类及其继承链上最终没有找到对应的方法实现，将启动消息转发机制，消息转发的流程如图：</p>
+<p><img src="/2018/06/23/OC的动态特性-一-Runtime/MessageForward.png" alt="MessageForward"><br>启动消息转发后，消息的接收者还有三次机会来对消息做出处理：</p>
+<ol>
+<li><strong>动态方法解析</strong>：在<code>+resolveClassMethod:</code>/<code>+resolveInstanceMethod:</code>中，如果为消息动态的添加了一个类/对象方法，则重新再发送一次消息，如果没有为消息动态的添加方法，则继续消息转发的下一步（与动态解析方法返回YES/NO没有关系）；</li>
+<li><strong>备援接受者</strong>：在<code>-forwardingTargetForSelector:</code>中如果返回了一个非nil的备援接受者，则将消息发送给备援接受者，如果返回nil，则继续消息转发的下一步；</li>
+<li><strong>转发消息</strong>：需要先在<code>-methodSignatureForSelector:</code>返回消息对应的方法签名，再在<code>-forwardInvocation:</code>中处理NSInvocation，如果没有返回方法签名，则会调用<code>-doesNotRecognizeSelector:</code>方法，并抛出异常；</li>
+</ol>
+<p>在为当前类实现以上消息转发方法时，对于没有处理的消息，都应调用父类的方法，交由父类处理。在第三步转发消息时，方法签名可以参看官方文档<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1" target="_blank" rel="noopener">Type Encodings</a>，处理NSInvocation时，可以简单的转发给另外一个target，但这就跟返回备援接受者效果一样，一般如果消息转发需要走到这一步，则是需要编辑NSInvocation来更改消息内容，比如追加参数、更换selector等。</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>Runtime是OC动态特性的基石，使用它可以实现OC语言层面的拓展，Runtime的应用非常的广泛，Runtime实现的功能也非常的使用。</p>
+<h3 id="关联对象"><a href="#关联对象" class="headerlink" title="关联对象"></a>关联对象</h3><p>Runtime提供了三个函数来管理关联对象：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//关联对象</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_setAssociatedObject</span><span class="params">(id object, <span class="keyword">const</span> <span class="keyword">void</span> *key, id value, objc_AssociationPolicy policy)</span></span></span><br><span class="line"><span class="function"><span class="comment">//获取关联的对象</span></span></span><br><span class="line"><span class="function">id <span class="title">objc_getAssociatedObject</span><span class="params">(id object, <span class="keyword">const</span> <span class="keyword">void</span> *key)</span></span></span><br><span class="line"><span class="function"><span class="comment">//移除关联的对象</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_removeAssociatedObjects</span><span class="params">(id object)</span></span></span><br></pre></td></tr></table></figure>
+<p>关联对象一个非常常用的地方是在类别中添加属性时，代替成员变量来保存属性的值。添加关联对象时，需要指明和属性修饰符类似的关联对象内存策略，常用的有以下几个：</p>
+<ul>
+<li>OBJC_ASSOCIATION_ASSIGN，同@property (assign)或 @property (unsafe_unretained)；</li>
+<li>OBJC_ASSOCIATION_RETAIN_NONATOMIC，同@property (nonatomic, strong)；</li>
+<li>OBJC_ASSOCIATION_COPY_NONATOMIC，同@property (nonatomic, copy)；</li>
+</ul>
+<h3 id="KVO原理"><a href="#KVO原理" class="headerlink" title="KVO原理"></a>KVO原理</h3><p>KVO是基于Runtime实现的：当对某个类<code>A</code>的对象添加KVO之后，KVO机制会动态的创建一个<code>A</code>的子类（通常命名为NSKVONotifying_A），然后让被观察对象的<code>isa</code>指向这个子类，在这个子类重写了被观察<code>keyPath</code>的<code>setter</code>方法，在方法的前后分别添加了<code>-willChangeValueForKey:</code>和<code>-didChangeValueForKey:</code>，当通过<code>setter</code>方法更改被观察的值时，观察者就能收到通知。</p>
+<h3 id="Method-Swizzling"><a href="#Method-Swizzling" class="headerlink" title="Method Swizzling"></a>Method Swizzling</h3><p>Runtime允许动态的新增、替换方法的实现，用新的实现替换原有方法的实现，就叫做Method Swizzling。一种特殊的Method Swizzling - 交换两个已有方法的实现，配合类别可以为原方法添加<code>hook</code>，完成对没有源码的原方法的修改。简单的<code>hook</code>使用<code>method_exchangeImplementations</code>即可实现，但实际上<code>hook</code>时有许多需要注意的问题，安全而健壮的<code>hook</code>可以参看文章<a href="http://yulingtianxia.com/blog/2017/04/17/Objective-C-Method-Swizzling/" target="_blank" rel="noopener">Objective-C Method Swizzling</a>。</p>
+<h3 id="YYModel"><a href="#YYModel" class="headerlink" title="YYModel"></a>YYModel</h3><p>YYModel运用Runtime面向对象的特性，为根类NSObject添加扩展，实现JSON数据和OC模型之间自动转换。YYModel非常的轻量级，代码也非常的直观，其他利用Runtime特性实现JSON与OC模型互相转换的库还有很多（如：MJExtension），它们对Runtime的利用更加复杂，功能也相对丰富。</p>
+<h3 id="JSPatch"><a href="#JSPatch" class="headerlink" title="JSPatch"></a>JSPatch</h3><p>JSPatch是一个热修复库，它的基本原理是：JS传递字符串给OC，OC通过Runtime动态调用接口和替换OC方法的实现。JSPatch对Runtime的应用还包括动态的注册类，为类添加方法等，实例代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class cls = objc_allocateClassPair(superCls, <span class="string">"JPObject"</span>, <span class="number">0</span>);</span><br><span class="line">class_addMethod(cls, selector, implement, typedesc);</span><br><span class="line">objc_registerClassPair(cls);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/13/APP工作机制-四-响应链/" rel="next" title="APP工作机制(四) -- 响应链">
+                <i class="fa fa-chevron-left"></i> APP工作机制(四) -- 响应链
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/30/OC的动态特性-二-反射机制/" rel="prev" title="OC的动态特性(二) -- 反射机制">
+                OC的动态特性(二) -- 反射机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzcyMy8yMDI2Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AI_Wei">
+            
+              <p class="site-author-name" itemprop="name">AI_Wei</p>
+              <p class="site-description motion-element" itemprop="description">自由源于自信，自信源于自律</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AiweiChujian" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:aiweichujian@gmail.com" target="_blank" title="G-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>G-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2804552143" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="/images/wechat.jpg" target="_blank" title="Wechat">
+                      
+                        <i class="fa fa-fw fa-wechat"></i>Wechat</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述"><span class="nav-text">简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概览"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-text">要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详解"><span class="nav-text">详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象"><span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对象"><span class="nav-text">1.对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-类"><span class="nav-text">2.类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Meta-Class"><span class="nav-text">Meta Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#objc-ivar-list"><span class="nav-text">objc_ivar_list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#objc-method-list"><span class="nav-text">objc_method_list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#objc-cache"><span class="nav-text">objc_cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#objc-protocol-list"><span class="nav-text">objc_protocol_list</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-类别"><span class="nav-text">3.类别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息传递"><span class="nav-text">消息传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息转发"><span class="nav-text">消息转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用"><span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关联对象"><span class="nav-text">关联对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KVO原理"><span class="nav-text">KVO原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method-Swizzling"><span class="nav-text">Method Swizzling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YYModel"><span class="nav-text">YYModel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSPatch"><span class="nav-text">JSPatch</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AI_Wei</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+</body>
+</html>

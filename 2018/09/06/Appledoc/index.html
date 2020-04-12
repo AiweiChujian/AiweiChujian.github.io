@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="appledoc,">
 
 
 
@@ -96,17 +96,18 @@
 
 
 
-<meta name="description" content="自由源于自信，自信源于自律">
+<meta name="description" content="工具简介Appledoc是一款开源工具，使用它可以根据指定路径下代码文件中的注释，为项目生成Apple风格的API文档。 工具教程1.安装appledoc可以通过Homebrew安装，终端执行命令brew install appledoc即可，不过这种方式不会一并安装文档模板（template），所以更推荐通过appledoc项目的源文件来安装： 12345678# 1. clone appled">
+<meta name="keywords" content="appledoc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OC的动态特性(二) -- 反射机制">
-<meta property="og:url" content="https://hellohezhili.com/2017/12/03/OC的动态特性-二-反射机制/index.html">
+<meta property="og:title" content="Appledoc">
+<meta property="og:url" content="https://hellohezhili.com/2018/09/06/Appledoc/index.html">
 <meta property="og:site_name" content="盒子里的猫">
-<meta property="og:description" content="自由源于自信，自信源于自律">
+<meta property="og:description" content="工具简介Appledoc是一款开源工具，使用它可以根据指定路径下代码文件中的注释，为项目生成Apple风格的API文档。 工具教程1.安装appledoc可以通过Homebrew安装，终端执行命令brew install appledoc即可，不过这种方式不会一并安装文档模板（template），所以更推荐通过appledoc项目的源文件来安装： 12345678# 1. clone appled">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-12-12T02:39:14.135Z">
+<meta property="og:updated_time" content="2020-04-06T13:05:35.823Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="OC的动态特性(二) -- 反射机制">
-<meta name="twitter:description" content="自由源于自信，自信源于自律">
+<meta name="twitter:title" content="Appledoc">
+<meta name="twitter:description" content="工具简介Appledoc是一款开源工具，使用它可以根据指定路径下代码文件中的注释，为项目生成Apple风格的API文档。 工具教程1.安装appledoc可以通过Homebrew安装，终端执行命令brew install appledoc即可，不过这种方式不会一并安装文档模板（template），所以更推荐通过appledoc项目的源文件来安装： 12345678# 1. clone appled">
 
 
 
@@ -136,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="https://hellohezhili.com/2017/12/03/OC的动态特性-二-反射机制/">
+  <link rel="canonical" href="https://hellohezhili.com/2018/09/06/Appledoc/">
 
 
 
 
 
-  <title>OC的动态特性(二) -- 反射机制 | 盒子里的猫</title>
+  <title>Appledoc | 盒子里的猫</title>
   
 
 
@@ -311,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2017/12/03/OC的动态特性-二-反射机制/">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/09/06/Appledoc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AI_Wei">
@@ -328,7 +329,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">OC的动态特性(二) -- 反射机制</h1>
+          <h1 class="post-title" itemprop="name headline">Appledoc</h1>
         
 
         <div class="post-meta">
@@ -340,8 +341,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-03T00:00:00+08:00">
-                2017-12-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-06T17:19:59+08:00">
+                2018-09-06
               </time>
             
 
@@ -350,6 +351,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/实用工具/" itemprop="url" rel="index">
+                    <span itemprop="name">实用工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -378,7 +401,26 @@
       
 
       
-        
+        <h2 id="工具简介"><a href="#工具简介" class="headerlink" title="工具简介"></a>工具简介</h2><p><a href="https://github.com/tomaz/appledoc" target="_blank" rel="noopener">Appledoc</a>是一款开源工具，使用它可以根据指定路径下代码文件中的注释，为项目生成Apple风格的API文档。</p>
+<h2 id="工具教程"><a href="#工具教程" class="headerlink" title="工具教程"></a>工具教程</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><p>appledoc可以通过Homebrew安装，终端执行命令<code>brew install appledoc</code>即可，不过这种方式不会一并安装文档模板（template），所以更推荐通过appledoc项目的源文件来安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. clone appledoc文件</span></span><br><span class="line">git <span class="built_in">clone</span> git://github.com/tomaz/appledoc.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 进入appledoc目录</span></span><br><span class="line"><span class="built_in">cd</span> ./appledoc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 运行appledoc安装脚本</span></span><br><span class="line">sudo sh install-appledoc.sh</span><br></pre></td></tr></table></figure>
+<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h3><h4 id="代码注释"><a href="#代码注释" class="headerlink" title="代码注释"></a>代码注释</h4><p>appledoc支持导出Markdown语法书写的注释，同时也支持导出Xcode通过<code>Command + Option + /</code>为方法添加的标准注释，附Xcode标准注释的关键字：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> @brief     方法简要描述</span></span><br><span class="line"><span class="comment"> @param     方法参数说明</span></span><br><span class="line"><span class="comment"> @exception 方法会抛出异常</span></span><br><span class="line"><span class="comment"> @see       参看相关的 Method/Function/枚举</span></span><br><span class="line"><span class="comment"> @discussion    方法详细说明</span></span><br><span class="line"><span class="comment"> @warning   警告</span></span><br><span class="line"><span class="comment"> @bug       BUG</span></span><br><span class="line"><span class="comment"> @return    返回值</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h4 id="导出文档"><a href="#导出文档" class="headerlink" title="导出文档"></a>导出文档</h4><p>appledoc的命令格式为<code>appledoc [OPTIONS] &lt;paths to source dirs or files&gt;</code>，常用的appledoc命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">appledoc -i *.m --keep-undocumented-objects --keep-undocumented-members -h --no-publish-docset --no-create-docset --no-install-docset -c <span class="string">"公司名称"</span> -p <span class="string">"项目名称"</span> -o <span class="string">"输出地址"</span> <span class="string">"源文件目录"</span></span><br></pre></td></tr></table></figure>
+<p>命令的最后是需要导出文档的源文件目录，中间是命令参数，appledoc所支持的更多命令参数可通过<code>appledoc --help</code>进行查看。</p>
+<p>命令成功执行后通常是在指定的输出地址下生成一个名为<strong>docset-installed.txt</strong>的文件（示例命令是直接在输出地址中生成html文档），里面记录了导出的文档的地址，导出的文档一般在<code>~/Library/Developer/Shared/Documentation/DocSets/</code>目录下，文档为<code>.doset</code>格式，可通过<strong>右键-显示包内容</strong>查看其内容。</p>
+<h4 id="Aggregate"><a href="#Aggregate" class="headerlink" title="Aggregate"></a>Aggregate</h4><p>可以通过为项目添加Aggregate Target，再为Aggregate添加Run Script，最后再编译Aggregate的方式来方便快速的为项目生成API文档。</p>
+<p><strong>添加Aggregate</strong>：Xcode中依次<code>File -&gt; New -&gt; Target... -&gt; Aggretgate</code>进行添加；</p>
+<p><strong>添加Run Script</strong>：在添加的Aggregate的<strong>Build Phases</strong>中添加Run Script；</p>
+<p><strong>Run Script示例</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">company=&quot;组织名称&quot;;  </span><br><span class="line">companyID=&quot;组织ID&quot;;</span><br><span class="line">outputPath=&quot;$&#123;PROJECT_DIR&#125;&quot;;</span><br><span class="line">filePath=&quot;$&#123;PROJECT_DIR&#125;&quot;</span><br><span class="line"></span><br><span class="line">appledoc \</span><br><span class="line">-i *.m \</span><br><span class="line">--keep-undocumented-objects \</span><br><span class="line">--keep-undocumented-members \</span><br><span class="line">-h \</span><br><span class="line">--no-publish-docset \</span><br><span class="line">--no-create-docset \</span><br><span class="line">--no-install-docset \</span><br><span class="line">--company-id &quot;$&#123;companyID&#125;&quot; \</span><br><span class="line">-c &quot;$&#123;company&#125;&quot; \</span><br><span class="line">-p &quot;$&#123;PROJECT_NAME&#125;&quot; \</span><br><span class="line">-o &quot;$&#123;outputPath&#125;&quot; \</span><br><span class="line">--exit-threshold 2 \</span><br><span class="line">&quot;$&#123;filePath&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="3-注意"><a href="#3-注意" class="headerlink" title="3.注意"></a>3.注意</h3><p>使用appledoc的注意事项：</p>
+<ul>
+<li>appledoc不会导出<code>//</code>注释的内容，需要导出的单行注释可以使用<code>///</code>；</li>
+<li>Xcode9.3之后不再支持集成自定义文档，使用appledoc集成文档时会报Error，但不影响文档的导出，详见<a href="https://github.com/tomaz/appledoc/issues/628" target="_blank" rel="noopener">Issue</a>；</li>
+</ul>
+
       
     </div>
     
@@ -411,6 +453,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/appledoc/" rel="tag"># appledoc</a>
+          
+        </div>
+      
 
       
       
@@ -420,8 +468,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/25/OC的动态特性-一-Runtime/" rel="next" title="OC的动态特性(一) -- Runtime">
-                <i class="fa fa-chevron-left"></i> OC的动态特性(一) -- Runtime
+              <a href="/2018/06/30/OC的动态特性-二-反射机制/" rel="next" title="OC的动态特性(二) -- 反射机制">
+                <i class="fa fa-chevron-left"></i> OC的动态特性(二) -- 反射机制
               </a>
             
           </div>
@@ -430,8 +478,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/12/16/APP工作机制-一-内存与内存管理/" rel="prev" title="APP工作机制(一) -- 内存与内存管理">
-                APP工作机制(一) -- 内存与内存管理 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/06/iOS三方轮子分类-OC/" rel="prev" title="iOS开发中好用的三方轮子">
+                iOS开发中好用的三方轮子 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -489,8 +537,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -507,7 +564,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -529,7 +586,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -594,6 +651,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工具简介"><span class="nav-text">工具简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具教程"><span class="nav-text">工具教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装"><span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用"><span class="nav-text">2.使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码注释"><span class="nav-text">代码注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导出文档"><span class="nav-text">导出文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Aggregate"><span class="nav-text">Aggregate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-注意"><span class="nav-text">3.注意</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
