@@ -106,12 +106,12 @@
 <meta property="og:site_name" content="盒子里的猫">
 <meta property="og:description" content="Reference:app的生命周期ios background modes  在知道APP是如何在内存中保持一直运行后之后，接下来需要知道的是APP运行时有哪些主要的状态，以及这些状态是如何切换的。 简述应用程序有 Not Running(未运行)，Inactive(未激活)，Active(激活), Background(后台)，Suspended(挂起)五个状态，当状态即将改变或已经改变时，">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://hellohezhili.com/2018/01/07/APP工作机制-三-APP生命周期/%E6%A6%82%E8%A7%88-1.jpg">
-<meta property="og:updated_time" content="2020-04-15T09:33:43.440Z">
+<meta property="og:image" content="https://hellohezhili.com/images/APP%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6-%E4%B8%80-%E5%86%85%E5%AD%98%E4%B8%8E%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E6%A6%82%E8%A7%88-1.jpg">
+<meta property="og:updated_time" content="2020-04-15T09:36:10.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP工作机制(三) -- APP生命周期">
 <meta name="twitter:description" content="Reference:app的生命周期ios background modes  在知道APP是如何在内存中保持一直运行后之后，接下来需要知道的是APP运行时有哪些主要的状态，以及这些状态是如何切换的。 简述应用程序有 Not Running(未运行)，Inactive(未激活)，Active(激活), Background(后台)，Suspended(挂起)五个状态，当状态即将改变或已经改变时，">
-<meta name="twitter:image" content="https://hellohezhili.com/2018/01/07/APP工作机制-三-APP生命周期/%E6%A6%82%E8%A7%88-1.jpg">
+<meta name="twitter:image" content="https://hellohezhili.com/images/APP%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6-%E4%B8%80-%E5%86%85%E5%AD%98%E4%B8%8E%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E6%A6%82%E8%A7%88-1.jpg">
 
 
 
@@ -421,7 +421,7 @@
 </blockquote>
 <p><em>在知道APP是如何在内存中保持一直运行后之后，接下来需要知道的是APP运行时有哪些主要的状态，以及这些状态是如何切换的。</em></p>
 <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>应用程序有 Not Running(未运行)，Inactive(未激活)，Active(激活), Background(后台)，Suspended(挂起)五个状态，当状态即将改变或已经改变时，会发送相应通知并在AppDelegate中会执行相应的回调，开发中需要视需求，在状态变换的回调方法中，添加相应的处理。</p>
-<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><img src="/2018/01/07/APP工作机制-三-APP生命周期/%E6%A6%82%E8%A7%88-1.jpg" alt="概览"></p>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><img src="/images/APP%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6-%E4%B8%80-%E5%86%85%E5%AD%98%E4%B8%8E%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E6%A6%82%E8%A7%88-1.jpg" alt="概览"></p>
 <h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><ul>
 <li>Not Running和Suspended是APP未运行时的两种状态，在APP的抽象对象UIApplication的的<code>applicationState</code>中没有这两种状态，也没有相应的通知和AppDelegate回调；</li>
 <li>需要注意区分APP在刚启动和返回前台时分别触发的<code>applicationDidBecomeActive:</code>；</li>
