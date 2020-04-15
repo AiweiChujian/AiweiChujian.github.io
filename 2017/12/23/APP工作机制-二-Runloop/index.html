@@ -108,7 +108,7 @@
 <meta property="og:image" content="https://hellohezhili.com/2017/12/23/APP工作机制-二-Runloop/RunLoop_Trap.png">
 <meta property="og:image" content="https://hellohezhili.com/2017/12/23/APP工作机制-二-Runloop/RunLoop_network.png">
 <meta property="og:image" content="https://hellohezhili.com/2017/12/23/APP工作机制-二-Runloop/ios_vsync_runloop.png">
-<meta property="og:updated_time" content="2020-04-01T13:52:14.596Z">
+<meta property="og:updated_time" content="2020-04-14T06:43:32.033Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP工作机制(二) -- Runloop">
 <meta name="twitter:description" content="Reference:深入理解RunLoopRunLoop 详解  程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。 概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在内存中持续工">
@@ -433,7 +433,7 @@
 <li>Timer是在计算好的预设时间点由内核发送时间通知，唤醒RunLoop来处理Timer事件；</li>
 <li>Observer是RunLoop的观察者，RunLoop在某些活动节点会触发其回调，可以据此在对应的时机安排自己APP需要执行的任务；</li>
 <li>RunLoop的休眠/唤醒是通过Mach陷阱切换程序的应用态/内核态来实现的；</li>
-<li>Perform Selector系列API是通过创建源并加入到对应RunLoop中来实现的，必须要对应RunLoop运行，派发的Selector才会被执行，Perform Selector添加的源会在执行后从RunLoop中移除；</li>
+<li>Perform Selector系列方法中<strong>延迟派发、派发给其他线程、以及当前线程异步派发时</strong>，是通过创建源并加入到对应RunLoop中来实现的，必须要目标线程的RunLoop运行，派发的Selector才会被执行，Perform Selector添加的源会在执行后从RunLoop中移除；</li>
 <li>用GCD为主线程派发任务，也是包装成待处理的Source1，再添加到主线程RunLoop中来实现的，但GCD为子线程（并发队列）派发任务，不是通过RunLoop实行的；</li>
 <li>UIEvent是UIKit在主线程中注册一个Source1，通过端口接收到Spring Board转发的IOHIDEvent，再在回调中处理，最后包装成UIEvent的；</li>
 </ul>
@@ -464,7 +464,7 @@
 <li>Custom Input Sources</li>
 <li>Cocoa Perform Selector Sources</li>
 </ul>
-<p>CoreFoundation中输入源则分为非基于端口的Source0和基于端口的Source1，分别对应Custom Input Sources和Port-Based Sources，Cocoa Perform Selector Sources根据Cocoa版本的不同，实际上创建的是CoreFoundation的Source0或Source1（甚至可能是Timer），<strong>Perform Selector创建的源，在执行完后会自动从RunLoop中移除</strong>。</p>
+<p>CoreFoundation中输入源则分为非基于端口的Source0和基于端口的Source1，分别对应Custom Input Sources和Port-Based Sources，Cocoa Perform Selector Sources是Perform Selector系列方法创建的源，Perform Selector延迟派发时创建的是定时源，派发给其他线程或当前线程异步派发时创建的Source0，<strong>Perform Selector创建的源，在执行完后会自动从RunLoop中移除</strong>。</p>
 <ul>
 <li><strong>Source0</strong>：只包含一个回调（函数指针），需要应用手动触发，不能主动唤醒RunLoop，使用时需要先调用CFRunLoopSourceSignal(source)，将Source标记为待处理，再手动调用CFRunLoopWakeUp(runloop)，唤醒RunLoop处理Source的事件。</li>
 <li><strong>Source1</strong>：包含一个mach_port和一个回调（函数指针），由mach_port驱动，可以主动唤醒RunLoop，通常用于通过内核和其他线程互相发送消息。</li>
@@ -516,7 +516,7 @@
 </ol>
 <p>RunLoop在需要时被唤醒，在不需要时进行休眠，<strong>其原理是通过mach_msg( )调用了一个Mach陷阱：mach_msg_trap( )，将线程由用户态切换为内核态，在内核态下等待消息</strong>，当有消息到达时又返回用户态进行处理，其逻辑示意如图：</p>
 <p><img src="/2017/12/23/APP工作机制-二-Runloop/RunLoop_Trap.png" alt="RunLoop_Trap"></p>
-<h3 id="5-系统中对RunLoop的应用"><a href="#5-系统中对RunLoop的应用" class="headerlink" title="5.系统中对RunLoop的应用"></a>5.系统中对RunLoop的应用</h3><h4 id="Perform-Selector"><a href="#Perform-Selector" class="headerlink" title="Perform Selector"></a>Perform Selector</h4><p>Cocoa中的Perform Selector系列API根据版本的不同，其内部实际上是创建的输入源或定时源，再添加到指定线程的RunLoop中，所以在使用Perform Selector系列API为线程添加任务的时候，要注意判断线程的RunLoop是否在运行，如果未运行，则通过Perform Selector系列API添加的任务也不会被执行。</p>
+<h3 id="5-系统中对RunLoop的应用"><a href="#5-系统中对RunLoop的应用" class="headerlink" title="5.系统中对RunLoop的应用"></a>5.系统中对RunLoop的应用</h3><h4 id="Perform-Selector"><a href="#Perform-Selector" class="headerlink" title="Perform Selector"></a>Perform Selector</h4><p>Perform Selector系列方法延迟派发创建的是定时源，派发给其他线程或当前线程异步派发时创建的Source0，再添加到指定线程的RunLoop中。所以如果使用Perform Selector<strong>延迟派发、派发给其他线程、以及当前线程异步派发时</strong>，要注意判断目标线程的RunLoop是否在运行，如果未运行则派发的任务就不会被执行。</p>
 <h4 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h4><p>使用GCD为主线程派发任务，会唤醒主线程RunLoop，并对派发的事件进行处理，在每次主线程RunLoop休眠前，还会检查是否有GCD派发过来的事件，如果有，则会跳过休眠，开始对事件进行处理。但以上RunLoop中的逻辑，仅限于主线程中的RunLoop，通过GCD为其他线程派发的任务，则是由libDispatch处理，所以GCD将任务派发给子线程时，也不需要子线程的RunLoop处于运行状态。</p>
 <h4 id="UIEvent"><a href="#UIEvent" class="headerlink" title="UIEvent"></a>UIEvent</h4><p>系统为APP注册了一个Source1用来接收操作系统的事件。当一个硬件事件（触摸/锁屏/摇晃等）发生后，先由IOKit.framework生成一个IOHIDEvent，并由SpringBoard接收，SpringBoard再通过mach_port转发给需要的APP；APP中系统注册的那个Source1接收到mach_port中传递过来的消息后，唤醒主线程RunLoop，在其回调中调用_UIApplicationHandleEventQueue( )进行APP内部的分发；_UIApplicationHandleEventQueue( )中会把IOHIDEvent包装成UIEvent，再通过APP的响应链传递给对应的响应者。</p>
 <h4 id="NSTimer"><a href="#NSTimer" class="headerlink" title="NSTimer"></a>NSTimer</h4><p>NSTimer其实就是CFRunLoopTimerRef，他们之间是toll-free bridged的（<a href="https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html#//apple_ref/doc/uid/TP40010677-SW4" target="_blank" rel="noopener">Toll-Free Bridged Types</a>）。根据版本不同RunLoop的Timer可能基于内核的mk_timer或者GCD的timer来实现的，Timer并不是绝对准时的，而是有一个宽容度（Tolerance），实际执行的时间可能在这个宽容度允许的误差之内，如果因为执行队列中其他事件造成时间超过了宽容度所允许的误差，那么这次Timer的block不会延后执行，而是会被跳过。</p>
