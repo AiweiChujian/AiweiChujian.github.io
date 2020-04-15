@@ -91,8 +91,6 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="盒子里的猫" type="application/atom+xml">
-
 
 
 
@@ -106,12 +104,12 @@
 <meta property="og:site_name" content="盒子里的猫">
 <meta property="og:description" content="Reference:App Architecture  1. 软件架构和APP设计模式软件架构是软件设计中的分支，它关注两个方面：  如何将软件分解成不同的接口和概念层次部件； 这些部件自身和部件之间的不同操作中所使用的控制流和数据流路径。  一个好的APP架构依赖于一套有力的设计规则来定义部件的划分以及部件之间的相互协作方式，在架构中一套被重复使用的设计规则称为设计模式。 app的设计模式基本">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://hellohezhili.com/2018/12/08/APP架构1/15712192375156.jpg">
+<meta property="og:image" content="https://hellohezhili.com/2018/12/08/APP架构1/APP架构1/15712192375156.jpg">
 <meta property="og:updated_time" content="2019-12-18T07:46:49.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP架构（一）-- 概论">
 <meta name="twitter:description" content="Reference:App Architecture  1. 软件架构和APP设计模式软件架构是软件设计中的分支，它关注两个方面：  如何将软件分解成不同的接口和概念层次部件； 这些部件自身和部件之间的不同操作中所使用的控制流和数据流路径。  一个好的APP架构依赖于一套有力的设计规则来定义部件的划分以及部件之间的相互协作方式，在架构中一套被重复使用的设计规则称为设计模式。 app的设计模式基本">
-<meta name="twitter:image" content="https://hellohezhili.com/2018/12/08/APP架构1/15712192375156.jpg">
+<meta name="twitter:image" content="https://hellohezhili.com/2018/12/08/APP架构1/APP架构1/15712192375156.jpg">
 
 
 
@@ -157,6 +155,7 @@
 
 
 
+<link rel="alternate" href="/atom.xml" title="盒子里的猫" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
@@ -422,7 +421,7 @@
 </ul>
 <p>在APP中，View对象通常会构成一个单一的view层级，view controller也通常会形成 view controller层级。model对象却不需要有明确的层级关系，在程序中它们可以是互不关联的独立 model。</p>
 <p>model层的最重要的意义在于：<strong>它为我们的程序提供一个表述事实的单一来源，让程序的行为有清晰的规则可以依据，这会让编程逻辑清晰、行为正确</strong>。如果 model 层能做到和应用框架分离，我们就可以完全在 app 的范围之外使用它。</p>
-<h2 id="3-反馈回路"><a href="#3-反馈回路" class="headerlink" title="3. 反馈回路"></a>3. 反馈回路</h2><p><strong>用户界面是一个同时负责展示和输入功能的反馈设备，APP的逻辑就是一个反馈回路</strong>。<br>用户发起的事件会导致view的响应，我们把由此引起的代码路径称为view action，当一view action被送到model层时，它会被转变为model action，将view action转变为model action的操作,以及路径上的其他逻辑被叫做<strong>交互逻辑</strong>。<br>一个或者多个model对象上状态的改变叫做model变更。Model的变更通常会触发一个model通知，当view依赖于model数据时，通知会触发一个view变更，将model通知和数据转变为view 更改的操作，以及路径上的其他逻辑被叫做<strong>表现逻辑</strong>。<br><img src="/2018/12/08/APP架构1/15712192375156.jpg" alt></p>
+<h2 id="3-反馈回路"><a href="#3-反馈回路" class="headerlink" title="3. 反馈回路"></a>3. 反馈回路</h2><p><strong>用户界面是一个同时负责展示和输入功能的反馈设备，APP的逻辑就是一个反馈回路</strong>。<br>用户发起的事件会导致view的响应，我们把由此引起的代码路径称为view action，当一view action被送到model层时，它会被转变为model action，将view action转变为model action的操作,以及路径上的其他逻辑被叫做<strong>交互逻辑</strong>。<br>一个或者多个model对象上状态的改变叫做model变更。Model的变更通常会触发一个model通知，当view依赖于model数据时，通知会触发一个view变更，将model通知和数据转变为view 更改的操作，以及路径上的其他逻辑被叫做<strong>表现逻辑</strong>。<br><img src="APP架构1/15712192375156.jpg" alt></p>
 <h2 id="4-单向数据流"><a href="#4-单向数据流" class="headerlink" title="4. 单向数据流"></a>4. 单向数据流</h2><p>有些状态可能是在文档model之外进行维护的，例如导航状态。在app中非文档model的状态被叫做<strong>view state</strong>。在Cocoa里，大部分view对象都管理着它们自己的view state，controller对象则管理剩余的view state。<br>当所有的状态都在model层中被维护，而且所有的变更都通过完整的反馈回路路径进行传递时，我们就将它称为<strong>单向数据流</strong>。即：任意的view对象或者中间层对象只能够通过 model发出的通知来进行创建和更新(换句话说view或者中间层不能通过捷径来更新自身或者其他的view)时，这个模式通常就是单向的。在遵循单向数据流的模式中，就实现了model与应用框架的解耦。</p>
 <h2 id="5-APP的任务"><a href="#5-APP的任务" class="headerlink" title="5. APP的任务"></a>5. APP的任务</h2><p>一个程序的正常工作方式为：view必须依赖于model数据来生成和存在，我们配置view，让它可以对model进行更改，并且能在model得到更新时也得到更新。所以我们需要决定APP中如何执行下列任务：</p>
 <ol>
@@ -609,13 +608,6 @@
 
           </nav>
 
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
           
 
           
