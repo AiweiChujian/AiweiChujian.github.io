@@ -104,12 +104,12 @@
 <meta property="og:site_name" content="盒子里的猫">
 <meta property="og:description" content="Reference:App Architecture  Model-View-ViewModel(MVVM)是一种基于MVC进行改进的模式，它将所有model相关的任务（观察model变更，将model数据变形，以及更新model）从controller层抽离出来，放到新的叫做view-model的一层对象中。引入view-model层的主要目的有两点：  鼓励将model和view之间的关系构">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://hellohezhili.com/2019/01/06/APP架构4-MVVM/APP架构4-MVVM/15694650751590.jpg">
+<meta property="og:image" content="https://hellohezhili.com/.com//15694650751590.jpg">
 <meta property="og:updated_time" content="2019-12-18T07:35:30.346Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP架构（四）-- MVVM+C">
 <meta name="twitter:description" content="Reference:App Architecture  Model-View-ViewModel(MVVM)是一种基于MVC进行改进的模式，它将所有model相关的任务（观察model变更，将model数据变形，以及更新model）从controller层抽离出来，放到新的叫做view-model的一层对象中。引入view-model层的主要目的有两点：  鼓励将model和view之间的关系构">
-<meta name="twitter:image" content="https://hellohezhili.com/2019/01/06/APP架构4-MVVM/APP架构4-MVVM/15694650751590.jpg">
+<meta name="twitter:image" content="https://hellohezhili.com/.com//15694650751590.jpg">
 
 
 
@@ -413,7 +413,7 @@
 <li>将view应该展示的状态通过一套独立于app框架的接口进行呈现。</li>
 </ol>
 <p>在MVVM中为了保持view与view-model的同步，MVVM强制使用某种形式的绑定，这通常通过响应式编程来完成。MVVM在一定程度上解决了MVC最大的两个问题，首先通过将model观察的代码以及其他显示和交互逻辑移动到围绕着数据流构建的隔离的view-model中，解决了MVC中ViewController里不规则的状态交互所带来的有关问题，在很大程度上缓解了ViewController肥大的问题；然后view-model还为场景的view state提供了一套干净的接口，让它可以独立于app框架进行测试，解决了MVC难以测试的问题。</p>
-<p><strong>MVVM+C中APP的反馈回路</strong>：<br><img src="APP架构4-MVVM/15694650751590.jpg" alt>  </p>
+<p><strong>MVVM+C中APP的反馈回路</strong>：<br><img src="/.com//15694650751590.jpg" alt>  </p>
 <p>在MVVM+C中，协调器在APP启动完成的最后阶段创建，对于MVVM而言，协调器并非是强制需要的部件，但引入协调器来负责维护ViewController的层级，可以进一步分担ViewController的工作，让其变得更加的简单，这符合MVVM的架构思路，协调器分担的职责主要为：管理其他controller的展示，同时协调model数据和controller之间的通讯。协调器的工作方式有两种：</p>
 <ol>
 <li>作为ViewController的delegate，ViewController把导航行为直接转发给协调器。</li>
