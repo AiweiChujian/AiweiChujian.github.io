@@ -106,14 +106,14 @@
 <meta property="og:site_name" content="盒子里的猫">
 <meta property="og:description" content="Reference:App Architecture  iOS开发官方钦定的设计模式是MVC，而MVC及其两种变形：MVVM+C和MVC+VS，是学习iOS APP架构最需要掌握的三种设计模式，这三种设计模式都是基于场景进行的架构，它们其实都是观察者模式、策略模式和组合模式三种设计子模式的集合。  MVCS：在有的地方会提到一种称为MVCS的架构，它在Model层与Controller层之间加入">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://hellohezhili.com/2018/12/16/APP架构2/15625977439460.jpg">
-<meta property="og:image" content="https://hellohezhili.com/2018/12/16/APP架构2/15625994263472.jpg">
-<meta property="og:image" content="https://hellohezhili.com/2018/12/16/APP架构2/15626012236605.jpg">
+<meta property="og:image" content="https://hellohezhili.com/2018/12/16/APP架构2/APP架构2/15625977439460.jpg">
+<meta property="og:image" content="https://hellohezhili.com/2018/12/16/APP架构2/APP架构2/15625994263472.jpg">
+<meta property="og:image" content="https://hellohezhili.com/2018/12/16/APP架构2/APP架构2/15626012236605.jpg">
 <meta property="og:updated_time" content="2019-12-18T08:31:46.285Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP架构（二）-- 概览">
 <meta name="twitter:description" content="Reference:App Architecture  iOS开发官方钦定的设计模式是MVC，而MVC及其两种变形：MVVM+C和MVC+VS，是学习iOS APP架构最需要掌握的三种设计模式，这三种设计模式都是基于场景进行的架构，它们其实都是观察者模式、策略模式和组合模式三种设计子模式的集合。  MVCS：在有的地方会提到一种称为MVCS的架构，它在Model层与Controller层之间加入">
-<meta name="twitter:image" content="https://hellohezhili.com/2018/12/16/APP架构2/15625977439460.jpg">
+<meta name="twitter:image" content="https://hellohezhili.com/2018/12/16/APP架构2/APP架构2/15625977439460.jpg">
 
 
 
@@ -415,21 +415,21 @@
 <p><strong>MVCS</strong>：在有的地方会提到一种称为MVCS的架构，它在Model层与Controller层之间加入了一个Service层，在iOS中一般又特指负责Model数据同步、缓存、持久化等服务的Store层，它所分离的逻辑在MVC中可以属于Model层，也可以属于Controller层。但在<em>App Architecture</em>一书中并没有将MVCS列为一种单独的架构，同时MVCS中的S层除了可能减轻了Controller的职责也未见其它裨益，而减轻Controller的职责通过封装服务类也能办到，事实上<em>App Architecture</em>一书中在阐述MVC架构的Demo中就用一个全局的服务Store负责了所谓MVCS架构中S层的工作，可见MVCS中为每个场景都分离一个S层的做法也确实没那么必要，其本质上和MVC架构也没多少区别。</p>
 </blockquote>
 <h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>MVC源于Smalltalk中所发展出的分离展示部分的理念，也就是view层和model层应该被完全隔离开，这带来了一个强烈的需求，那就是要引入一个支持对象来辅助两者之间的通讯，这个支持对象在MVC中就是Controller。MVC中Controller对象负责处理model或者view层范畴之外的所有任务。<br>Controller层接收所有的view action，处理所有的交互逻辑；发送所有的model action，接收所有的model通知，对所有用来展示的数据进行准备，最后再将它们应用到View的变更上去。构建和导航任务也由Controller负责。</p>
-<p><img src="/2018/12/16/APP架构2/15625977439460.jpg" alt></p>
+<p><img src="APP架构2/15625977439460.jpg" alt></p>
 <h3 id="1-构建"><a href="#1-构建" class="headerlink" title="1.构建"></a>1.构建</h3><p><strong>Model和View</strong>：MVC中View和Model的构建都由Controller负责，App对象负责创建最顶层的view controller，这个view controller将加载view，并且要么显式地创建和持有model层，要么通过一个延迟创建的model单例来获取model。</p>
 <h3 id="2-变更View"><a href="#2-变更View" class="headerlink" title="2.变更View"></a>2.变更View</h3><p>MVC中，Controller需要观察model，在收到model变更的通知时去变更View。当一个更改model的View action发生时，为了保证单向数据流原则，Controller应避免去直接操作View层级，标准的做法是：View action转变为model变更，然后model发送通知，Controller订阅model通知，并且在当通知到达时再更改View层级。</p>
 <h3 id="3-更改Model"><a href="#3-更改Model" class="headerlink" title="3.更改Model"></a>3.更改Model</h3><p>MVC中，Controller主要通过target/action机制和delegate来接收view事件。Controller知道自己所连接的view，而view在编译期间并不知道Controller接口的信息。当一个View事件到达时，Controller有能力改变自身的内部状态，更改model，或者直接改变View层级。</p>
 <h3 id="4-View-State"><a href="#4-View-State" class="headerlink" title="4.View State"></a>4.View State</h3><p>MVC中View State可以按需要被储存在View或者Controller的属性中，MVC中那些只影响View或Controller状态的action通常也不需要通过model进行传递，而页面层级或导航状态也由Controller进行维护。</p>
 <h3 id="5-测试"><a href="#5-测试" class="headerlink" title="5.测试"></a>5.测试</h3><p>MVC中View Controller与app的其他部件紧密相连，这导致层级间缺乏清晰的边界，单元测试和接口测试都十分困难，集成测试是MVC最可行的测试手段。</p>
 <h2 id="MVVM-C"><a href="#MVVM-C" class="headerlink" title="MVVM+C"></a>MVVM+C</h2><p>MVVM+C就是MVVM加Coordinator(协调器)。MVVM在每个场景中使用View-model来描述场景中的表现逻辑和交互逻辑，使用Coordinator来管理View controller层级。<br><strong>View-model</strong>在编译期间不包含对view或者controller的引用，它暴露出一系列属性来描述每个view在显示时应有的值。将这些值设置到View上的工作，通常由预先建立的绑定来完成(响应式编程)，绑定会保证当这些显示值发生变化时，把它设定到对应的View上去。<br><strong>Coordinator(协调器)</strong>是在场景间切换时负责提供逻辑的对象。协调器持有对model层的引用，并且了解View controller树的结构。MVVM-C中的View controller通过delegate的机制将Viewcontroller的信息告诉协调器，协调器据此显示新的Viewcontroller并设置它们的 model数据。<br>MVVM+C中view controller不再拥有内部的View state，这些状态也被移动到了View-model中，<strong>view controller 仅仅只是View层级的一部分</strong>。</p>
-<p><img src="/2018/12/16/APP架构2/15625994263472.jpg" alt></p>
+<p><img src="APP架构2/15625994263472.jpg" alt></p>
 <h3 id="1-构建-1"><a href="#1-构建-1" class="headerlink" title="1.构建"></a>1.构建</h3><p><strong>Model</strong>：在MVVM中model的创建和MVC中相同，通常由一个顶层controller负责。不过model对象属于view-model，而不再属于view controller。<br><strong>View</strong>：view层级的创建也和MVC中一样，通过storyboard或者代码来完成。和MVC不同的是，view controller不再直接为每个view获取和准备数据，而是由view-model负责。<br><strong>View-Model</strong>：View controller在创建的时候会一并创建view-model，并且将每个view绑定到view-model所暴露出的相应属性上去。</p>
 <h3 id="2-变更View-1"><a href="#2-变更View-1" class="headerlink" title="2.变更View"></a>2.变更View</h3><p>在MVVM中，和MVC不同，view controller不监听model。View-model将负责观察model，并将model的通知转变为Viewcontroller可以理解的形式。View controller订阅view-model的变更(响应式编程)，当一个view-model事件来到时，再由Viewcontroller去更改View层级。</p>
 <h3 id="3-更改Model-1"><a href="#3-更改Model-1" class="headerlink" title="3.更改Model"></a>3.更改Model</h3><p>在MVVM中，view controller接收View事件的方式和MVC中一样(target/Action和delegate)。不过，当一个View事件到达时，view controller不会去改变自身的内部状态、view state、或者是model，而是调用view-model上的方法，再由view-model改变内部状态或者model。</p>
 <h3 id="4-View-State-1"><a href="#4-View-State-1" class="headerlink" title="4.View State"></a>4.View State</h3><p>在MVVM中，View state要么存在于View自身之中，要么存在于view-model里。和MVC不同，view controller中不存在任何View state。View-model中的View state的变更，会被controller观察到，不过controller无法区分model的通知和View state变更的通知。在MVVM+C中，Viewcontroller层级将由协调器进行管理。</p>
 <h3 id="5-测试-1"><a href="#5-测试-1" class="headerlink" title="5.测试"></a>5.测试</h3><p>在MVVM中，因为view-model的引入，View层与controller层是解耦合的，所以可以使用接口测试来测试view-model，而不需要像MVC里那样使用集成测试，接口测试要比集成测试简单得多。</p>
 <h2 id="MVC-VS"><a href="#MVC-VS" class="headerlink" title="MVC+VS"></a>MVC+VS</h2><p>MVC+VS是为标准的MVC带来单向数据流方式的一种尝试，通过MVC+VS能加深编程人员对view state和单向数据流的理解。在MVC+VS中，我们明确地在一个新的model对象中，对所有的view state进行定义和表达，我们把这个对象叫做view state model。我们不从 view 中去读取view state，而是从view state model中去获取它们。MVC+VS也具有独到的优点，例如：任意的状态恢复，完整的用户界面日志，以及极为强大的调试能力(通过设置不同的view state)。</p>
-<p><img src="/2018/12/16/APP架构2/15626012236605.jpg" alt></p>
+<p><img src="APP架构2/15626012236605.jpg" alt></p>
 <h3 id="1-构建-2"><a href="#1-构建-2" class="headerlink" title="1.构建"></a>1.构建</h3><p>在MVC+VC和MVC一样，model和view的构建工作依然由view controller负责，但MVC+VC中view controller还需要使用和订阅view state。</p>
 <h3 id="2-变更View-2"><a href="#2-变更View-2" class="headerlink" title="2.变更View"></a>2.变更View</h3><p>在MVC+VS中Controller同时对文档model和view state model进行观察，并且只在变更发生的时候更新view层级(单向数据流原则)。</p>
 <h3 id="3-更改Model-2"><a href="#3-更改Model-2" class="headerlink" title="3.更改Model"></a>3.更改Model</h3><p>当view action发生时，view controller去变更文档model(这和MVC相同)或者变更model state。MVC+VS中不会去直接改变view层级，所有的view变更都要通过文档model和view state model的通知来进行。</p>
