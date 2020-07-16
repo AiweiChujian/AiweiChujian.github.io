@@ -103,14 +103,14 @@
 <meta property="og:site_name" content="盒子里的猫">
 <meta property="og:description" content="Reference:Objective-C Runtime Programming GuideiOS Runtime详解  简述Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过方法调用来完">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://hellohezhili.com/.com//RuntimePreview.png">
-<meta property="og:image" content="https://hellohezhili.com/.com//Object-Class.png">
-<meta property="og:image" content="https://hellohezhili.com/.com//MessageForward.png">
-<meta property="og:updated_time" content="2020-04-13T10:06:45.538Z">
+<meta property="og:image" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/RuntimePreview.png">
+<meta property="og:image" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/Object-Class.png">
+<meta property="og:image" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/MessageForward.png">
+<meta property="og:updated_time" content="2020-07-15T07:39:52.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OC的动态特性(一) -- Runtime">
 <meta name="twitter:description" content="Reference:Objective-C Runtime Programming GuideiOS Runtime详解  简述Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过方法调用来完">
-<meta name="twitter:image" content="https://hellohezhili.com/.com//RuntimePreview.png">
+<meta name="twitter:image" content="https://hellohezhili.com/2018/06/23/OC的动态特性-一-Runtime/RuntimePreview.png">
 
 
 
@@ -387,7 +387,7 @@
 <p><strong>Reference:</strong><br><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008048" target="_blank" rel="noopener">Objective-C Runtime Programming Guide</a><br><a href="https://www.jianshu.com/p/6ebda3cd8052" target="_blank" rel="noopener">iOS Runtime详解</a></p>
 </blockquote>
 <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过方法调用来完成函数的动态绑定，进行消息的传递和转发。</p>
-<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><img src="/.com//RuntimePreview.png" alt="RuntimePreview"></p>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><img src="/2018/06/23/OC的动态特性-一-Runtime/RuntimePreview.png" alt="RuntimePreview"></p>
 <h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><ul>
 <li>类和对象都有个指向类的<code>isa</code>指针，所以类又称类对象，对象的<code>isa</code>指向所属类，类的<code>isa</code>指向元类；</li>
 <li>所有元类的<code>isa</code>都指向根类（NSObject）的元类，包括它自己；</li>
@@ -402,7 +402,7 @@
 <h3 id="2-类"><a href="#2-类" class="headerlink" title="2.类"></a>2.类</h3><p>源码中类的定义：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">objc_class</span> *<span class="title">Class</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_class</span> &#123;</span></span><br><span class="line">    Class isa;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !__OBJC2__</span></span><br><span class="line">    Class super_class                       OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name                        OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">long</span> version                            OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">long</span> info                               OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">long</span> instance_size                      OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_ivar_list</span> *<span class="title">ivars</span>            <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_list</span> **<span class="title">methodLists</span>   <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_cache</span> *<span class="title">cache</span>                <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_protocol_list</span> *<span class="title">protocols</span>    <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
 <h4 id="Meta-Class"><a href="#Meta-Class" class="headerlink" title="Meta Class"></a>Meta Class</h4><p>类的结构体中也有一个指向所属类的<code>isa</code>指针，还有一个指向父类的<code>super_class</code>指针，类的<code>isa</code>指向的是类的类，被称之为元类；元类的<code>super_class</code>指针指向元类的父类，元类的<code>isa</code>指针则都指向根元类（即NSObject的元类）；值得注意的是<strong>根元类的<code>super_class</code>指向的是根类（即NSObject），<code>isa</code>指针依然指向根元类（即它自己）</strong>。</p>
-<p><strong>对象、类和元类之间的关系如图</strong>：<br><img src="/.com//Object-Class.png" alt="Object-Class"></p>
+<p><strong>对象、类和元类之间的关系如图</strong>：<br><img src="/2018/06/23/OC的动态特性-一-Runtime/Object-Class.png" alt="Object-Class"></p>
 <p><strong>类对象</strong>：对象和类都有<code>isa</code>指针指向所属的类，甚至在C++实现的Runtime版本中，类的结构体直接继承自对象的结构体，所以说类也是对象，称之为类对象，类对象和元类是一一对应的，都是运行时由系统创建的单例。</p>
 <h4 id="objc-ivar-list"><a href="#objc-ivar-list" class="headerlink" title="objc_ivar_list"></a>objc_ivar_list</h4><p>类中<code>struct objc_ivar_list *ivars</code>是成员变量列表，源码中定义的成员变量其结构如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_ivar</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> *ivar_name                     OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">char</span> *ivar_type                     OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">int</span> ivar_offset                     OBJC2_UNAVAILABLE;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __LP64__</span></span><br><span class="line">    <span class="keyword">int</span> space                           OBJC2_UNAVAILABLE;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -420,7 +420,8 @@
 <h3 id="3-类别"><a href="#3-类别" class="headerlink" title="3.类别"></a>3.类别</h3><p>源码中类别的结构如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">objc_category</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> *category_name                         OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">char</span> *class_name                            OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_list</span> *<span class="title">instance_methods</span>   <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_method_list</span> *<span class="title">class_methods</span>      <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">objc_protocol_list</span> *<span class="title">protocols</span>        <span class="title">OBJC2_UNAVAILABLE</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过类别可以为类添加属性，但不能添加成员变量，类别添加属性时，可以通过<code>objc_setAssociatedObject</code>添加关联对象，代替成员变量来保存属性的值。</p>
-<p>类别中的方法、协议会在类别<code>+load</code>时添加到主类的列表中，后添加的方法会在列表前面，所以类别的方法可以覆盖主类中的同名方法，<code>+load</code>的执行顺序总结如下：</p>
+<p>主类和类别中的方法、协议等都是在Runtime初始化函数<code>_objc_init</code>中<code>map_images</code>时，添加到类的列表中，类别虽然后添加，但却是插在列表前面，所以类别的方法可以覆盖主类中的同名方法。</p>
+<p><code>_objc_init</code>中<code>map_images</code>完成后，类、类别等已经加载完成，然后会调用<code>load_images</code>，在<code>load_images</code>中会<strong>直接调用</strong>各个类和类别的<code>+load</code>方法的实现。<code>+load</code>是在所有类都加载完成后才被Runtime调用的，所以<strong><code>+load</code>的不安全指的是不能保证其他类的<code>+load</code>已经执行，而不是指其它类未完成加载</strong>。<code>+load</code>的执行顺序总结如下：</p>
 <ul>
 <li>父类的<code>+load</code>执行后子类的<code>+load</code>才执行；</li>
 <li>所有类的<code>+load</code>执行后类别的<code>+load</code>才执行；</li>
@@ -438,7 +439,8 @@
 <li>如果最终沿着继承链没有找到对应的方法，则启动<strong>消息转发</strong>机制；</li>
 </ol>
 <h2 id="消息转发"><a href="#消息转发" class="headerlink" title="消息转发"></a>消息转发</h2><p>当一个消息在类及其继承链上最终没有找到对应的方法实现，将启动消息转发机制，消息转发的流程如图：</p>
-<p><img src="/.com//MessageForward.png" alt="MessageForward"><br>启动消息转发后，消息的接收者还有三次机会来对消息做出处理：</p>
+<p><img src="/2018/06/23/OC的动态特性-一-Runtime/MessageForward.png" alt="MessageForward"></p>
+<p>启动消息转发后，消息的接收者还有三次机会来对消息做出处理：</p>
 <ol>
 <li><strong>动态方法解析</strong>：在<code>+resolveClassMethod:</code>/<code>+resolveInstanceMethod:</code>中，如果为消息动态的添加了一个类/对象方法，则重新再发送一次消息，如果没有为消息动态的添加方法，则继续消息转发的下一步（与动态解析方法返回YES/NO没有关系）；</li>
 <li><strong>备援接受者</strong>：在<code>-forwardingTargetForSelector:</code>中如果返回了一个非nil的备援接受者，则将消息发送给备援接受者，如果返回nil，则继续消息转发的下一步；</li>
@@ -463,7 +465,7 @@
 <p>Zombie Objects中<code>__dealloc_zombie</code>打大致实现（非源码）：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)__dealloc_zombie</span><br><span class="line">&#123;</span><br><span class="line">    Class cls = object_getClass(self);</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *clsName = class_getName(cls);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> *zombieClsPrefix = <span class="string">"_NSZombie_"</span>;</span><br><span class="line">    <span class="keyword">char</span> *zombieClsName = <span class="built_in">malloc</span>(<span class="built_in">strlen</span>(zombieClsPrefix)+<span class="built_in">strlen</span>(clsName)+<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">strcpy</span>(zombieClsName, zombieClsPrefix);</span><br><span class="line">    <span class="built_in">strcat</span>(zombieClsName, clsName);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查看是否存在相同的僵尸对象类名，不存在则创建</span></span><br><span class="line">    Class zombieCls = objc_lookUpClass(zombieClsName);</span><br><span class="line">    <span class="keyword">if</span> (!zombieCls) &#123;</span><br><span class="line">        Class baseZombieCls = objc_lookUpClass(<span class="string">"_NSZombie_"</span>);</span><br><span class="line">        zombieCls = objc_duplicateClass(baseZombieCls, zombieClsName, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 释放引用。</span></span><br><span class="line">    objc_destructInstance(self);</span><br><span class="line">    <span class="comment">// ISA Swizzling</span></span><br><span class="line">    object_setClass(self, zombieCls);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="YYModel"><a href="#YYModel" class="headerlink" title="YYModel"></a>YYModel</h3><p>YYModel运用Runtime面向对象的特性，为根类NSObject添加扩展，实现JSON数据和OC模型之间自动转换。YYModel非常的轻量级，代码也非常的直观，其他利用Runtime特性实现JSON与OC模型互相转换的库还有很多（如：MJExtension），它们对Runtime的利用更加复杂，功能也相对丰富。</p>
-<h3 id="JSPatch"><a href="#JSPatch" class="headerlink" title="JSPatch"></a>JSPatch</h3><p>JSPatch是一个热修复库，它的基本原理是：JS传递字符串给OC，OC通过Runtime动态调用接口和替换OC方法的实现。JSPatch对Runtime的应用还包括动态的注册类，为类添加方法等，实例代码如下：</p>
+<h3 id="JSPatch"><a href="#JSPatch" class="headerlink" title="JSPatch"></a>JSPatch</h3><p>JSPatch是一个热修复库，它的基本原理是：JS传递字符串给OC，OC通过Runtime动态调用接口和替换OC方法的实现。JSPatch对Runtime的应用还包括动态的注册类，为类添加方法等，示例代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class cls = objc_allocateClassPair(superCls, <span class="string">"JPObject"</span>, <span class="number">0</span>);</span><br><span class="line">class_addMethod(cls, selector, implement, typedesc);</span><br><span class="line">objc_registerClassPair(cls);</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -506,8 +508,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/13/APP工作机制-四-响应链/" rel="next" title="APP工作机制(四) -- 响应链">
-                <i class="fa fa-chevron-left"></i> APP工作机制(四) -- 响应链
+              <a href="/2018/01/07/APP工作机制-三-APP生命周期/" rel="next" title="APP工作机制(三) -- APP生命周期">
+                <i class="fa fa-chevron-left"></i> APP工作机制(三) -- APP生命周期
               </a>
             
           </div>
@@ -602,7 +604,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
