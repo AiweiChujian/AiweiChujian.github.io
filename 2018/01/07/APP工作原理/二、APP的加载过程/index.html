@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://hellohezhili.com"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="mh9cQ2yLqXFEC_ZrY3D23g1Cdi1bUYHw4byhld6mqDE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Mach-O,加载,启动,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC]  Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件">
+<meta name="keywords" content="Mach-O,加载,启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二、APP的加载过程">
+<meta property="og:url" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/index.html">
+<meta property="og:site_name" content="盒子里的猫">
+<meta property="og:description" content="[TOC]  Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/2-1.png">
+<meta property="og:updated_time" content="2021-08-02T09:31:11.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二、APP的加载过程">
+<meta name="twitter:description" content="[TOC]  Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件">
+<meta name="twitter:image" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/2-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'AI_Wei'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/">
+
+
+
+
+
+  <title>二、APP的加载过程 | 盒子里的猫</title>
+  
+
+
+
+
+
+
+
+
+<link rel="alternate" href="/atom.xml" title="盒子里的猫" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">盒子里的猫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">二、APP的加载过程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-07T10:45:23+08:00">
+                2018-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP工作原理/" itemprop="url" rel="index">
+                    <span itemprop="name">APP工作原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<blockquote>
+<p><strong>Reference:</strong><br><a href="https://juejin.im/post/5e12ce8a5188253a6647c900#heading-14" target="_blank" rel="noopener">iOS 底层 - 从头梳理 dyld 加载流程</a><br><a href="https://catchzeng.com/2018/03/23/iOS进阶-程序启动那些事/" target="_blank" rel="noopener">iOS进阶 – 程序启动那些事</a><br><a href="https://blog.cnbluebox.com/blog/2017/06/30/dyld2/" target="_blank" rel="noopener">Dyld系列之一：_dyld_start之前</a><br><a href="https://juejin.im/post/5dd24f85f265da0bee500b10#heading-3" target="_blank" rel="noopener">DYLD动态链接器</a><br><a href="https://blog.cnbluebox.com/blog/2017/06/20/dyldyu-objc/" target="_blank" rel="noopener">dyld与ObjC</a><br><a href="https://wangdetong.github.io/2017/09/11/20170911从-dyld-到-runtime/" target="_blank" rel="noopener">从 dyld 到 runtime</a></p>
+</blockquote>
+<h2 id="Executable"><a href="#Executable" class="headerlink" title="Executable"></a>Executable</h2><p>APP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用<code>chmod+x</code>命令来赋予一个文件可执行权限，但实际上可以执行的文件只有两类，第一类是脚本文件，第二类是可执行二进制文件，可执行二进制文件又分为Mach-O和Fat Binary，它们之间的区别如下：</p>
+<ul>
+<li><strong>脚本文件</strong>：脚本文件是以<code>#!</code>开头的文本文件，执行时会由shell根据<code>#!</code>后面指明的地址，找到脚本解释器，然后由脚本解释器，对文件中的脚步代码，进行解释执行；</li>
+<li><strong>Mach-O</strong>：Mach-O是以魔数<code>0xfeedface</code>(32位) 或<code>0xfeedfacf</code>(64位)作为文件头的二进制文件，Mach-O有多种type，可执行文件的type是Executable（MH_EXECUTE），<strong>运行一个可执行的Mach-O时，系统会fork一个新进程，然后执行<code>execve</code>调用，解析Mach-O，执行其中的的Load Commands，启动动态链接器dyld，链接主程序与依赖库</strong>，最终得到一个新的进程镜像，在内存中运行；</li>
+<li><strong>Fat Binary</strong>：Fat Binary就是针对不同芯片架构的Mach-O（Executable）的集合，是以魔数<code>0xcafebabe</code>（小端）或<code>0xbebafeca</code>（大端）为文件头的二进制文件，执行时根据Fat Header找到当前架构的Mach-O，再解析并加载对应的Mach-O；</li>
+</ul>
+<p>iOS中的App在不使用BitCode的情况下，其内部的二进制文件是一个Fat Binary，使用BitCode时，App中是与设备的芯片架构所对应的Mach-O，它们在App启动时，最终都是解析并加载一个Mach-O。</p>
+<blockquote>
+<p><strong>Fat Binary的大端模式和小端模式</strong>：大端模式，是指数据的高字节保存在内存的低地址中，而数据的低字节保存在内存的高地址中；小端模式，则是指数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中。</p>
+</blockquote>
+<h2 id="Mach-O"><a href="#Mach-O" class="headerlink" title="Mach-O"></a>Mach-O</h2><p>Mach-O的文件结构如图：<br><img src="/2018/01/07/APP工作原理/二、APP的加载过程/2-1.png" alt></p>
+<p>Mach-O主要由Header、Load Commands和Data所构成：</p>
+<ul>
+<li><strong>Header</strong>：包含魔数、芯片类型与子类型、文件类型、加载命令数量与大小、动态链接器标识、字节顺序等信息；</li>
+<li><strong>Load Commands</strong>：程序的加载命令，包括段与进程地址的映射、指定动态链接器、指明需要动态链接的库等等；</li>
+<li><strong>Data</strong>：程序的原始数据段，包括_TEXT、_DATA等，加载时被映射到进程的内存空间中。</li>
+</ul>
+<h2 id="Load-Commands"><a href="#Load-Commands" class="headerlink" title="Load Commands"></a>Load Commands</h2><p>Mach-O中Load Commands部分是程序的加载命令，这些加载命令在内核在执行<code>execve</code>调用时，完成对Mach-O的文件解析之后，有的由内核直接执行，有的则由动态链接器处理，这部分可以参考文章—<a href="https://ctinusdev.github.io/2017/08/27/Mach-OBasis_Loadcommand/" target="_blank" rel="noopener">Mach-O文件介绍之loadcommand</a>，下面列出一些常见的加载命令及其含义：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">LC_SEGMENT</td>
+<td style="text-align:left">将数据段映射到地址空间中</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_DYLD_INFO_ONLY</td>
+<td style="text-align:left">动态链接相关信息</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_SYMTAB</td>
+<td style="text-align:left">符号表地址</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_DYSYMTAB</td>
+<td style="text-align:left">动态符号表地址</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_LOAD_DYLINKER</td>
+<td style="text-align:left">动态链接器</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_UUID</td>
+<td style="text-align:left">文件的唯一标识</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_VERSION_MIN_IPHONEOS</td>
+<td style="text-align:left">支持的最低iOS版本</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_SOURCE_VERSION</td>
+<td style="text-align:left">源码版本</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_MAIN</td>
+<td style="text-align:left">设置进程的主线程入口地址和栈大小</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_ENCRPYTION_INFO</td>
+<td style="text-align:left">加密信息</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_LOAD_DYLIB</td>
+<td style="text-align:left">加载动态库</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_LOAD_WEAK_DYLIB</td>
+<td style="text-align:left">弱加载动态库（不因库不存在而中止）</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_FUNCTION_STARTS</td>
+<td style="text-align:left">函数起始地址表</td>
+</tr>
+<tr>
+<td style="text-align:left">LC_CODE_SIGNATURE</td>
+<td style="text-align:left">代码签名信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Dyld"><a href="#Dyld" class="headerlink" title="Dyld"></a>Dyld</h2><p>Executable类型的Mach-O的Load Commands中通过LC_LOAD_DYLINKER指明了程序的动态链接器，MacOS/iOS中默认的动态链接器是dyld（/usr/lib/dyld），dyld主要负责将主程序及其依赖库加载为镜像文件（images），并链接这些镜像文件，<a href="https://opensource.apple.com/tarballs/dyld/" target="_blank" rel="noopener">dyld的代码是开源的</a>，本文中引用的源码是732.8版本。</p>
+<h3 id="dyld-start"><a href="#dyld-start" class="headerlink" title="_dyld_start"></a>_dyld_start</h3><p>dyld本身也是一个Mach-O，类型为MH_DYLINKER，在execve的调用中，完成主程序Mach-O的解析后，根据其中的LC_LOAD_DYLINKER，由<strong>内核</strong>解析并加载dyld，根据dyld的LC_UNIXTHREAD得到dyld的entry_point，即_dyld_start函数，然后通过_dyld_start执行dyld程序，开始dyld的工作。</p>
+<p>从execve到_dyld_start的函数调用栈大致如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">▼ execve    // 启动app时, 用户态发送一个系统调用execve到内核</span><br><span class="line">  ▼ __mac_execve    // 创建线程</span><br><span class="line">    ▼ exec_activate_image </span><br><span class="line">      ▼ exec_mach_imgact</span><br><span class="line">        ▼ load_machfile</span><br><span class="line">          ▶︎ parse_machfile // 解析主程序的Mach-O</span><br><span class="line">          ▼ load_dylinker   // 解析完Mach-O后，根据LC_LOAD_DYLINKER所指定的地址（/usr/bin/dyld）启动动态链接器</span><br><span class="line">            ▼ parse_machfile    // 解析dyld的Mach-O，根据它的LC_UNIXTHREAD得到dyld的entry_point，即_dyld_start</span><br><span class="line">        ▼ activate_exec_state</span><br><span class="line">          ▶︎ thread_setentrypoint // 设置entry_point，开始执行_dyld_start</span><br></pre></td></tr></table></figure>
+<h3 id="start"><a href="#start" class="headerlink" title="start"></a>start</h3><p>_dyld_start中调用了start函数，start中主要是完成一些dyld的引导工作，包括rebaseDyld、栈溢出保护、获取主程序的<strong>ASLR</strong>随机数等，在start的末尾调用并返回了_main函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uintptr_t</span> start(<span class="keyword">const</span> dyld3::MachOLoaded* appsMachHeader, <span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span>* argv[],</span><br><span class="line">				<span class="keyword">const</span> dyld3::MachOLoaded* dyldsMachHeader, <span class="keyword">uintptr_t</span>* startGlue)</span><br><span class="line">&#123;</span><br><span class="line">    dyld3::kdebug_trace_dyld_marker(DBG_DYLD_TIMING_BOOTSTRAP_START, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    rebaseDyld(dyldsMachHeader);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span>** envp = &amp;argv[argc+<span class="number">1</span>];</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span>** apple = envp;</span><br><span class="line">	<span class="keyword">while</span>(*apple != <span class="literal">NULL</span>) &#123; ++apple; &#125;</span><br><span class="line">	++apple;</span><br><span class="line"></span><br><span class="line">	__guard_setup(apple);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> DYLD_INITIALIZER_SUPPORT</span></span><br><span class="line">	<span class="comment">// run all C++ initializers inside dyld</span></span><br><span class="line">	runDyldInitializers(argc, argv, envp, apple);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">uintptr_t</span> appsSlide = appsMachHeader-&gt;getSlide();</span><br><span class="line">	<span class="keyword">return</span> dyld::_main((macho_header*)appsMachHeader, appsSlide, argc, argv, envp, apple, startGlue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="main"><a href="#main" class="headerlink" title="_main"></a>_main</h3><p>内核通过_dyld_start开始执行dyld程序，再调用start函数完成引导工作，最后调用_main函数开始执行dyld程序，_mian函数是dyld实际的逻辑入口，源码中对于_main函数的注释如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Entry point for dyld.  The kernel loads dyld and jumps to __dyld_start which</span></span><br><span class="line"><span class="comment">// sets up some registers and call this function.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Returns address of main() in target program which __dyld_start jumps to</span></span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<p>_main中所做的工作较多，大体上可以分为以下几步：</p>
+<h4 id="1-加载共享缓存库"><a href="#1-加载共享缓存库" class="headerlink" title="1. 加载共享缓存库"></a>1. 加载共享缓存库</h4><p>在加载共享缓存库之前，_main函数中会先设置运行环境，设置运行环境的工作包括包括：</p>
+<ul>
+<li>配置环境变量，将传入的参数赋值给一些环境变量；</li>
+<li>设置上下文信息<code>setContext</code>，包括一些回调函数、参数、标志信息等；</li>
+<li>检测进程是否受限<code>configureProcessRestrictions</code>；</li>
+<li>根据环境变量配置打印信息<code>DYLD_PRINT_OPTS</code>、<code>DYLD_PRINT_ENV</code>；</li>
+<li>获取程序的架构信息<code>getHostInfo</code>；</li>
+</ul>
+<p>在设置了运行环境之后，_mian函数中通过<code>mapSharedCache</code>再调用了<code>loadDyldCache</code>函数，已确保<strong>共享缓存库</strong>已被加载：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">loadDyldCache</span><span class="params">(<span class="keyword">const</span> SharedCacheOptions&amp; options, SharedCacheLoadInfo* results)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    results-&gt;loadAddress        = <span class="number">0</span>;</span><br><span class="line">    results-&gt;slide              = <span class="number">0</span>;</span><br><span class="line">    results-&gt;errorMessage       = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> TARGET_OS_SIMULATOR</span></span><br><span class="line">    <span class="comment">// simulator only supports mmap()ing cache privately into process</span></span><br><span class="line">    <span class="keyword">return</span> mapCachePrivate(options, results);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="keyword">if</span> ( options.forcePrivate ) &#123;</span><br><span class="line">        <span class="comment">// mmap cache into this process only</span></span><br><span class="line">        <span class="keyword">return</span> mapCachePrivate(options, results);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// fast path: when cache is already mapped into shared region</span></span><br><span class="line">        <span class="keyword">bool</span> hasError = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> ( reuseExistingCache(options, results) ) &#123;</span><br><span class="line">            hasError = (results-&gt;errorMessage != <span class="literal">nullptr</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// slow path: this is first process to load cache</span></span><br><span class="line">            hasError = mapCacheSystemWide(options, results);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> hasError;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>共享缓存库：实际上就是一个iOS系统动态库的集合</strong>，iOS中的系统动态库可以被不同的App所共享，所以系统动态库只需要在第一个App使用它时被加载，后续的App使用时，使用它第一次加载后在内存中的缓存即可，但每个App使用到的系统动态库较多，如果使用到的系统动态库需要逐个的去判断并加载的话，对App的启动速度依然有较大的影响，于是iOS中便将常用的系统动态库都合并到了一个较大的缓存文件中，这样所有App对系统动态库的使用，都只需要确保这个缓存文件已经被加载到了内存中即可，这个缓存文件就是共享缓存库，关于共享缓存库可以<a href="https://www.jianshu.com/p/d225df2f1690" target="_blank" rel="noopener">参考链接</a>。</p>
+<blockquote>
+<p><strong>共享缓存区与共享缓存库</strong>：动态库又被称为共享库，它们会被加载到内存的共享缓存区，供不同的进程共享，共享缓存库是常用系统动态库的集合，它也会被加载到共享缓存区，供所有的进程所共享，但共享缓存区不止共享缓存库，它还可能存在App的Embedded Framework，Embedded Framework不能与外部的App共享，但可以与自己的Extension等共享。</p>
+</blockquote>
+<h4 id="2-实例化主程序"><a href="#2-实例化主程序" class="headerlink" title="2. 实例化主程序"></a>2. 实例化主程序</h4><p> App使用到的二进制可执行文件都需要被加载、解析并实例化为内存镜像，每一个Mach-O都对应一个镜像实例。实例化主程序就是生成主程序的镜像，主程序二进制文件的读取和解析是在execve中完成的，然后作为参数传递给dyld的，在dyld的_main中通过<code>instantiateFromLoadedImage</code>将主程序实例化为镜像，再添加到<strong>全局的镜像列表</strong>中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> ImageLoaderMachO* <span class="title">instantiateFromLoadedImage</span><span class="params">(<span class="keyword">const</span> macho_header* mh, <span class="keyword">uintptr_t</span> slide, <span class="keyword">const</span> <span class="keyword">char</span>* path)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// try mach-o loader</span></span><br><span class="line">	<span class="keyword">if</span> ( isCompatibleMachO((<span class="keyword">const</span> <span class="keyword">uint8_t</span>*)mh, path) ) &#123;</span><br><span class="line">		ImageLoader* image = ImageLoaderMachO::instantiateMainExecutable(mh, slide, path, gLinkContext);</span><br><span class="line">		addImage(image);</span><br><span class="line">		<span class="keyword">return</span> (ImageLoaderMachO*)image;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">throw</span> <span class="string">"main executable not a known format"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-加载插入库"><a href="#3-加载插入库" class="headerlink" title="3. 加载插入库"></a>3. 加载插入库</h4><p>这一步是将环境变量DYLD_INSERT_LIBRARIES中配置的动态库加载到内存中，先判断环境变量DYLD_INSERT_LIBRARIES中是否有需要插入的动态库，如果有存在则调用<code>loadInsertedDylib</code>来依次加载，利用DYLD_INSERT_LIBRARIES环境变量是MacOS和iOS上非常知名的一种注入技术，通常越狱插件就是基于此来注入到应用中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// load any inserted libraries</span></span><br><span class="line">		<span class="keyword">if</span>	( sEnv.DYLD_INSERT_LIBRARIES != <span class="literal">NULL</span> ) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span>* lib = sEnv.DYLD_INSERT_LIBRARIES; *lib != <span class="literal">NULL</span>; ++lib) </span><br><span class="line">				loadInsertedDylib(*lib);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Inserted Libraries与Embedded Framework</strong>：iOS的App在启动时涉及三类动态库，首先是System Libraries（系统动态库），它们被合并到共享缓存库中，在加载到手机内存之后，由所有App所共享；然后便是Inserted Libraries，它们在启动过程中主程序实例化之后，根据DYLD_INSERT_LIBRARIES环境变量依次进行加载，越狱设备中安装的应用插件通常就是这类动态库；最后便是Embedded Framework，它们是由开发者创建的，属于App自己的动态库，iOS8之前的iOS App是不能有自己的动态库的，在iOS8之后为了满足App和Extension之间代码共享的需求，于是便有了Embedded Framework的概念，它们不能与外部App共享，在App启动过程中<strong>链接主程序时，根据LC_LOAD_DYLIB命令和依赖关系递归的加载到内存中</strong>。除了这些启动时加载的动态库，MacOS的App还可以通过dlopen()在运行时加载动态库插件，但这在iOS的App提交审核时是被禁止的。</p>
+</blockquote>
+<h4 id="4-链接镜像"><a href="#4-链接镜像" class="headerlink" title="4. 链接镜像"></a>4. 链接镜像</h4><p>_main函数中调用<code>link</code>来链接程序的镜像，启动时先链接主程序再链接插入库，通常<code>link</code>函数链接一个镜像时有三项主要的工作：递归的加载依赖库（<strong>App的Embedded Framework的实例化</strong>）、递归的Rebase和递归的Binding，这里732.8版本的源码与更早版本源码的做法有些许差异，它将主程序和插入库链接时的Binding先暂时跳过了，放在了主程序和插入库都链接完成之后再进行：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> ImageLoader::link(<span class="keyword">const</span> LinkContext&amp; context, <span class="keyword">bool</span> forceLazysBound, <span class="keyword">bool</span> preflightOnly, <span class="keyword">bool</span> neverUnload, <span class="keyword">const</span> RPathChain&amp; loaderRPaths, <span class="keyword">const</span> <span class="keyword">char</span>* imagePath)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">uint64_t</span> t0 = mach_absolute_time();</span><br><span class="line">    <span class="keyword">uint64_t</span> t0 = mach_absolute_time();</span><br><span class="line">    <span class="comment">// 1. 递归的加载镜像的依赖库</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;recursiveLoadLibraries(context, preflightOnly, loaderRPaths, imagePath);</span><br><span class="line">	context.notifyBatch(dyld_image_state_dependents_mapped, preflightOnly);</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">uint64_t</span> t1 = mach_absolute_time();</span><br><span class="line">    context.clearAllDepths();</span><br><span class="line">    <span class="comment">// 递归刷新依赖库的层级</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;recursiveUpdateDepth(context.imageCount());</span><br><span class="line"></span><br><span class="line">	__block <span class="keyword">uint64_t</span> t2, t3, t4, t5;</span><br><span class="line">	&#123;</span><br><span class="line">		dyld3::ScopedTimer(DBG_DYLD_TIMING_APPLY_FIXUPS, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">		<span class="comment">// 递归的进行Rebase</span></span><br><span class="line">		t2 = mach_absolute_time();</span><br><span class="line">		<span class="keyword">this</span>-&gt;recursiveRebaseWithAccounting(context);</span><br><span class="line">		context.notifyBatch(dyld_image_state_rebased, <span class="literal">false</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 递归的进行Binding（主程序和插入库link时会跳过）</span></span><br><span class="line">		t3 = mach_absolute_time();</span><br><span class="line">		<span class="keyword">if</span> ( !context.linkingMainExecutable )</span><br><span class="line">			<span class="keyword">this</span>-&gt;recursiveBindWithAccounting(context, forceLazysBound, neverUnload);</span><br><span class="line">			</span><br><span class="line">		<span class="comment">// 递归的进行弱绑定（主程序和插入库link时会跳过）</span></span><br><span class="line">		t4 = mach_absolute_time();</span><br><span class="line">		<span class="keyword">if</span> ( !context.linkingMainExecutable )</span><br><span class="line">			<span class="keyword">this</span>-&gt;weakBind(context);</span><br><span class="line">		t5 = mach_absolute_time();</span><br><span class="line">	&#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Rebase</strong>：为了增加攻击者对程序内部地址预测的难度，程序在加载到内存中时会有一个随机的地址偏移值，这项安全技术被称为ASLR（iOS中的ASLR可<a href="https://www.jianshu.com/p/c14425265c69" target="_blank" rel="noopener">参考链接</a>），因为这个随机偏移的存在，在程序每次加载到内存后都需要对内部代码中的地址做修正，启动过程中这步操作被称为Rebase，它是修复指向当前镜像内部的地址。</p>
+</blockquote>
+<h4 id="5-符号绑定"><a href="#5-符号绑定" class="headerlink" title="5. 符号绑定"></a>5. 符号绑定</h4><p>符号绑定包括binding和weak binding，先进行binding，再是weak binding，从源码中可以看出Binding的耗时统计并不包括weak binding：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Bind and notify for the main executable now that interposing has been registered</span></span><br><span class="line"><span class="keyword">uint64_t</span> bindMainExecutableStartTime = mach_absolute_time();</span><br><span class="line">sMainExecutable-&gt;recursiveBindWithAccounting(gLinkContext, sEnv.DYLD_BIND_AT_LAUNCH, <span class="literal">true</span>);</span><br><span class="line"><span class="keyword">uint64_t</span> bindMainExecutableEndTime = mach_absolute_time();</span><br><span class="line">ImageLoaderMachO::fgTotalBindTime += bindMainExecutableEndTime - bindMainExecutableStartTime;</span><br><span class="line">gLinkContext.notifyBatch(dyld_image_state_bound, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bind and notify for the inserted images now interposing has been registered</span></span><br><span class="line"><span class="keyword">if</span> ( sInsertedDylibCount &gt; <span class="number">0</span> ) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">int</span> i=<span class="number">0</span>; i &lt; sInsertedDylibCount; ++i) &#123;</span><br><span class="line">        ImageLoader* image = sAllImages[i+<span class="number">1</span>];</span><br><span class="line">        image-&gt;recursiveBind(gLinkContext, sEnv.DYLD_BIND_AT_LAUNCH, <span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">		</span><br><span class="line"><span class="comment">// do weak binding only after all inserted images linked</span></span><br><span class="line">sMainExecutable-&gt;weakBind(gLinkContext);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Binding</strong>： 通常一个程序中都会包含对外部地址的引用，比如对动态库的使用，动态库不会在编译时被合并到程序中，运行时有自己的地址空间，所以无法在编译时就确定对其相关引用的具体地址，于是就有了PIC（Position Independent Code）技术：<strong>程序中指向外部的地址，在编译时先被设置为符号地址，在加载时再根据外部镜像的符号表等信息，重新把符号地址绑定为实际的地址</strong>，启动过程中符号地址重新绑定这步操作被称为Binding，它是绑定指向当前镜像外部的地址。</p>
+</blockquote>
+<h4 id="6-初始化主程序"><a href="#6-初始化主程序" class="headerlink" title="6. 初始化主程序"></a>6. 初始化主程序</h4><p>_main函数调用<code>initializeMainExecutable</code>函数来初始化程序，初始化时先初始化插入库中的根镜像，再初始化主程序。镜像通过调用<code>recursiveInitialization</code>方法进行初始化，<code>recursiveInitialization</code>中会根据依赖关系递归的先执行依赖库的初始化工作。</p>
+<blockquote>
+<p>Xcode中可以通过配置环境变量<strong>DYLD_PRINT_INITIALIZERS=1</strong>来打印各个依赖库的初始化方法及其调用顺序，可以发现<code>libSystem</code>的初始化方法始终是最先调用的。</p>
+</blockquote>
+<h2 id="Objc-init"><a href="#Objc-init" class="headerlink" title="Objc_init"></a>Objc_init</h2><p>程序中镜像在初始化时会递归的先进行依赖库的初始化工作，从dyld的源码中可以得知，<strong>在没有插入库的情况下，<code>libsystem</code>通常会是第一个进行初始化的库，而<code>libsystem</code>的初始化方法中则调用了runtime的初始化方法<code>_objc_init</code></strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> _objc_init(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">bool</span> initialized = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (initialized) <span class="keyword">return</span>;</span><br><span class="line">    initialized = <span class="literal">true</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// fixme defer initialization until an objc-using image is found?</span></span><br><span class="line">    environ_init();</span><br><span class="line">    tls_init();</span><br><span class="line">    static_init();</span><br><span class="line">    lock_init();</span><br><span class="line">    exception_init();</span><br><span class="line"></span><br><span class="line">    _dyld_objc_notify_register(&amp;map_images, load_images, unmap_image);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>_objc_init</code>中调用dyld的<code>_dyld_objc_notify_register</code>注册了三个回调方法，来接收dyld加载镜像相关事件的回调，以完成对每个镜像中的Objc相关部分的处理：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> _dyld_objc_notify_register(_dyld_objc_notify_mapped    mapped,</span><br><span class="line">                                _dyld_objc_notify_init      init,</span><br><span class="line">                                _dyld_objc_notify_unmapped  unmapped)</span><br><span class="line">&#123;</span><br><span class="line">	dyld::registerObjCNotifiers(mapped, init, unmapped);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">registerObjCNotifiers</span><span class="params">(_dyld_objc_notify_mapped mapped, _dyld_objc_notify_init init, _dyld_objc_notify_unmapped unmapped)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// record functions to call</span></span><br><span class="line">	sNotifyObjCMapped	= mapped;</span><br><span class="line">	sNotifyObjCInit		= init;</span><br><span class="line">	sNotifyObjCUnmapped = unmapped;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// call 'mapped' function with all images mapped so far</span></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		notifyBatchPartial(dyld_image_state_bound, <span class="literal">true</span>, <span class="literal">NULL</span>, <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (<span class="keyword">const</span> <span class="keyword">char</span>* msg) &#123;</span><br><span class="line">		<span class="comment">// ignore request to abort during registration</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// call 'init' function on all images already init'ed (below libSystem)</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;ImageLoader*&gt;::iterator it=sAllImages.begin(); it != sAllImages.end(); it++) &#123;</span><br><span class="line">		ImageLoader* image = *it;</span><br><span class="line">		<span class="keyword">if</span> ( (image-&gt;getState() == dyld_image_state_initialized) &amp;&amp; image-&gt;notifyObjC() ) &#123;</span><br><span class="line">			dyld3::<span class="function">ScopedTimer <span class="title">timer</span><span class="params">(DBG_DYLD_TIMING_OBJC_INIT, (<span class="keyword">uint64_t</span>)image-&gt;machHeader(), <span class="number">0</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">			(*sNotifyObjCInit)(image-&gt;getRealPath(), image-&gt;machHeader());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于处理镜像中Objc相关信息的三个回调方法：</p>
+<ul>
+<li><code>map_images</code>：在镜像完成加载（即加载进内存中）后被调用，通过<code>_read_images</code>函数完成对镜像中Objc的类、协议、类别等的初始化工作；</li>
+<li><code>load_images</code>：在镜像的初始化完成后被调用，主要是调用镜像中各种Objc类的<code>+load</code>方法，完成Objc类的加载；</li>
+<li><code>unmap_image</code>：在移除镜像时被调用，主要是做镜像的Objc相关信息的清理工作。</li>
+</ul>
+<blockquote>
+<p><code>libsystem</code>的初始化时调用<code>_objc_init</code>才注册Objc的处理回调方法，这时主程序和插入库，以及它们依赖库的镜像都已经加载到内存中，所以在**注册回调的方法时，就触发了一次<code>map_images</code>来批量的初始化已加载镜像中的Objc信息，然后也循环的触发了<code>load_images</code>，来加载那些在<code>libsystem</code>初始化之前就已经随镜像载入内存中的Objc类。</p>
+</blockquote>
+<h4 id="7-返回主程序入口"><a href="#7-返回主程序入口" class="headerlink" title="7. 返回主程序入口"></a>7. 返回主程序入口</h4><p>最后dyld的_main函数会根据不同的情况，查找到对应的主程序入口（通常是主程序中的main函数地址）作为返回值返回，这个值最终会返回给一开始fork创建的进程，进程据此跳转到主程序入口继续运行，主程序中的代码便开始执行。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mach-O/" rel="tag"># Mach-O</a>
+          
+            <a href="/tags/加载/" rel="tag"># 加载</a>
+          
+            <a href="/tags/启动/" rel="tag"># 启动</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/23/APP工作原理/一、APP的编译过程/" rel="next" title="一、APP的编译过程">
+                <i class="fa fa-chevron-left"></i> 一、APP的编译过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/17/APP工作原理/三、APP的生命周期/" rel="prev" title="三、APP的生命周期">
+                三、APP的生命周期 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzcyMy8yMDI2Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AI_Wei">
+            
+              <p class="site-author-name" itemprop="name">AI_Wei</p>
+              <p class="site-description motion-element" itemprop="description">自由源于自信，自信源于自律</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AiweiChujian" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:aiweichujian@gmail.com" target="_blank" title="G-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>G-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2804552143" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="/images/wechat.jpg" target="_blank" title="Wechat">
+                      
+                        <i class="fa fa-fw fa-wechat"></i>Wechat</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Executable"><span class="nav-text">Executable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mach-O"><span class="nav-text">Mach-O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-Commands"><span class="nav-text">Load Commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dyld"><span class="nav-text">Dyld</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dyld-start"><span class="nav-text">_dyld_start</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start"><span class="nav-text">start</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main"><span class="nav-text">_main</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-加载共享缓存库"><span class="nav-text">1. 加载共享缓存库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-实例化主程序"><span class="nav-text">2. 实例化主程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-加载插入库"><span class="nav-text">3. 加载插入库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-链接镜像"><span class="nav-text">4. 链接镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-符号绑定"><span class="nav-text">5. 符号绑定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-初始化主程序"><span class="nav-text">6. 初始化主程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objc-init"><span class="nav-text">Objc_init</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-返回主程序入口"><span class="nav-text">7. 返回主程序入口</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AI_Wei</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+</body>
+</html>

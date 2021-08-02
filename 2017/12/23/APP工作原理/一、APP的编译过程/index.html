@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://hellohezhili.com"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="mh9cQ2yLqXFEC_ZrY3D23g1Cdi1bUYHw4byhld6mqDE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="编译,Mach-O,BitCode,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC]  Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Buil">
+<meta name="keywords" content="编译,Mach-O,BitCode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一、APP的编译过程">
+<meta property="og:url" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/index.html">
+<meta property="og:site_name" content="盒子里的猫">
+<meta property="og:description" content="[TOC]  Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Buil">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/1-1.jpg">
+<meta property="og:updated_time" content="2021-08-02T09:30:59.584Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一、APP的编译过程">
+<meta name="twitter:description" content="[TOC]  Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Buil">
+<meta name="twitter:image" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/1-1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'AI_Wei'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/">
+
+
+
+
+
+  <title>一、APP的编译过程 | 盒子里的猫</title>
+  
+
+
+
+
+
+
+
+
+<link rel="alternate" href="/atom.xml" title="盒子里的猫" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">盒子里的猫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一、APP的编译过程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-23T17:55:03+08:00">
+                2017-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP工作原理/" itemprop="url" rel="index">
+                    <span itemprop="name">APP工作原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<blockquote>
+<p><strong>Reference:</strong><br><a href="https://blog.csdn.net/aas319/article/details/78606342" target="_blank" rel="noopener">iOS App 的编译过程</a><br><a href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/" target="_blank" rel="noopener">深入剖析 iOS 编译 Clang / LLVM</a><br><a href="http://www.cocoachina.com/articles/26055" target="_blank" rel="noopener">关于bitcode, 知道这些就够了</a><br><a href="https://zhangbuhuai.com/post/macho-static-link.html" target="_blank" rel="noopener">Mach-O 与静态链接</a></p>
+</blockquote>
+<h2 id="Xcode-Build"><a href="#Xcode-Build" class="headerlink" title="Xcode Build"></a>Xcode Build</h2><p>Xcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：</p>
+<ol>
+<li>准备Build环境：创建Build目录，写入辅助文件，创建目标包（.app)；</li>
+<li>处理依赖项：如果依赖其他Target，会先Build所依赖的Target；</li>
+<li>运行编译前脚本：如Cocoapods的Check Pods Manifest.lock；</li>
+<li>使用LVVM编译Target中的源代码文件，并进行静态链接，生成Mach-O；</li>
+<li>编译xib并将结果和图片等资源文件拷贝到目标包；</li>
+<li>编译storyboard、ImageAssets，并将结果拷贝到目标包；</li>
+<li>处理Info.plist文件、生成符号表文件dSYM；</li>
+<li>运行编译后脚本：如Cocoapods的编译后脚本，会将Pods中编译好的依赖库和资源文件拷贝到目标包；</li>
+<li>生成App包，并对包进行签名；</li>
+</ol>
+<blockquote>
+<p>一个Target可以依赖其他Target（比如Tests Target依赖主Target），Build时会先Build依赖的Target，这是一个递归的过程。</p>
+</blockquote>
+<h2 id="Clang-LLVM"><a href="#Clang-LLVM" class="headerlink" title="Clang/LLVM"></a>Clang/LLVM</h2><p>Xcode的Build过程中，对源代码文件的编译是由Clang/LLVM（或Swift/LLVM）来完成的，LLVM是编译器基础设施，LLVM将编译器分为前端（Frontend）、优化器（Optimizer）和后端（Backend），前端负责将各种语言转换为LLVM IR（中间代码），优化器负责对LLVM IR进行优化，后端则负责将LLVM IR转换为机器代码，生成二进制文件。</p>
+<p>在LLVM的架构中，针对不同的语言，可以有不同的编译器前端，优化器也可以添加<a href="http://llvm.org/docs/WritingAnLLVMPass.html" target="_blank" rel="noopener">自定义优化节点（pass）</a>，针对不同的芯片架构则会有不同的编译器后端。Clang是基于LLVM的、针对C/C++/Objective-C的编译器前端，Xcode中使用Clang/LLVM对Target的源代码文件进行编译时，其工作步骤包括：</p>
+<ul>
+<li>预处理：由Clang进行宏替换、头文件导入等；</li>
+<li>词法分析和语法分析：由Clang生成符号表、生成抽象语法树AST；</li>
+<li>生成IR：由Clang根据AST生成LLVM IR；</li>
+<li>优化IR：Xcode中可以设置优化级别，开启bitcode，苹果还会做额外的优化工作；</li>
+<li>根据LLVM IR生成汇编，优化后再转为机器代码，得到目标文件（Object File）；</li>
+<li>对目标文件进行静态链接，生成Mach-O或Fat Binary（Mach-O的集合）；</li>
+</ul>
+<blockquote>
+<p>一个Mach-O是针对某一特定芯片架构的二进制文件，Fat Binary就是Apple将针对不同芯片架构的<strong>多个Mach-O合并后</strong>得到的通用二进制文件。</p>
+</blockquote>
+<h2 id="BitCode"><a href="#BitCode" class="headerlink" title="BitCode"></a>BitCode</h2><p>由于Fat Binary会使用户下载的二进制文件中包含大量和当前设备芯片架构无关的内容，于是在Xcode 9之后Apple推出了基于BitCode的二进制文件瘦身方案，作为整个iOS安装包瘦身技术中的一环：BitCode是对LLVM IR进一步优化后再<a href="https://llvm.org/docs/BitCodeFormat.html" target="_blank" rel="noopener">编码</a>所得到的中间二进制文件，开启BitCode之后，Xcode在打包上传到App Store的构建文件中，二进制文件不再是Fat Binary，而是包含BitCode的Mach-O，提交到App Store后，再由App Store负责提取出BitCode，然后针对不同的芯片架构编译、链接、生成对应的Mach-O，这样当用户下载时，App中就只包含当前芯片架构所对应的Mach-O。</p>
+<p>BitCode在整个编码过程所处的位置如图：<br><img src="/2017/12/23/APP工作原理/一、APP的编译过程/1-1.jpg" alt></p>
+<p>开启BitCode来进行App打包上传时，需要注意以下几点：</p>
+<ol>
+<li><strong>BitCode一致性</strong>：要求App所依赖的库也必须支持BitCode，否则就会打包失败，比如App中如果使用了不支持BitCode的三方静态库（例如某些以<code>.a</code>形式提供的三方闭源库），就不能使用BitCode打包上传；</li>
+<li><strong>下载dSYM文件</strong>：符号表文件dSYM是在生成最终二进制文件后再生成的，使用BitCode时，这一步由App Store完成，所以App的dSYM文件需要到Xcode -&gt; Organizer中下载；</li>
+</ol>
+<h2 id="Build-Configure"><a href="#Build-Configure" class="headerlink" title="Build Configure"></a>Build Configure</h2><p>Xcode中可以通过Build Pahses、Build Rules和Build Settings来控制Build的过程。</p>
+<h3 id="1-Build-Phases"><a href="#1-Build-Phases" class="headerlink" title="1. Build Phases"></a>1. Build Phases</h3><p>Build Phases控制Build各阶段的工作内容，主要的Phases有：</p>
+<ul>
+<li><strong>Dependencies</strong>：指定当前Target的依赖项目，可以是其他Target，Build时会先Build所依赖的项目；</li>
+<li><strong>Headers</strong>：当Build结果的Mach-O Type是Dynamic Library或静态库Static Library时，可以在Build Phases中添加Headers Phase来指明公开的头文件；</li>
+<li><strong>Compile Sources</strong>：所有需要编译的源代码文件，Build时会根据Build Rules和Build Settings中设置的规则进行编译，这儿也可以为单个文件添加编译参数，如<code>-fno-objc-arc</code>；</li>
+<li><strong>Link Binary With Libraries</strong>：Target需要链接的静态库和动态库，它们会和编译生成的目标文件进行链接；</li>
+<li><strong>Copy Bundle Resource</strong>：需要编译后拷贝到包中的资源文件，包括xib、storyboard、ImageAssets等等；</li>
+</ul>
+<p>以上的主要Phases在Build过程中有且只有一个，除了主要的Phases，还可以按需要为Target的Build过程添加一个或多个可选的Pashes:</p>
+<ul>
+<li><strong>Copy Files Phase</strong>：将指定文件拷贝到Build所生成的目标包（.app）中；</li>
+<li><strong>Run Script Phase</strong>：执行脚本程序，例如Cocoapods的Check Pods Manifest.lock和Copy Pods Resources都是通过此方式插入到Build过程中的；</li>
+</ul>
+<h3 id="2-Build-Rules"><a href="#2-Build-Rules" class="headerlink" title="2. Build Rules"></a>2. Build Rules</h3><p>在Build Rules中，可以通过更改相应脚本来对不同文件进行自定义处理，包括自定义的编译、拷贝、压缩等等。Build Rules中还罗列了Xcode对不同文件的默认处理方式，可以<em>Copy to Target</em>后进行自定义编辑。</p>
+<h3 id="3-Build-Settings"><a href="#3-Build-Settings" class="headerlink" title="3. Build Settings"></a>3. Build Settings</h3><p>Build Settings是对Build过程中各个阶段的命令参数的设置，内容非常的繁杂，有一千项左右，在网站<a href="https://xcodebuildsettings.com/#group-product-packaging-utility" target="_blank" rel="noopener">Xcode Build Settings</a>上有各项的简要介绍。</p>
+<h2 id="Mach-O-Type"><a href="#Mach-O-Type" class="headerlink" title="Mach-O Type"></a>Mach-O Type</h2><p>Mach-O是iOS/MacOS中的二进制文件，是由源码经编译再链接所生成的，同时也是Xcode所生成的应用包中最重要的产物。Mach-O又分为不同的类型，在<code>mach-o/loader.h</code>文件中定义了Mach-O的细分类型，从应用开发的角度，只需要关心Xcode将其生成的Mach-O所分为的五种类型即可：</p>
+<ul>
+<li><strong>Executable</strong>：可单独执行的二进制文件，即可执行文件，必须有main方法作为执行入口，App打包所生产的二进制文件即为此类型；</li>
+<li><strong>Dylib Library</strong>：动态库链接文件，打包动态库时需要注意在Build Phases中指明Headers；</li>
+<li><strong>Static Library</strong>：静态库链接文件，打包静态库时同样需要指明Headers；</li>
+<li><strong>Bundle</strong>：独立的动态库，同时还包含资源文件，不会被链接，需要显示加载，可在运行时通过<code>dlopen()</code>或NSBundle的<code>-load</code>方法进行加载。MacOS中可作为应用程序的插件，iOS中可通过Bundle打包资源文件，然后在<em>Copy Bundle Resource</em>中拷贝到App中，不过作为资源包时，Bundle中的二进制文件需要被删除；</li>
+<li><strong>Relocatable Object File</strong>：可重定向的目标文件，即未进行静态链接的目标文件的集合，打包静态库时可选此类型，这样可以避免程序中多个静态库都依赖相同的静态库时，被依赖的静态库被重复的拷贝到程序中；</li>
+</ul>
+<blockquote>
+<p>Xcode中，在<em>Build Settings -&gt; Mach-O Type</em>中可以指定编译所生成的Mach-O的类型；</p>
+</blockquote>
+<h3 id="静态库与动态库"><a href="#静态库与动态库" class="headerlink" title="静态库与动态库"></a>静态库与动态库</h3><p>源代码文件经编译所生成的二进制文件，除可执行文件之外，根据其是在编译时被链接到程序中，还是运行时被加载到程序中，又可以分为静态库和动态库，关于iOS/MacOS中的静态库和动态库，需要了解的有以下几点：</p>
+<ul>
+<li><strong>Framework</strong>：framework是Xcode的一种代码打包方式，framework中包括Mach-O文件、头文件、以及相关的资源文件，根据生成的Mach-O类型的不同，framework可以是动态库，也可以是静态库。</li>
+<li><strong>静态库</strong>：静态库主要由头文件和二进制文件所组成，在iOS/MacOS中静态库的二进制文件可以是<code>.a</code>文件，也可以是<em>Static Library</em>和<em>Relocatable Object File</em>对应的Mach-O文件。程序引用的静态库，会在编译期的静态链接时被链接到目标程序中，使用静态库会使目标程序体积增大，但不会让程序对外部产生依赖。</li>
+<li><strong>动态库</strong>：动态库也主要由头文件和二进制文件所组成，iOS/MacOS中动态库的二进制文件为<code>.dylib</code>、<code>.tbd</code>、或者<em>Dylib Library</em>和<em>Bundle</em>对应的Mach-O。程序引用的动态库会在程序运行时（启动时或启动后）被加载，并与程序动态链接，使用动态库不会使程序体积增大，同时动态库也可以独立的升级替换，但使用动态库也让程序对外部产生了依赖，同时动态库的加载也会造成一定的性能损失。</li>
+<li><strong>Embedded Framework</strong>：出于安全考虑，iOS的App之间不允许使用非官方的动态库，但在iOS 8之后App可以有extension，App和extension是两个不同的进程，它们之间有代码共享的需求，于是便有了Embedded Framework，它可以被视为一种“沙盒动态库”，只在一个App及其extension之间被共享。</li>
+<li><strong>Swift Static Libraries</strong>：<strong>Xcode9之后是支持将Swift代码打包成静态库的framework来使用的</strong>，在Xcode9之前因为Swift的运行库不成熟，其并未被作为系统动态库所使用，Xcode打包Swift静态库时，会将Swift的运行库静态链接到所生成的静态库中，如果App使用了多个Swift静态库，就会造成App中Swift运行库的重复，Xcode9之后Swift的运行库已经被加入到系统动态库中，已不在有此限制。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/编译/" rel="tag"># 编译</a>
+          
+            <a href="/tags/Mach-O/" rel="tag"># Mach-O</a>
+          
+            <a href="/tags/BitCode/" rel="tag"># BitCode</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/工具教程/Markdown语法基础/" rel="next" title="Markdown语法基础">
+                <i class="fa fa-chevron-left"></i> Markdown语法基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/07/APP工作原理/二、APP的加载过程/" rel="prev" title="二、APP的加载过程">
+                二、APP的加载过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzcyMy8yMDI2Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AI_Wei">
+            
+              <p class="site-author-name" itemprop="name">AI_Wei</p>
+              <p class="site-description motion-element" itemprop="description">自由源于自信，自信源于自律</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AiweiChujian" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:aiweichujian@gmail.com" target="_blank" title="G-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>G-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2804552143" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="/images/wechat.jpg" target="_blank" title="Wechat">
+                      
+                        <i class="fa fa-fw fa-wechat"></i>Wechat</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Xcode-Build"><span class="nav-text">Xcode Build</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clang-LLVM"><span class="nav-text">Clang/LLVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BitCode"><span class="nav-text">BitCode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-Configure"><span class="nav-text">Build Configure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Build-Phases"><span class="nav-text">1. Build Phases</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Build-Rules"><span class="nav-text">2. Build Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Build-Settings"><span class="nav-text">3. Build Settings</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mach-O-Type"><span class="nav-text">Mach-O Type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态库与动态库"><span class="nav-text">静态库与动态库</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AI_Wei</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+</body>
+</html>

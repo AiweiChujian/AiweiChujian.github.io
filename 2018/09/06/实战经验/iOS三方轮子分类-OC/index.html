@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://hellohezhili.com"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="mh9cQ2yLqXFEC_ZrY3D23g1Cdi1bUYHw4byhld6mqDE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="三方库合集,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="收录的库以Objective C为主，Swift三方库参见[]；  以⚠️标记表示作者已多年(3年及以上)未更新；* 以🚫标记表示作者已声明不再维护升级。   1.用户界面层(User Interface)视图控件对于更新不够频繁或自定义接口不够丰富的视图控件，最好直接使用其源码，而不是通过Cocoapods导入  MJRefresh：下拉刷新，上拉加载 MBProgressHUD：好用易扩展">
+<meta name="keywords" content="三方库合集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发中好用的三方轮子">
+<meta property="og:url" content="https://hellohezhili.com/2018/09/06/实战经验/iOS三方轮子分类-OC/index.html">
+<meta property="og:site_name" content="盒子里的猫">
+<meta property="og:description" content="收录的库以Objective C为主，Swift三方库参见[]；  以⚠️标记表示作者已多年(3年及以上)未更新；* 以🚫标记表示作者已声明不再维护升级。   1.用户界面层(User Interface)视图控件对于更新不够频繁或自定义接口不够丰富的视图控件，最好直接使用其源码，而不是通过Cocoapods导入  MJRefresh：下拉刷新，上拉加载 MBProgressHUD：好用易扩展">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-08-02T08:45:53.801Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发中好用的三方轮子">
+<meta name="twitter:description" content="收录的库以Objective C为主，Swift三方库参见[]；  以⚠️标记表示作者已多年(3年及以上)未更新；* 以🚫标记表示作者已声明不再维护升级。   1.用户界面层(User Interface)视图控件对于更新不够频繁或自定义接口不够丰富的视图控件，最好直接使用其源码，而不是通过Cocoapods导入  MJRefresh：下拉刷新，上拉加载 MBProgressHUD：好用易扩展">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'AI_Wei'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hellohezhili.com/2018/09/06/实战经验/iOS三方轮子分类-OC/">
+
+
+
+
+
+  <title>iOS开发中好用的三方轮子 | 盒子里的猫</title>
+  
+
+
+
+
+
+
+
+
+<link rel="alternate" href="/atom.xml" title="盒子里的猫" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">盒子里的猫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/09/06/实战经验/iOS三方轮子分类-OC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS开发中好用的三方轮子</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-06T21:45:55+08:00">
+                2018-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/实战经验/" itemprop="url" rel="index">
+                    <span itemprop="name">实战经验</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <font color="red"><br><em> <strong>收录的库以Objective C为主，Swift三方库参见[]；</strong>
+</em> <strong>以⚠️标记表示作者已多年(3年及以上)未更新；</strong><br>* <strong>以🚫标记表示作者已声明不再维护升级。</strong><br><br></font>
+
+
+<h2 id="1-用户界面层-User-Interface"><a href="#1-用户界面层-User-Interface" class="headerlink" title="1.用户界面层(User Interface)"></a>1.用户界面层(User Interface)</h2><h3 id="视图控件"><a href="#视图控件" class="headerlink" title="视图控件"></a>视图控件</h3><p>对于更新不够频繁或自定义接口不够丰富的视图控件，最好直接使用其源码，而不是通过Cocoapods导入</p>
+<ul>
+<li><a href="https://github.com/CoderMJLee/MJRefresh" target="_blank" rel="noopener">MJRefresh</a>：下拉刷新，上拉加载</li>
+<li><a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="noopener">MBProgressHUD</a>：好用易扩展的活动指示器</li>
+<li><a href="https://github.com/SVProgressHUD/SVProgressHUD" target="_blank" rel="noopener">SVProgressHUD</a>：轻量级的活动指示器</li>
+<li><a href="https://github.com/terryworona/TWMessageBarManager" target="_blank" rel="noopener">TWMessageBarManager</a>：轻量的通知和警告提示库⚠️</li>
+<li><a href="https://github.com/KrauseFx/TSMessages" target="_blank" rel="noopener">TSMessages</a>：轻量的通知和警告提示库</li>
+<li><a href="https://github.com/calimarkus/JDStatusBarNotification" target="_blank" rel="noopener">JDStatusBarNotification</a>：顶部状态栏提醒</li>
+<li><a href="https://github.com/JJSaccolo/UIActivityIndicator-for-SDWebImage" target="_blank" rel="noopener">UIActivityIndicator-for-SDWebImage</a>：为网络图片加载添加活动指示</li>
+<li><a href="https://github.com/ko1o/PYSearch" target="_blank" rel="noopener">PYSearch</a>：一种使用样式较广的搜索页面</li>
+<li><a href="https://github.com/ibireme/YYText" target="_blank" rel="noopener">YYText</a>：富文本</li>
+<li><a href="https://github.com/Cocoanetics/DTCoreText" target="_blank" rel="noopener">DTCoreText</a>：富文本，可解析Html和CSS</li>
+<li><a href="https://github.com/TTTAttributedLabel/TTTAttributedLabel" target="_blank" rel="noopener">TTTAttributedLabel</a>：富文本label</li>
+<li><a href="https://github.com/xiangwangfeng/M80AttributedLabel" target="_blank" rel="noopener">M80AttributedLabel</a>：富文本label</li>
+<li><a href="https://github.com/gsdios/SDCycleScrollView" target="_blank" rel="noopener">SDCycleScrollView</a>：轮播图</li>
+<li><a href="https://github.com/WenchaoD/FSCalendar" target="_blank" rel="noopener">FSCalendar</a>：日历插件</li>
+<li><a href="https://github.com/xiaozhuxiong121/PGDatePicker" target="_blank" rel="noopener">PGDatePicker</a>：时间/日期选择器</li>
+<li><a href="https://github.com/dzenbot/DZNEmptyDataSet" target="_blank" rel="noopener">DZNEmptyDataSet</a>：无数据时的展示视图</li>
+<li><a href="https://github.com/kingsic/SGPagingView" target="_blank" rel="noopener">SGPagingView</a>：标签指示器</li>
+<li><a href="https://github.com/nicklockwood/iCarousel" target="_blank" rel="noopener">iCarousel</a>：卡片的旋转切换</li>
+<li><a href="https://github.com/Abnerzj/ZJPickerView" target="_blank" rel="noopener">ZJPickerView</a>：各列会联动的选择器</li>
+<li><a href="https://github.com/littleMeaning/LMReport" target="_blank" rel="noopener">LMReport</a>：常见报表表格样式</li>
+<li><a href="https://github.com/jkpang/PPBadgeView" target="_blank" rel="noopener">PPBadgeView</a>：为各种视图添加badge</li>
+<li><a href="https://github.com/weng1250/WZLBadge" target="_blank" rel="noopener">WZLBadge</a>:为视图添加badge</li>
+<li><a href="https://github.com/wangmchn/WMPageController" target="_blank" rel="noopener">WMPageController</a>：分页视图控制器</li>
+<li><a href="https://github.com/Grouper/FlatUIKit" target="_blank" rel="noopener">FlatUIKit</a>：扁平化风格的UIKit⚠️</li>
+<li><a href="https://github.com/jessesquires/JSQMessagesViewController" target="_blank" rel="noopener">JSQMessagesViewController</a>：聊天消息类框架🚫</li>
+<li><a href="https://github.com/jverdi/JVFloatLabeledTextField" target="_blank" rel="noopener">JVFloatLabeledTextField</a>：带浮动标签的文本输入框</li>
+<li><a href="https://github.com/CEWendel/SWTableViewCell" target="_blank" rel="noopener">SWTableViewCell</a>：支持左滑和右滑的tableViewCell⚠️</li>
+<li><a href="https://github.com/MortimerGoro/MGSwipeTableCell" target="_blank" rel="noopener">MGSwipeTableCell</a>：支持左滑和右滑的tableViewCell</li>
+<li><a href="https://github.com/devinross/tapkulibrary" target="_blank" rel="noopener">tapkulibrary</a>：自定义控件库，包括HUD、进度条、日历、CoverFlow等</li>
+<li><a href="https://github.com/mwaterfall/MWPhotoBrowser" target="_blank" rel="noopener">MWPhotoBrowser</a>：简单的照片浏览控件⚠️</li>
+<li><a href="https://github.com/zhouxing5311/ZZCircleProgress" target="_blank" rel="noopener">ZZCircleProgress</a>：可定制的环形进度条</li>
+<li><a href="https://github.com/DrummerB/BFNavigationBarDrawer" target="_blank" rel="noopener">BFNavigationBarDrawer</a>：NavigationBar下的tool菜单</li>
+<li><a href="https://github.com/dsxNiubility/SXFiveScoreShow" target="_blank" rel="noopener">SXFiveScoreShow</a>：五项素质评分所组成的五角星</li>
+<li><a href="https://github.com/ZhipingYang/UUChatTableView" target="_blank" rel="noopener">UUChatTableView</a>：IM聊天界面的封装</li>
+<li><a href="https://github.com/wwdc14/HyPopMenuView" target="_blank" rel="noopener">HyPopMenuView</a>：类似微博效果的弹出菜单</li>
+<li><a href="https://github.com/xiekw2010/DXPopover" target="_blank" rel="noopener">DXPopover</a>：带小箭头的弹出视图</li>
+<li><a href="https://github.com/dopcn/DOPDropDownMenu" target="_blank" rel="noopener">DOPDropDownMenu</a>：下拉菜单</li>
+<li><a href="https://github.com/skywinder/ActionSheetPicker-3.0" target="_blank" rel="noopener">ActionSheetPicker-3.0</a>：底部弹窗选择器</li>
+<li><a href="https://github.com/ChokShen/MultilevelMenu" target="_blank" rel="noopener">MultilevelMenu</a>：多级选择器，Swift实现</li>
+</ul>
+<h3 id="层级管理"><a href="#层级管理" class="headerlink" title="层级管理"></a>层级管理</h3><ul>
+<li><a href="https://github.com/ChavezChen/CWLateralSlide" target="_blank" rel="noopener">CWLateralSlide</a>：侧边抽屉效果的视图容器</li>
+<li><a href="https://github.com/ViewDeck/ViewDeck" target="_blank" rel="noopener">ViewDeck</a>：侧边抽屉效果的视图容器</li>
+<li><a href="https://github.com/ECSlidingViewController/ECSlidingViewController" target="_blank" rel="noopener">ECSlidingViewController</a>：双层子视图容器实现侧滑效果</li>
+<li><a href="https://github.com/mutualmobile/MMDrawerController" target="_blank" rel="noopener">MMDrawerController</a>：轻量的侧边抽屉效果的视图容器⚠️</li>
+<li><a href="https://github.com/robbdimitrov/RDVTabBarController" target="_blank" rel="noopener">RDVTabBarController</a>：三方封装的tabBarController</li>
+</ul>
+<h3 id="页面布局"><a href="#页面布局" class="headerlink" title="页面布局"></a>页面布局</h3><ul>
+<li><a href="https://github.com/SnapKit/Masonry" target="_blank" rel="noopener">Masonry</a>：Autolayout代码布局库</li>
+<li><a href="https://github.com/PureLayout/PureLayout" target="_blank" rel="noopener">PureLayout</a>：Autolayout代码布局库</li>
+<li><a href="https://github.com/forkingdog/UITableView-FDTemplateLayoutCell" target="_blank" rel="noopener">UITableView+FDTemplateLayoutCell</a>：tableVeiwCell高度的自动布局</li>
+</ul>
+<h3 id="动画特效"><a href="#动画特效" class="headerlink" title="动画特效"></a>动画特效</h3><ul>
+<li><a href="https://github.com/BradLarson/GPUImage" target="_blank" rel="noopener">GPUImage</a>：图片添加滤镜⚠️</li>
+<li><a href="https://github.com/facebook/Shimmer" target="_blank" rel="noopener">Shimmer</a>：为视图添加流光效果</li>
+<li><a href="https://github.com/nicklockwood/FXBlurView" target="_blank" rel="noopener">FXBlurView</a>：添加毛玻璃效果🚫</li>
+<li><a href="https://github.com/Nyx0uf/NYXImagesKit" target="_blank" rel="noopener">NYXImagesKit</a>：常规的图片处理</li>
+<li><a href="https://github.com/levey/AwesomeMenu" target="_blank" rel="noopener">AwesomeMenu</a>：弹射动画展开的菜单</li>
+<li><a href="https://github.com/CanvasPod/Canvas" target="_blank" rel="noopener">Canvas</a>：无需编码就能添加动画效果的库⚠️</li>
+<li><a href="https://github.com/IFTTT/JazzHands" target="_blank" rel="noopener">JazzHands</a>：在scrollview中绘制关键帧动画⚠️ </li>
+<li><a href="https://github.com/facebook/pop" target="_blank" rel="noopener">pop</a>：pop动画引擎</li>
+<li><a href="https://github.com/schneiderandre/popping" target="_blank" rel="noopener">popping</a>：基于pop引擎的动画库</li>
+<li><a href="https://github.com/kevinzhow/pop-handapp" target="_blank" rel="noopener">pop-handapp</a>：基于pop引擎的动画实例</li>
+<li><a href="https://github.com/ColinEberhardt/VCTransitionsLibrary" target="_blank" rel="noopener">VCTransitionsLibrary</a>：转场动画库⚠️</li>
+</ul>
+<h3 id="UI层优化"><a href="#UI层优化" class="headerlink" title="UI层优化"></a>UI层优化</h3><ul>
+<li><a href="https://github.com/forkingdog/FDFullscreenPopGesture" target="_blank" rel="noopener">FDFullscreenPopGesture</a>：简化返回手势的管理 </li>
+<li><a href="https://github.com/MoZhouqi/KMNavigationBarTransition" target="_blank" rel="noopener">KMNavigationBarTransition</a>：优化转场时的导航栏样式</li>
+<li><a href="https://github.com/liuzhiyi1992/ZYCornerRadius" target="_blank" rel="noopener">ZYCornerRadius</a>：避免离屏渲染的圆角设置</li>
+<li><a href="https://github.com/path/FastImageCache" target="_blank" rel="noopener">FastImageCache</a>：本地图片的快速加载与渲染</li>
+<li><a href="https://github.com/texturegroup/texture" target="_blank" rel="noopener">Texture</a>：通过异步绘制来提升性能的UI框架</li>
+<li><a href="https://github.com/tombenner/nui" target="_blank" rel="noopener">nui</a>：用类CSS的语法来简化UI样式的设置⚠️</li>
+<li><a href="https://github.com/lixiang1994/LEETheme" target="_blank" rel="noopener">LEETheme</a>：简化APP主题的管理</li>
+</ul>
+<h2 id="2-业务逻辑层-Bussiness-Logic"><a href="#2-业务逻辑层-Bussiness-Logic" class="headerlink" title="2.业务逻辑层(Bussiness Logic)"></a>2.业务逻辑层(Bussiness Logic)</h2><h3 id="APP任务"><a href="#APP任务" class="headerlink" title="APP任务"></a>APP任务</h3><ul>
+<li><a href="https://github.com/hackiftekhar/IQKeyboardManager" target="_blank" rel="noopener">IQKeyboardManager</a>：键盘事务管理</li>
+<li><a href="https://github.com/AYJk/AYCheckVersion" target="_blank" rel="noopener">AYCheckVersion</a>：更新检查</li>
+<li><a href="https://github.com/nicklockwood/iVersion" target="_blank" rel="noopener">iVersion</a>：更新检查🚫</li>
+<li><a href="https://github.com/arashpayan/appirater" target="_blank" rel="noopener">Appirater</a>：去AppStore评分</li>
+<li><a href="https://github.com/CocoaLumberjack/CocoaLumberjack" target="_blank" rel="noopener">CocoaLumberjack</a>：App的日志管理库</li>
+<li><a href="https://github.com/fpillet/NSLogger" target="_blank" rel="noopener">NSLogger</a>：带mac客户端的日志分析工具</li>
+</ul>
+<h3 id="功能组件"><a href="#功能组件" class="headerlink" title="功能组件"></a>功能组件</h3><ul>
+<li><a href="https://github.com/banchichen/TZImagePickerController" target="_blank" rel="noopener">TZImagePickerController</a>：图片选择器</li>
+<li><a href="https://github.com/renzifeng/ZFPlayer" target="_blank" rel="noopener">ZFPlayer</a>：视频播放器及控制器</li>
+<li><a href="https://github.com/kevinzhow/PNChart" target="_blank" rel="noopener">PNChart</a>：图表绘制库(OC)</li>
+<li><a href="https://github.com/danielgindi/Charts" target="_blank" rel="noopener">Charts</a>：图标绘制库(Swift)</li>
+<li><a href="https://github.com/marcuswestin/WebViewJavascriptBridge" target="_blank" rel="noopener">WebViewJavascriptBridge</a>：OC和JS的交互库</li>
+<li><a href="https://github.com/ayushgoel/AGEmojiKeyboard" target="_blank" rel="noopener">AGEmojiKeyboard</a>：emoji表情输入面板</li>
+<li><a href="https://github.com/renzifeng/ZFSetting" target="_blank" rel="noopener">ZFSetting</a>：快捷构建设置界面</li>
+<li><a href="https://github.com/TimOliver/TOCropViewController" target="_blank" rel="noopener">TOCropViewController</a>：图片裁剪</li>
+<li><a href="https://github.com/syedhali/EZAudio" target="_blank" rel="noopener">EZAudio</a>：音频波形图绘制⚠️</li>
+</ul>
+<h3 id="便捷工具"><a href="#便捷工具" class="headerlink" title="便捷工具"></a>便捷工具</h3><ul>
+<li><a href="https://github.com/ReactiveCocoa/ReactiveObjC" target="_blank" rel="noopener">ReactiveObjC</a>：函数响应式编程框架</li>
+<li><a href="https://github.com/facebook/KVOController" target="_blank" rel="noopener">KVOController</a>：方便安全的KVO工具</li>
+<li><a href="https://github.com/mxcl/PromiseKit" target="_blank" rel="noopener">PromiseKit</a>：Promise设计模式处理异步任务的库</li>
+<li><a href="https://github.com/shaojiankui/JKCategories" target="_blank" rel="noopener">JKCategories</a>：系统库的类扩展</li>
+<li><a href="https://github.com/bennyguitar/Colours" target="_blank" rel="noopener">Colours</a>：颜色库扩展</li>
+<li><a href="https://github.com/mattt/FormatterKit" target="_blank" rel="noopener">FormatterKit</a>：为很多数据类型提供了格式化的转换</li>
+<li><a href="https://github.com/jverkoey/nimbus" target="_blank" rel="noopener">nimbus</a>：开源的iOS开发框架</li>
+<li><a href="https://github.com/BlocksKit/BlocksKit" target="_blank" rel="noopener">BlocksKit</a>：为一些常用的系统接口提供block版本</li>
+<li><a href="https://github.com/BoltsFramework/Bolts-ObjC" target="_blank" rel="noopener">Bolts-ObjC</a>：GCD、NSOperation之外的多任务管理库</li>
+<li><a href="https://github.com/wezm/RegexKitLite" target="_blank" rel="noopener">RegexKitLite</a>：通过正则表达式处理字符串⚠️</li>
+<li><a href="https://github.com/bendytree/Objective-C-RegEx-Categories" target="_blank" rel="noopener">Objective-C-RegEx-Categories</a>：提供便捷的正则表达式使用接口⚠️</li>
+</ul>
+<h2 id="3-数据访问层-Data-Access"><a href="#3-数据访问层-Data-Access" class="headerlink" title="3.数据访问层(Data Access)"></a>3.数据访问层(Data Access)</h2><h3 id="网络传输"><a href="#网络传输" class="headerlink" title="网络传输"></a>网络传输</h3><ul>
+<li><a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="noopener">AFNetworking</a>：网络请求库</li>
+<li><a href="https://github.com/kangzubin/XMNetworking" target="_blank" rel="noopener">XMNetworking</a>：基于AF的封装，使用方便，适合中小型项目</li>
+<li><a href="https://github.com/yuantiku/YTKNetwork" target="_blank" rel="noopener">YTKNetwork</a>：基于AF的封装，功能完备，适合复杂网络请求项目</li>
+<li><a href="https://github.com/MugunthKumar/MKNetworkKit" target="_blank" rel="noopener">MKNetworkKit</a>：轻量的网络请求库</li>
+<li><a href="https://github.com/tonymillion/Reachability" target="_blank" rel="noopener">Reachability</a>：判断网络可达性</li>
+<li><a href="https://github.com/RestKit/RestKit" target="_blank" rel="noopener">RestKit</a>：专注于RESTful API的网络请求、JSON解析、CoreData存储的框架</li>
+<li><a href="https://github.com/rs/SDWebImage" target="_blank" rel="noopener">SDWebImage</a>：根据网络连接获取图片</li>
+<li><a href="https://github.com/facebook/SocketRocket" target="_blank" rel="noopener">SocketRocket</a>：facebook家的轻量级socket连接库⚠️</li>
+<li><a href="https://github.com/robbiehanson/CocoaAsyncSocket" target="_blank" rel="noopener">CocoaAsyncSocket</a>：异步socket通讯</li>
+<li><a href="https://github.com/facebook/SocketRocket" target="_blank" rel="noopener">SocketRocket</a>：webSocket客户端</li>
+<li><a href="https://github.com/robbiehanson/XMPPFramework" target="_blank" rel="noopener">XMPPFramework</a>：XMPP通信框架</li>
+</ul>
+<h3 id="转换处理"><a href="#转换处理" class="headerlink" title="转换处理"></a>转换处理</h3><ul>
+<li><a href="https://github.com/nicklockwood/GZIP" target="_blank" rel="noopener">GZIP</a>：数据压缩与解压</li>
+<li><a href="https://github.com/CoderMJLee/MJExtension" target="_blank" rel="noopener">MJExtension</a>：JSON字典和模型相互转换</li>
+<li><a href="https://github.com/Mantle/Mantle" target="_blank" rel="noopener">Mantle</a>：JSON字典和模型的转换</li>
+<li><a href="https://github.com/stig/json-framework" target="_blank" rel="noopener">json framework</a>：JSON数据解析</li>
+<li><a href="https://github.com/jsonmodel/jsonmodel" target="_blank" rel="noopener">JSONModel</a>：JSON字典和模型的转换</li>
+<li><a href="https://github.com/topfunky/hpple" target="_blank" rel="noopener">hpple</a>：XML/HTML解析</li>
+</ul>
+<h3 id="本地持久化"><a href="#本地持久化" class="headerlink" title="本地持久化"></a>本地持久化</h3><ul>
+<li><a href="https://github.com/ibireme/YYCache" target="_blank" rel="noopener">YYCache</a>：NSCoding归档缓存</li>
+<li><a href="https://github.com/realm/realm-cocoa" target="_blank" rel="noopener">Realm</a>：移动端本地数据库</li>
+<li><a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="noopener">MagicalRecord</a>：对CoreData的封装</li>
+<li><a href="https://github.com/ccgus/fmdb" target="_blank" rel="noopener">FMDB</a>：对SQLite数据库的封装</li>
+<li><a href="https://github.com/baptistefetet/KeychainItemWrapper" target="_blank" rel="noopener">KeychainItemWrapper</a>：keychain钥匙串管理⚠️</li>
+<li><a href="https://github.com/soffes/SAMKeychain" target="_blank" rel="noopener">SAMKeychain</a>：keychain钥匙串管理</li>
+<li><a href="https://github.com/gangverk/GVUserDefaults" target="_blank" rel="noopener">GVUserDefaults</a>：对NSUserDefaults的方便存取</li>
+</ul>
+<h2 id="4-测试调试-Test-amp-Debug"><a href="#4-测试调试-Test-amp-Debug" class="headerlink" title="4.测试调试(Test &amp; Debug)"></a>4.测试调试(Test &amp; Debug)</h2><p>调试类三方库在Cocoapods导入时需设置其编译环境仅包含<strong>Debug</strong>，即需要在三方库的引入后面加上<code>:configurations =&gt; [&#39;Debug&#39;]</code>；测试类三方库要注意仅加到测试target下。</p>
+<ul>
+<li><a href="https://github.com/Flipboard/FLEX" target="_blank" rel="noopener">FLEX</a>：强大的调试工具集</li>
+<li><a href="https://github.com/alibaba/youku-sdk-tool-woodpecker" target="_blank" rel="noopener">YKWoodpecker</a>：优酷（阿里）开源的调试工具集</li>
+<li><a href="https://github.com/Tencent/MLeaksFinder" target="_blank" rel="noopener">MLeaksFinder</a>：VC和VC上的View的内存泄漏检查工具</li>
+<li><a href="https://github.com/facebook/FBRetainCycleDetector" target="_blank" rel="noopener">FBRetainCycleDetector</a>：对象的循环引用检查工具</li>
+<li><a href="https://github.com/JxbSir/JxbDebugTool" target="_blank" rel="noopener">JxbDebugTool</a>：网络请求调试工具⚠️</li>
+<li><a href="https://github.com/coderyi/NetworkEye" target="_blank" rel="noopener">NetworkEye</a>：Http网络请求调试工具</li>
+<li><a href="https://github.com/square/PonyDebugger" target="_blank" rel="noopener">PonyDebugger</a>：通过Chrome调试网络流量和数据存储</li>
+<li><a href="https://github.com/kif-framework/KIF" target="_blank" rel="noopener">KIF</a>：基于XCTest的UI测试框架</li>
+<li><a href="https://github.com/kiwi-bdd/Kiwi" target="_blank" rel="noopener">Kiwi</a>：BDD行为驱动开发测试框架</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>Title: </span><a href="/2018/09/06/实战经验/iOS三方轮子分类-OC/">iOS开发中好用的三方轮子</a></p>
+  <p><span>Author:  </span><a href="/" title="访问 AI_Wei 的个人博客">AI_Wei</a></p>
+  <p><span>Publish: </span>2018年09月06日 - 21:45</p>
+  <p><span>Update:  </span>2021年08月02日 - 16:45</p>
+  <p><span>Link:  </span><a href="/2018/09/06/实战经验/iOS三方轮子分类-OC/" title="iOS开发中好用的三方轮子">https://hellohezhili.com/2018/09/06/实战经验/iOS三方轮子分类-OC/</a>
+    <span class="copy-path" title="Click To Copy Link"><i class="fa fa-clipboard" data-clipboard-text="https://hellohezhili.com/2018/09/06/实战经验/iOS三方轮子分类-OC/" aria-label="Copy Success"></i></span>
+  </p>
+  <p><span>Protocol:  </span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">BY-NC-ND 4.0 </a> Reprinted please indicate the source</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: 'Copy Success',
+          icon: "success", 
+          showConfirmButton: true
+          });
+    });
+    });  
+</script>
+
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/三方库合集/" rel="tag"># 三方库合集</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/06/工具教程/Appledoc/" rel="next" title="Appledoc">
+                <i class="fa fa-chevron-left"></i> Appledoc
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/08/APP架构/一、APP架构概论/" rel="prev" title="一、APP架构概论">
+                一、APP架构概论 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AI_Wei">
+            
+              <p class="site-author-name" itemprop="name">AI_Wei</p>
+              <p class="site-description motion-element" itemprop="description">自由源于自信，自信源于自律</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AiweiChujian" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:aiweichujian@gmail.com" target="_blank" title="G-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>G-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2804552143" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="/images/wechat.jpg" target="_blank" title="Wechat">
+                      
+                        <i class="fa fa-fw fa-wechat"></i>Wechat</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-用户界面层-User-Interface"><span class="nav-text">1.用户界面层(User Interface)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#视图控件"><span class="nav-text">视图控件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#层级管理"><span class="nav-text">层级管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页面布局"><span class="nav-text">页面布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动画特效"><span class="nav-text">动画特效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI层优化"><span class="nav-text">UI层优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-业务逻辑层-Bussiness-Logic"><span class="nav-text">2.业务逻辑层(Bussiness Logic)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#APP任务"><span class="nav-text">APP任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能组件"><span class="nav-text">功能组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#便捷工具"><span class="nav-text">便捷工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-数据访问层-Data-Access"><span class="nav-text">3.数据访问层(Data Access)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络传输"><span class="nav-text">网络传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换处理"><span class="nav-text">转换处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地持久化"><span class="nav-text">本地持久化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-测试调试-Test-amp-Debug"><span class="nav-text">4.测试调试(Test &amp; Debug)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AI_Wei</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+</body>
+</html>
