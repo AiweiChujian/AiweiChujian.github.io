@@ -104,12 +104,12 @@
 <meta property="og:site_name" content="盒子里的猫">
 <meta property="og:description" content="[TOC]  Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Buil">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/1-1.jpg">
-<meta property="og:updated_time" content="2021-08-02T09:30:59.584Z">
+<meta property="og:image" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/1.jpg">
+<meta property="og:updated_time" content="2021-08-11T01:41:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一、APP的编译过程">
 <meta name="twitter:description" content="[TOC]  Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Buil">
-<meta name="twitter:image" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/1-1.jpg">
+<meta name="twitter:image" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/1.jpg">
 
 
 
@@ -437,7 +437,7 @@
 <p>一个Mach-O是针对某一特定芯片架构的二进制文件，Fat Binary就是Apple将针对不同芯片架构的<strong>多个Mach-O合并后</strong>得到的通用二进制文件。</p>
 </blockquote>
 <h2 id="BitCode"><a href="#BitCode" class="headerlink" title="BitCode"></a>BitCode</h2><p>由于Fat Binary会使用户下载的二进制文件中包含大量和当前设备芯片架构无关的内容，于是在Xcode 9之后Apple推出了基于BitCode的二进制文件瘦身方案，作为整个iOS安装包瘦身技术中的一环：BitCode是对LLVM IR进一步优化后再<a href="https://llvm.org/docs/BitCodeFormat.html" target="_blank" rel="noopener">编码</a>所得到的中间二进制文件，开启BitCode之后，Xcode在打包上传到App Store的构建文件中，二进制文件不再是Fat Binary，而是包含BitCode的Mach-O，提交到App Store后，再由App Store负责提取出BitCode，然后针对不同的芯片架构编译、链接、生成对应的Mach-O，这样当用户下载时，App中就只包含当前芯片架构所对应的Mach-O。</p>
-<p>BitCode在整个编码过程所处的位置如图：<br><img src="/2017/12/23/APP工作原理/一、APP的编译过程/1-1.jpg" alt></p>
+<p>BitCode在整个编码过程所处的位置如图：<br><img src="/2017/12/23/APP工作原理/一、APP的编译过程/1.jpg" alt></p>
 <p>开启BitCode来进行App打包上传时，需要注意以下几点：</p>
 <ol>
 <li><strong>BitCode一致性</strong>：要求App所依赖的库也必须支持BitCode，否则就会打包失败，比如App中如果使用了不支持BitCode的三方静态库（例如某些以<code>.a</code>形式提供的三方闭源库），就不能使用BitCode打包上传；</li>
@@ -530,7 +530,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/17/工具教程/Markdown语法基础/" rel="next" title="Markdown语法基础">
+              <a href="/2017/11/17/实用笔记/Markdown语法基础/" rel="next" title="Markdown语法基础">
                 <i class="fa fa-chevron-left"></i> Markdown语法基础
               </a>
             
@@ -626,7 +626,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -637,7 +637,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -648,7 +648,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

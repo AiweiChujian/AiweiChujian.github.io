@@ -312,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/12/22/APP架构/三、MVC设计模式/">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/01/12/APP架构/六、MVC-VS设计模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AI_Wei">
@@ -331,7 +331,321 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/22/APP架构/三、MVC设计模式/" itemprop="url">三、MVC设计模式</a></h1>
+                <a class="post-title-link" href="/2019/01/12/APP架构/六、MVC-VS设计模式/" itemprop="url">六、MVC-VS设计模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-12T00:00:00+08:00">
+                2019-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP架构/" itemprop="url" rel="index">
+                    <span itemprop="name">APP架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+Reference:App Architecture
+
+MVC+VC是MVC的一种变体，所不同的是它将view state视为model层的一部分，用view state model进行存储，ViewController观察view state model，并且相应地更新 view 层级。
+MVC+VS中的反馈回路：
+MVC+VS对MVC的改进在于：提供了一种一致的处理view state变更的
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/01/12/APP架构/六、MVC-VS设计模式/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/01/06/APP架构/五、MVVM设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/06/APP架构/五、MVVM设计模式/" itemprop="url">五、MVVM设计模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-06T00:00:00+08:00">
+                2019-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP架构/" itemprop="url" rel="index">
+                    <span itemprop="name">APP架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+Reference:App Architecture
+
+Model-View-ViewModel(MVVM)是一种基于MVC进行改进的模式，它将所有model相关的任务（观察model变更，将model数据变形，以及更新model）从controller层抽离出来，放到新的叫做view-model的一层对象中。引入view-model层的主要目的有两点：
+
+鼓励将model和view之间的关系构
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/01/06/APP架构/五、MVVM设计模式/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/12/22/APP架构/四、MVC设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/22/APP架构/四、MVC设计模式/" itemprop="url">四、MVC设计模式</a></h1>
         
 
         <div class="post-meta">
@@ -412,7 +726,7 @@ MVC基于经典的面向对象原则:对象在内部对它们的行为和状态�
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/12/22/APP架构/三、MVC设计模式/#more" rel="contents">
+            <a class="btn" href="/2018/12/22/APP架构/四、MVC设计模式/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -467,7 +781,7 @@ MVC基于经典的面向对象原则:对象在内部对它们的行为和状态�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/12/16/APP架构/二、APP架构的设计模式/">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/12/16/APP架构/三、网络层的架构设计/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AI_Wei">
@@ -486,7 +800,7 @@ MVC基于经典的面向对象原则:对象在内部对它们的行为和状态�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/16/APP架构/二、APP架构的设计模式/" itemprop="url">二、APP架构的设计模式</a></h1>
+                <a class="post-title-link" href="/2018/12/16/APP架构/三、网络层的架构设计/" itemprop="url">三、网络层的架构设计</a></h1>
         
 
         <div class="post-meta">
@@ -563,13 +877,170 @@ MVC基于经典的面向对象原则:对象在内部对它们的行为和状态�
           
 Reference:App Architecture
 
-iOS开发官方钦定的设计模式是MVC，而MVC及其两种变形：MVVM+C和MVC+VS，是学习iOS APP架构最需要掌握的三种设计模式，这三种设计模式都是基于场景进行的架构，它们其实都是观察者模式、策略模式和组合模式三种设计子模式的集合。
+添加网络的挑战为程序添加网络支持时，会面临一些额外的挑战，这不是某个架构所特有的问题，也和本节中对于网络层如何架构的讨论无关，但是对于一款需要从网络中获取数据的APP，或多或少都需要清楚对于这些问题的思考：
 
-MVCS：在有的地方会提到一种称为MVCS的架构，它在Model层与Controller层之间加入
+额外的失败来源：任何从网络获取数据的尝试，都可能由于一系列的理由以失败而告终。我们必须考虑如何优雅地处理这些错误，而且经常还要为展示
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/12/16/APP架构/二、APP架构的设计模式/#more" rel="contents">
+            <a class="btn" href="/2018/12/16/APP架构/三、网络层的架构设计/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/12/12/APP架构/二、APP架构的设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/12/APP架构/二、APP架构的设计模式/" itemprop="url">二、APP架构的设计模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-12T00:00:00+08:00">
+                2018-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP架构/" itemprop="url" rel="index">
+                    <span itemprop="name">APP架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+Reference:App Architecture
+
+iOS开发官方钦定的设计模式是MVC，而MVC及其两种变形：MVVM+C和MVC+VS，是学习iOS APP架构最需要掌握的三种设计模式，实践源码可以参考链接。这三种设计模式都是基于场景进行的架构，它们其实都是观察者模式、策略模式和组合模式三种设计子模式的集合。
+
+MVCS：在有的地方会提到一种称为MVCS的架构，它在Model层与Cont
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/12/APP架构/二、APP架构的设计模式/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1031,11 +1502,10 @@ app的设计模式基本
       
         
           
-          [TOC]
-
+          
 Reference:Objective-C Runtime Programming GuideiOS Runtime详解
 
-简述Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过
+简述Runtime抽象的说OC的运行时系统，实质点讲它是一个由C和汇编编写的库（后逐步用C++重写）。这个库完成了OC对C的扩展，在编译期，通过它实现了OC向C/C++的装换；同时在运行时，它是OC面向对象和动态特性的基石：它让OC可以动态的创建类和对象、并通过方法调用来完
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1251,7 +1721,7 @@ Reference:app的生命周期ios background modes
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2017/11/17/工具教程/Markdown语法基础/">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2017/11/17/实用笔记/Markdown语法基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AI_Wei">
@@ -1270,7 +1740,7 @@ Reference:app的生命周期ios background modes
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/17/工具教程/Markdown语法基础/" itemprop="url">Markdown语法基础</a></h1>
+                <a class="post-title-link" href="/2017/11/17/实用笔记/Markdown语法基础/" itemprop="url">Markdown语法基础</a></h1>
         
 
         <div class="post-meta">
@@ -1305,8 +1775,8 @@ Reference:app的生命周期ios background modes
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具教程/" itemprop="url" rel="index">
-                    <span itemprop="name">工具教程</span>
+                  <a href="/categories/实用笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">实用笔记</span>
                   </a>
                 </span>
 
@@ -1352,7 +1822,7 @@ Markdown的宗旨：Markdown的目标是实现易读易写。可读性无论如�
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/17/工具教程/Markdown语法基础/#more" rel="contents">
+            <a class="btn" href="/2017/11/17/实用笔记/Markdown语法基础/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1446,7 +1916,7 @@ Markdown的宗旨：Markdown的目标是实现易读易写。可读性无论如�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1457,7 +1927,7 @@ Markdown的宗旨：Markdown的目标是实现易读易写。可读性无论如�
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1468,7 +1938,7 @@ Markdown的宗旨：Markdown的目标是实现易读易写。可读性无论如�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

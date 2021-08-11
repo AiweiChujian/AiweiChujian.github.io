@@ -104,12 +104,12 @@
 <meta property="og:site_name" content="盒子里的猫">
 <meta property="og:description" content="[TOC]  Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/2-1.png">
-<meta property="og:updated_time" content="2021-08-02T09:31:11.045Z">
+<meta property="og:image" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/1.png">
+<meta property="og:updated_time" content="2021-08-11T01:42:22.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二、APP的加载过程">
 <meta name="twitter:description" content="[TOC]  Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件">
-<meta name="twitter:image" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/2-1.png">
+<meta name="twitter:image" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/1.png">
 
 
 
@@ -418,7 +418,7 @@
 <blockquote>
 <p><strong>Fat Binary的大端模式和小端模式</strong>：大端模式，是指数据的高字节保存在内存的低地址中，而数据的低字节保存在内存的高地址中；小端模式，则是指数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中。</p>
 </blockquote>
-<h2 id="Mach-O"><a href="#Mach-O" class="headerlink" title="Mach-O"></a>Mach-O</h2><p>Mach-O的文件结构如图：<br><img src="/2018/01/07/APP工作原理/二、APP的加载过程/2-1.png" alt></p>
+<h2 id="Mach-O"><a href="#Mach-O" class="headerlink" title="Mach-O"></a>Mach-O</h2><p>Mach-O的文件结构如图：<br><img src="/2018/01/07/APP工作原理/二、APP的加载过程/1.png" alt></p>
 <p>Mach-O主要由Header、Load Commands和Data所构成：</p>
 <ul>
 <li><strong>Header</strong>：包含魔数、芯片类型与子类型、文件类型、加载命令数量与大小、动态链接器标识、字节顺序等信息；</li>
@@ -698,7 +698,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -709,7 +709,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -720,7 +720,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

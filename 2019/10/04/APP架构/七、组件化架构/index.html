@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://hellohezhili.com"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="mh9cQ2yLqXFEC_ZrY3D23g1Cdi1bUYHw4byhld6mqDE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="组件化架构,中间件,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="组件组件是软件系统中可独立部署的最小实体，组件化架构就是一套定义组件划分以及组件间相互协作方式的设计规则。 在编译后的二进制文件可进行外部链接之后，就有了组件的概念，它是将软件系统拆分后获得的部件，它比模块的划分要高一个级别，拆分时重视组件的重用性，拆分后强调组件的独立部署能力。 组件可被独立部署的特性，也意味着组件可以被独立开发，在iOS开发中，对于需要多人合作的大型APP，组件可被独立开发的特">
+<meta name="keywords" content="组件化架构,中间件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="七、组件化架构">
+<meta property="og:url" content="https://hellohezhili.com/2019/10/04/APP架构/七、组件化架构/index.html">
+<meta property="og:site_name" content="盒子里的猫">
+<meta property="og:description" content="组件组件是软件系统中可独立部署的最小实体，组件化架构就是一套定义组件划分以及组件间相互协作方式的设计规则。 在编译后的二进制文件可进行外部链接之后，就有了组件的概念，它是将软件系统拆分后获得的部件，它比模块的划分要高一个级别，拆分时重视组件的重用性，拆分后强调组件的独立部署能力。 组件可被独立部署的特性，也意味着组件可以被独立开发，在iOS开发中，对于需要多人合作的大型APP，组件可被独立开发的特">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-08-11T01:19:18.389Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="七、组件化架构">
+<meta name="twitter:description" content="组件组件是软件系统中可独立部署的最小实体，组件化架构就是一套定义组件划分以及组件间相互协作方式的设计规则。 在编译后的二进制文件可进行外部链接之后，就有了组件的概念，它是将软件系统拆分后获得的部件，它比模块的划分要高一个级别，拆分时重视组件的重用性，拆分后强调组件的独立部署能力。 组件可被独立部署的特性，也意味着组件可以被独立开发，在iOS开发中，对于需要多人合作的大型APP，组件可被独立开发的特">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'AI_Wei'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hellohezhili.com/2019/10/04/APP架构/七、组件化架构/">
+
+
+
+
+
+  <title>七、组件化架构 | 盒子里的猫</title>
+  
+
+
+
+
+
+
+
+
+<link rel="alternate" href="/atom.xml" title="盒子里的猫" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">盒子里的猫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/10/04/APP架构/七、组件化架构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">七、组件化架构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-04T00:00:00+08:00">
+                2019-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP架构/" itemprop="url" rel="index">
+                    <span itemprop="name">APP架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>组件是软件系统中可独立部署的最小实体，组件化架构就是一套定义组件划分以及组件间相互协作方式的设计规则。</p>
+<p>在编译后的二进制文件可进行外部链接之后，就有了组件的概念，它是将软件系统拆分后获得的部件，它比模块的划分要高一个级别，拆分时重视组件的重用性，拆分后强调组件的独立部署能力。</p>
+<p>组件可被独立部署的特性，也意味着组件可以被独立开发，在iOS开发中，对于需要多人合作的大型APP，组件可被独立开发的特性能极大的提升整体开发效率，设计良好的组件能被跨APP的重用，这也满足了大型APP团队的实际需求，同时将单工程APP拆分成多个组件，配合组件化架构中组件间的解耦方案，也能最低程度的限制APP中代码的耦合度。</p>
+<blockquote>
+<p><strong>PS：</strong>基于动态链接，在组件的概念上进一步演进的插件化技术，在iOS系统中出于对安全性的考虑，一直被苹果限制使用。</p>
+</blockquote>
+<h2 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h2><h3 id="1-组件构建原则"><a href="#1-组件构建原则" class="headerlink" title="1. 组件构建原则"></a>1. 组件构建原则</h3><p>在iOS APP的组件化架构中，架构都是有模式可循的，如何将APP组件化，即如何对代码进行划分以构建一个组件，才是开发实践中需要反复思考，并真正考验设计能力的问题。组件的划分需要兼顾研发性和复用性，还需要考虑组件间的依赖关系，并且具备时效性，是随项目而不断演化的，<strong>组件构建原则</strong>（出自《Clean Architecture》）能够指导组件化的决策过程。</p>
+<h4 id="组件聚合"><a href="#组件聚合" class="headerlink" title="组件聚合"></a>组件聚合</h4><ol>
+<li><strong>复用/发布等同原则（REP）：</strong>组件复用的最小粒度应等同于其发布的最小粒度，也就是说，有一个共同的主题或者大方向的类和模块应该放到同一个组件中；</li>
+<li><strong>共同闭包原则（CCP）：</strong>会同时修改且因为相同目的而修改的类和模块应该放到同一个组件中，不会同时修改且不会因为相同目的而修改的类和模块应该放到不同组件中；</li>
+<li><strong>共同复用原则（CRP）：</strong>不要强迫一个组件的用户依赖它们不需要的东西，也就是说，不是紧密相连的类和模块不应该放在同一个组件中。</li>
+</ol>
+<p>以上原则从不同角度指导了组件聚合，彼此间是相互拉扯的，构建组件时需要根据项目当前的实际情况进行综合考虑，没有最佳，只有更适合。</p>
+<h4 id="组件耦合"><a href="#组件耦合" class="headerlink" title="组件耦合"></a>组件耦合</h4><ul>
+<li><strong>无依赖环原则（ADP）：</strong>组件依赖关系图中不应该出现环，依赖环最直接的后果便是会破坏组件的独立性，使组件独立维护、测试和发布都变得非常困难；</li>
+<li><strong>稳定依赖原则（SDP）：</strong>依赖关系必须要指向更稳定的方向，容易变更的组件不应该被太多的其它组件所依赖，被许多组件所赖的组件必须得是稳定的；</li>
+<li><strong>稳定抽象原则（SAP）：</strong>组件的抽象化程度通常和其稳定性保持一致，即抽象化程度越高的组件其稳定性通常也越高，同时还更利于扩展。</li>
+</ul>
+<p>在iOS组件化架构的实践中，为组件引入一个中间件的中介者模式，是被广泛使用的架构方案，中间件打破了组件间的依赖关系，同时让组件的依赖都指向了中间件，但组件间实际的依赖逻辑依然存在，减少组件耦合的原则，在组件化设计时依然具有指导意义。</p>
+<p>根据无依赖环原则，需要避免组件间直接或间接的循环依赖，打破循环依赖的主要手段包括：将相互依赖的部分放入一个组件中（或者为它们新建一个组件）；以及在其中一方的组件中引入抽象，实现依赖反转。结合稳定依赖原则和稳定抽象原则可以知道，一个被多方依赖的组件应该是一个稳定的组件，而通常抽象程度越高的组件就越稳定。</p>
+<blockquote>
+<p><strong>PS：</strong>《Clean Architecture》中提出了组件稳定性和抽象程度的量化方法，根据稳定性和抽象程度的指标可以综合分析系统中组件设计与“优秀”设计模式之间的契合度，这种衡量在某些情况中可能具有不错的参考价值。</p>
+</blockquote>
+<h3 id="2-iOS组件化工具"><a href="#2-iOS组件化工具" class="headerlink" title="2. iOS组件化工具"></a>2. iOS组件化工具</h3><p>在iOS8之后苹果允许APP有自己的Embedded Frameworks（详见<a href="/2017/12/23/APP工作原理/一、APP的编译过程">APP的编译过程</a>），所以iOS开发中能将源码打包成静态库或动态库的包管理工具（CocoaPods、Carthage、Swift Package Manager等），都可以作为实现iOS组件化的工具，甚至利用Xcode的Workspace与Projects，或者Project与Targets，也都能实现iOS项目的组件化，这里仅以使用最多的CocoaPods简述创建一个组件的过程。</p>
+<p>利用CocoaPods来实现iOS项目的组件化，将拆分后的组件代码做成CocoaPods的私有库，一个组件就是一个私有库，私有库的索引推送在私有源上，在组件使用者的Podfile中指明私有源，再引入私有库，即引入了组件：</p>
+<ol>
+<li>创建一个远程仓库作为私有源，通过<code>pod repo add</code>命令（Useage: <code>pod repo add MYSpecs https://xxxx/myspecs.git</code>）将私有源添加到自己的CocoaPods中；</li>
+<li>通过<code>pod lib create</code>命令（Useage: <code>pod lib create MYComponent</code>）为组件创建CocoaPods库，再为CocoaPods库创建远程仓库，根据组件的实际情况和远程仓库地址配置CocoaPods库的<code>podspec</code>文件（<a href="https://www.codenong.com/jsca3d96bbc5cf/" target="_blank" rel="noopener">Podspec语法参考(翻译)</a>）；</li>
+<li>在CocoaPods库中的组件代码编译通过之后，可对库的<code>podspec</code>文件进行本地验证（<code>pod lib lint</code>）和远程验证（<code>pod spec lint</code>），最后将<code>podspec</code>文件推送（<code>pod repo push</code>）到私有源上。验证和推送<code>podspec</code>文件时，需要<code>cd</code>到文件所在的目录，常用的可选参数有：<ul>
+<li><strong>–sources</strong>：如果组件库依赖了其他私有库/组件，需要通过此参数指明私有源；</li>
+<li><strong>–use-libraries</strong>：如果组件库依赖了静态的三方库，需要添加此参数，否则会提示找不到这些库；</li>
+<li><strong>–use-modular-headers</strong>：如果组件库的<code>podspec</code>中声明自己以静态库的方式被导入，而组件库依赖的某些三方库没有指明自己的moudle name，需要添加此参数；</li>
+<li><strong>–skip-import-validation</strong>：如果组件库依赖的某些库，缺少对x86芯片指令集的支持（模拟器），需要通过此命令跳过组件库的导入验证；</li>
+</ul>
+</li>
+<li>在组件使用者的<code>podfile</code>中通过<code>source</code>指明私有源，再通过<code>pod</code>正常引入私有库，即引入了组件；</li>
+</ol>
+<p>podfile其实是简写的Ruby代码，在pod install和update时可以设置环境变量，然后在podfile中通过<code>ENV[&#39;key&#39;]</code>获取，再根据变量做if-else的条件判断，然后执行不同的逻辑，同时podfile中引入一个库时，可以为库指定地址，根据这两点，就可以让一个podfile根据不同参数而去分别引入开发/发布的组件库，一个工程既可作为开发时的壳工程，也可以作为发布时的主工程。</p>
+<blockquote>
+<p><strong>PS：</strong>podfile中还可以为库指定本地地址，从而让正在开发中的组件跳过lint和push的步骤，直接集成到整个项目中，进行调试，提高开发效率，podfile语法参考：<em><a href>Podfile语法中文参考文档</a></em>。</p>
+</blockquote>
+<h2 id="架构模式"><a href="#架构模式" class="headerlink" title="架构模式"></a>架构模式</h2><p>拆分后的组件可以被独立部署（开发），但组件间可能存在复杂的依赖关系，这些依赖让拆分后项目的架构异常复杂且难以维护，组件化之后的项目需要一套架构方案，来简化组件间的依赖，同时还要有方便的组件间协作方式。iOS组件化架构由蘑菇街团队分享之后而广为流传，在蘑菇街的组件化架构方案中，通过为组件添加中间件以实现的中介者模式，来解决组件间依赖和协作的问题，在后续开发者的实践中，中介者模式也基本被认为是iOS组件化架构的最佳解决方案。</p>
+<p>iOS组件化架构中，通常引入中间件来作为组件的中介者，组件间的协作方法都被<strong>抽象</strong>后由中间件直接响应，组件都只需要单向依赖中间件，中间件内部再将协作方法<strong>转发</strong>给具体的组件，iOS组件化架构实际上就是对中介者模式的应用。</p>
+<h2 id="中间件方案"><a href="#中间件方案" class="headerlink" title="中间件方案"></a>中间件方案</h2><p>蘑菇街分享了自己组件化架构的中间件<a href="https://github.com/meili/MGJRouter" target="_blank" rel="noopener">MGJRouter</a>（<a href="https://limboy.me/tech/2016/03/10/mgj-components.html" target="_blank" rel="noopener">蘑菇街 App 的组件化之路</a>），casatwy指出其有多项不足（没必要的注册、注册后block对内存的占用、以及基于openUrl设计导致传参困难等），并分享了自己的中间件方案<a href="https://github.com/casatwy/CTMediator" target="_blank" rel="noopener">CTMediator</a>，后续蘑菇街又说明MGJRouter还存在一套基于protocol-class的补充方案，casatwy继续评判…</p>
+<p>在那场论战中蘑菇街方案的问题肯定是客观存在的，但casatwy的部分观点也有待商榷，总之通过那场论战可以知道，iOS组件化架构的中间件并没有一套业内统一认可和使用的方案，只要抓住<strong>iOS中基于中间件的组件化架构，就是对中介者模式的应用</strong>这一本质，完全可以设计或修改出适合自己项目的中间件。</p>
+<h3 id="AWMaster"><a href="#AWMaster" class="headerlink" title="AWMaster"></a>AWMaster</h3><p><a href="https://github.com/AiweiChujian/AWMaster" target="_blank" rel="noopener">AWMaster</a>是一套基于protocol来<strong>抽象</strong>组件间协作方法，通过消息转发的备援接收者来<strong>转发</strong>协作方法的中间件方案，它有以下特点：</p>
+<ol>
+<li>不将协作方法高度抽象为中间件的一个通用方法，而是仅抽象为协议（但保留了对openUrl远程调用的支持），方便协作方法的维护、调用和传参；</li>
+<li>保留了对协作方法的注册，通过protocol和class进行注册，注册后维护方法和class的映射关系，CTMediator也并非不需要注册，而是将注册隐藏在了强制的命名规范之中（Target_targetName），这种隐晦的方式方便使用，但不利于理解，考虑在后续大版本中再更新为此方式；</li>
+<li>基于消息转发的备援接收者来完成协作方法的转发，方法的调用和转发都更自然，也比CTMediator中完整的消息转发（NSInvocation）性能更优；</li>
+<li>额外提供协作方法的群发功能，满足一个协作方法需要被多个组件响应的特殊需求。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>iOS组件化架构的关键就两点：1. 对单工程项目的组件化拆分，以及拆分后利用包管理等工具对组件进行管理；2. 根据中介者模式，为组件引入中间件，解决组件间依赖和协作的问题。熟悉架构中使用的包管理（或其它）工具、理解中介者模式并清楚架构中选用的中间件的工作方式，便能掌握项目中的组件化架构，组件化架构最终需要反复思考的问题依然是组件的设计与演进。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/组件化架构/" rel="tag"># 组件化架构</a>
+          
+            <a href="/tags/中间件/" rel="tag"># 中间件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/24/实用笔记/injectionⅢ/" rel="next" title="InjectionⅢ">
+                <i class="fa fa-chevron-left"></i> InjectionⅢ
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzcyMy8yMDI2Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AI_Wei">
+            
+              <p class="site-author-name" itemprop="name">AI_Wei</p>
+              <p class="site-description motion-element" itemprop="description">自由源于自信，自信源于自律</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AiweiChujian" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:aiweichujian@gmail.com" target="_blank" title="G-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>G-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2804552143" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="/images/wechat.jpg" target="_blank" title="Wechat">
+                      
+                        <i class="fa fa-fw fa-wechat"></i>Wechat</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#组件"><span class="nav-text">组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件化"><span class="nav-text">组件化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-组件构建原则"><span class="nav-text">1. 组件构建原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#组件聚合"><span class="nav-text">组件聚合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组件耦合"><span class="nav-text">组件耦合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-iOS组件化工具"><span class="nav-text">2. iOS组件化工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构模式"><span class="nav-text">架构模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件方案"><span class="nav-text">中间件方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AWMaster"><span class="nav-text">AWMaster</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AI_Wei</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+</body>
+</html>
