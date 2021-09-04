@@ -135,9 +135,9 @@
       <category term="APP架构" scheme="https://hellohezhili.com/categories/APP%E6%9E%B6%E6%9E%84/"/>
     
     
-      <category term="MVC+VS" scheme="https://hellohezhili.com/tags/MVC-VS/"/>
-    
       <category term="MVCS" scheme="https://hellohezhili.com/tags/MVCS/"/>
+    
+      <category term="MVC+VS" scheme="https://hellohezhili.com/tags/MVC-VS/"/>
     
   </entry>
   
@@ -311,13 +311,13 @@
       <category term="APP架构" scheme="https://hellohezhili.com/categories/APP%E6%9E%B6%E6%9E%84/"/>
     
     
-      <category term="MVCS" scheme="https://hellohezhili.com/tags/MVCS/"/>
+      <category term="MVVM" scheme="https://hellohezhili.com/tags/MVVM/"/>
     
       <category term="MVC" scheme="https://hellohezhili.com/tags/MVC/"/>
     
-      <category term="MVVM" scheme="https://hellohezhili.com/tags/MVVM/"/>
-    
       <category term="MVC-VS" scheme="https://hellohezhili.com/tags/MVC-VS/"/>
+    
+      <category term="MVCS" scheme="https://hellohezhili.com/tags/MVCS/"/>
     
   </entry>
   
