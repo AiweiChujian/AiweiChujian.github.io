@@ -96,23 +96,23 @@
 
 
 
-<meta name="description" content="[TOC]  Reference:深入理解RunLoopRunLoop 详解  程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。 概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在">
+<meta name="description" content="Reference:深入理解RunLoopRunLoop 详解  程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。 概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在内存中持续工">
 <meta name="keywords" content="RunLoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="四、事件处理机制（RunLoop）">
 <meta property="og:url" content="https://hellohezhili.com/2018/03/02/APP工作原理/四、事件处理机制（RunLoop）/index.html">
 <meta property="og:site_name" content="盒子里的猫">
-<meta property="og:description" content="[TOC]  Reference:深入理解RunLoopRunLoop 详解  程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。 概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在">
+<meta property="og:description" content="Reference:深入理解RunLoopRunLoop 详解  程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。 概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在内存中持续工">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://hellohezhili.com/2018/03/02/APP工作原理/四、事件处理机制（RunLoop）/1.png">
 <meta property="og:image" content="https://hellohezhili.com/2018/03/02/APP工作原理/四、事件处理机制（RunLoop）/2.png">
 <meta property="og:image" content="https://hellohezhili.com/2018/03/02/APP工作原理/四、事件处理机制（RunLoop）/3.png">
 <meta property="og:image" content="https://hellohezhili.com/2018/03/02/APP工作原理/四、事件处理机制（RunLoop）/4.png">
 <meta property="og:image" content="https://hellohezhili.com/2018/03/02/APP工作原理/四、事件处理机制（RunLoop）/5.png">
-<meta property="og:updated_time" content="2021-08-11T01:43:51.839Z">
+<meta property="og:updated_time" content="2021-08-12T06:33:13.493Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="四、事件处理机制（RunLoop）">
-<meta name="twitter:description" content="[TOC]  Reference:深入理解RunLoopRunLoop 详解  程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。 概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在">
+<meta name="twitter:description" content="Reference:深入理解RunLoopRunLoop 详解  程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。 概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在内存中持续工">
 <meta name="twitter:image" content="https://hellohezhili.com/2018/03/02/APP工作原理/四、事件处理机制（RunLoop）/1.png">
 
 
@@ -408,8 +408,7 @@
       
 
       
-        <p>[TOC]</p>
-<blockquote>
+        <blockquote>
 <p><strong>Reference:</strong><br><a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">深入理解RunLoop</a><br><a href="https://www.cnblogs.com/DamonTang/archive/2012/12/07/2807290.html" target="_blank" rel="noopener">RunLoop 详解</a></p>
 </blockquote>
 <p><em>程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。</em></p>
@@ -677,7 +676,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -699,7 +698,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

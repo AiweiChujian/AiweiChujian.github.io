@@ -96,18 +96,18 @@
 
 
 
-<meta name="description" content="[TOC] UIEvent用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：  用户通过硬件产生一个交互，硬件将信息传递给系统； 系统的IOKit生成IOHIDEvent，并发送给SpringBoard； SpringBoard再通过系统端口将事件传递给对应的APP； APP主线程的RunLoop中，由UIKit注">
+<meta name="description" content="UIEvent用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：  用户通过硬件产生一个交互，硬件将信息传递给系统； 系统的IOKit生成IOHIDEvent，并发送给SpringBoard； SpringBoard再通过系统端口将事件传递给对应的APP； APP主线程的RunLoop中，由UIKit注册了一个So">
 <meta name="keywords" content="UIEvent,UIResponder,响应链">
 <meta property="og:type" content="article">
 <meta property="og:title" content="五、事件传递机制（Responder Chain）">
 <meta property="og:url" content="https://hellohezhili.com/2018/03/13/APP工作原理/五、事件传递机制（Responder Chain）/index.html">
 <meta property="og:site_name" content="盒子里的猫">
-<meta property="og:description" content="[TOC] UIEvent用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：  用户通过硬件产生一个交互，硬件将信息传递给系统； 系统的IOKit生成IOHIDEvent，并发送给SpringBoard； SpringBoard再通过系统端口将事件传递给对应的APP； APP主线程的RunLoop中，由UIKit注">
+<meta property="og:description" content="UIEvent用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：  用户通过硬件产生一个交互，硬件将信息传递给系统； 系统的IOKit生成IOHIDEvent，并发送给SpringBoard； SpringBoard再通过系统端口将事件传递给对应的APP； APP主线程的RunLoop中，由UIKit注册了一个So">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-08-04T02:47:06.675Z">
+<meta property="og:updated_time" content="2021-08-12T06:33:11.048Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="五、事件传递机制（Responder Chain）">
-<meta name="twitter:description" content="[TOC] UIEvent用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：  用户通过硬件产生一个交互，硬件将信息传递给系统； 系统的IOKit生成IOHIDEvent，并发送给SpringBoard； SpringBoard再通过系统端口将事件传递给对应的APP； APP主线程的RunLoop中，由UIKit注">
+<meta name="twitter:description" content="UIEvent用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：  用户通过硬件产生一个交互，硬件将信息传递给系统； 系统的IOKit生成IOHIDEvent，并发送给SpringBoard； SpringBoard再通过系统端口将事件传递给对应的APP； APP主线程的RunLoop中，由UIKit注册了一个So">
 
 
 
@@ -402,8 +402,7 @@
       
 
       
-        <p>[TOC]</p>
-<h2 id="UIEvent"><a href="#UIEvent" class="headerlink" title="UIEvent"></a>UIEvent</h2><p>用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：</p>
+        <h2 id="UIEvent"><a href="#UIEvent" class="headerlink" title="UIEvent"></a>UIEvent</h2><p>用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：</p>
 <ol>
 <li>用户通过硬件产生一个交互，硬件将信息传递给系统；</li>
 <li>系统的IOKit生成IOHIDEvent，并发送给SpringBoard；</li>
@@ -534,8 +533,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/23/iOS编程进阶/一、ObjC的动态特性(Runtime)/" rel="prev" title="一、ObjC的动态特性(Runtime)">
-                一、ObjC的动态特性(Runtime) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/06/13/APP工作原理/六、UIView的生命周期/" rel="prev" title="六、UIView的生命周期">
+                六、UIView的生命周期 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -620,7 +619,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -642,7 +641,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

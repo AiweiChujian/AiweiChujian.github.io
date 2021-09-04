@@ -96,19 +96,19 @@
 
 
 
-<meta name="description" content="[TOC]  Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Buil">
+<meta name="description" content="Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Build环境：创建">
 <meta name="keywords" content="编译,Mach-O,BitCode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一、APP的编译过程">
 <meta property="og:url" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/index.html">
 <meta property="og:site_name" content="盒子里的猫">
-<meta property="og:description" content="[TOC]  Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Buil">
+<meta property="og:description" content="Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Build环境：创建">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/1.jpg">
-<meta property="og:updated_time" content="2021-08-11T01:41:55.000Z">
+<meta property="og:updated_time" content="2021-08-12T06:33:11.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一、APP的编译过程">
-<meta name="twitter:description" content="[TOC]  Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Buil">
+<meta name="twitter:description" content="Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接  Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：  准备Build环境：创建">
 <meta name="twitter:image" content="https://hellohezhili.com/2017/12/23/APP工作原理/一、APP的编译过程/1.jpg">
 
 
@@ -404,8 +404,7 @@
       
 
       
-        <p>[TOC]</p>
-<blockquote>
+        <blockquote>
 <p><strong>Reference:</strong><br><a href="https://blog.csdn.net/aas319/article/details/78606342" target="_blank" rel="noopener">iOS App 的编译过程</a><br><a href="https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/" target="_blank" rel="noopener">深入剖析 iOS 编译 Clang / LLVM</a><br><a href="http://www.cocoachina.com/articles/26055" target="_blank" rel="noopener">关于bitcode, 知道这些就够了</a><br><a href="https://zhangbuhuai.com/post/macho-static-link.html" target="_blank" rel="noopener">Mach-O 与静态链接</a></p>
 </blockquote>
 <h2 id="Xcode-Build"><a href="#Xcode-Build" class="headerlink" title="Xcode Build"></a>Xcode Build</h2><p>Xcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：</p>
@@ -626,7 +625,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -648,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

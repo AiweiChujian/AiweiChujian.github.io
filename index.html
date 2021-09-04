@@ -312,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/02/23/编程通用基础/一、五大设计原则/">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/02/23/编程通用基础/五大设计原则/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AI_Wei">
@@ -331,7 +331,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/23/编程通用基础/一、五大设计原则/" itemprop="url">一、五大设计原则</a></h1>
+                <a class="post-title-link" href="/2019/02/23/编程通用基础/五大设计原则/" itemprop="url">五大设计原则</a></h1>
         
 
         <div class="post-meta">
@@ -406,14 +406,14 @@
         
           
           
-本文类容基于《架构整洁之道》
+本文类容基于《Clean Architecture》
 
-五大设计原则包括：单一职责原则（SRP)、开闭原则（OCP）、里氏替换原则（LSP）、接口隔离原则（ISP）和依赖反转原则（DIP），它们是经受过时间检验和筛选的软件设计指导思想，这种指导既适用于软件架构设计，也适用于编程代码实现，遵守设计原则，便于写出更具灵活性（易读、易扩展、易维护和易重用）的程序。
-SRP: 单一职责原则单一职责原则最初的描述是：“一个软件模
+五大设计原则包括：单一职责原则（SRP)、开闭原则（OCP）、里氏替换原则（LSP）、接口隔离原则（ISP）和依赖反转原则（DIP），它们是经受过时间检验和筛选的软件设计指导思想，这种指导既适用于架构设计，也适用于程序设计，遵循设计原则，便于写出更具灵活性（易读、易扩展、易维护和易重用）的软件。
+SRP: 单一职责原则单一职责原则最初的描述
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/02/23/编程通用基础/一、五大设计原则/#more" rel="contents">
+            <a class="btn" href="/2019/02/23/编程通用基础/五大设计原则/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -872,13 +872,12 @@ MBProgressHUD：好用易扩展
       
         
           
-          [TOC]
-UIEvent用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：
+          UIEvent用户对设备的交互行为，最终会在APP中被包装为UIEvent，由对应的APP进行响应和处理，用户的交互行为到UIEvent的过程如下：
 
 用户通过硬件产生一个交互，硬件将信息传递给系统；
 系统的IOKit生成IOHIDEvent，并发送给SpringBoard；
 SpringBoard再通过系统端口将事件传递给对应的APP；
-APP主线程的RunLoop中，由UIKit注
+APP主线程的RunLoop中，由UIKit注册了一个So
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1030,11 +1029,10 @@ APP主线程的RunLoop中，由UIKit注
       
         
           
-          [TOC]
-
+          
 Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime
 
-ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件
+ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件可执行权限，
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1186,13 +1184,12 @@ ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解�
       
         
           
-          [TOC]
-
+          
 Reference:iOS App 的编译过程深入剖析 iOS 编译 Clang / LLVM关于bitcode, 知道这些就够了Mach-O 与静态链接
 
 Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iOS项目时，其实就是App的打包过程，除了对源代码文件进行编译，Xcode还做了很多其他的工作，主要包括：
 
-准备Buil
+准备Build环境：创建
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1344,12 +1341,11 @@ Xcode BuildXcode Build时以一个Target作为Build目标，当Target是一个iO
       
         
           
-          [TOC]
-
+          
 Reference:深入理解RunLoopRunLoop 详解
 
 程序运行时代码都是顺序执行的，执行完毕程序就结束退出了，了解APP工作机制的一个基础，是弄清楚APP如何实现在内存中常驻的。
-概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在
+概述代码在程序的线程中顺序执行，当程序所有的线程中代码都运行完毕，程序就结束并退出了，iOS与MacOS中通过RunLoop机制来让线程可以一直保持运行，并循环的处理各类事件，从而让APP常驻在内存中持续工
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1564,7 +1560,7 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/10/04/APP架构/七、组件化架构/">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AI_Wei">
@@ -1583,7 +1579,7 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/04/APP架构/七、组件化架构/" itemprop="url">七、组件化架构</a></h1>
+                <a class="post-title-link" href="/2018/12/25/APP工作原理/八、视图的显示原理/" itemprop="url">八、视图的显示原理</a></h1>
         
 
         <div class="post-meta">
@@ -1595,8 +1591,8 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-04T00:00:00+08:00">
-                2019-10-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-25T00:00:00+08:00">
+                2018-12-25
               </time>
             
 
@@ -1618,8 +1614,8 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/APP架构/" itemprop="url" rel="index">
-                    <span itemprop="name">APP架构</span>
+                  <a href="/categories/APP工作原理/" itemprop="url" rel="index">
+                    <span itemprop="name">APP工作原理</span>
                   </a>
                 </span>
 
@@ -1657,13 +1653,14 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
       
         
           
-          组件组件是软件系统中可独立部署的最小实体，组件化架构就是一套定义组件划分以及组件间相互协作方式的设计规则。
-在编译后的二进制文件可进行外部链接之后，就有了组件的概念，它是将软件系统拆分后获得的部件，它比模块的划分要高一个级别，拆分时重视组件的重用性，拆分后强调组件的独立部署能力。
-组件可被独立部署的特性，也意味着组件可以被独立开发，在iOS开发中，对于需要多人合作的大型APP，组件可被独立开发的特
+          
+Reference:绘制像素到屏幕上iOS 保持界面流畅的技巧iOS界面渲染流程分析iOS开发-视图渲染与性能优化
+
+显示逻辑iOS的APP运行起来后，主线程的RunLoop可以被用户交互、定时任务、GPU通知等所唤醒，唤醒后处理事件，完成对视图的更改；在RunLoop再次休眠前，根据所做的更改，由CPU完成视图约束更新、布局和绘制；再通过OpenGL ES（或Metal）生成纹理，提交给GPU
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/10/04/APP架构/七、组件化架构/#more" rel="contents">
+            <a class="btn" href="/2018/12/25/APP工作原理/八、视图的显示原理/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1718,7 +1715,7 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2019/03/24/实用笔记/injectionⅢ/">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/12/18/APP工作原理/七、UIView的布局与刷新/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AI_Wei">
@@ -1737,7 +1734,7 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/24/实用笔记/injectionⅢ/" itemprop="url">InjectionⅢ</a></h1>
+                <a class="post-title-link" href="/2018/12/18/APP工作原理/七、UIView的布局与刷新/" itemprop="url">七、UIView的布局与刷新</a></h1>
         
 
         <div class="post-meta">
@@ -1749,8 +1746,8 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-24T18:48:24+08:00">
-                2019-03-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-18T00:00:00+08:00">
+                2018-12-18
               </time>
             
 
@@ -1772,8 +1769,8 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/实用笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">实用笔记</span>
+                  <a href="/categories/APP工作原理/" itemprop="url" rel="index">
+                    <span itemprop="name">APP工作原理</span>
                   </a>
                 </span>
 
@@ -1783,6 +1780,8 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
             </span>
           
 
+          
+            
           
 
           
@@ -1809,15 +1808,14 @@ Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础O
       
         
           
-          工具简介InjectionⅢ是作者John Holdsworth开源的一款iOS热重载工具，当APP在模拟器上编译运行后，使用它可以即时的执行项目中代码的改动，无需重新编译整个项目，从而极大的提高代码的调试效率。
-InjectionⅢ大概的工作原理是：
+          
+Reference:先进的自动布局工具箱深入理解 Autolayout 与列表性能
 
-在APP启动时，以加载NSBundle的形式在APP中运行一个Client端；
-InjectionⅢ作为Server端监视指定目录下文件的改动，
+Update CycleUIKit/QuartzCore为主线程的RunLoop添加了Observer，监听kCFRunLoopBeforeWaiting（休眠前）和kCFRunLoopExit（退出）事件，在事件的回调函数中会对视图的更新约束、布局和绘制任务进行处理，再汇总处理后的结果，提交给GPU渲染，每一
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/03/24/实用笔记/injectionⅢ/#more" rel="contents">
+            <a class="btn" href="/2018/12/18/APP工作原理/七、UIView的布局与刷新/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1863,7 +1861,7 @@ InjectionⅢ作为Server端监视指定目录下文件的改动，
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1911,7 +1909,7 @@ InjectionⅢ作为Server端监视指定目录下文件的改动，
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1933,7 +1931,7 @@ InjectionⅢ作为Server端监视指定目录下文件的改动，
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

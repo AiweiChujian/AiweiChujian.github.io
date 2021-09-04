@@ -104,13 +104,13 @@
 <meta property="og:site_name" content="盒子里的猫">
 <meta property="og:description" content="Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础Objective-C 中的内存分配iOS中的block是如何持有对象的  程序都是加载到内存中运行，了解APP工作机制，第一步先了解APP是如何使用内存的。 简述程序加载到内存中运行时，在内存中分静态数据(只读)和动态数据(读写)两部分，其中动态部分中堆的分配与释放由程序做内存管理，iOS">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://hellohezhili.com/2018/07/14/iOS编程进阶/四、内存管理/4-1.png">
-<meta property="og:image" content="https://hellohezhili.com/2018/07/14/iOS编程进阶/四、内存管理/4-2.jpg">
-<meta property="og:updated_time" content="2021-08-11T01:39:17.288Z">
+<meta property="og:image" content="https://hellohezhili.com/2018/07/14/iOS编程进阶/四、内存管理/1.png">
+<meta property="og:image" content="https://hellohezhili.com/2018/07/14/iOS编程进阶/四、内存管理/2.jpg">
+<meta property="og:updated_time" content="2021-08-31T03:22:59.101Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="四、内存管理">
 <meta name="twitter:description" content="Reference:Effective Objective-C 2.0理解 iOS 的内存管理内存管理基础Objective-C 中的内存分配iOS中的block是如何持有对象的  程序都是加载到内存中运行，了解APP工作机制，第一步先了解APP是如何使用内存的。 简述程序加载到内存中运行时，在内存中分静态数据(只读)和动态数据(读写)两部分，其中动态部分中堆的分配与释放由程序做内存管理，iOS">
-<meta name="twitter:image" content="https://hellohezhili.com/2018/07/14/iOS编程进阶/四、内存管理/4-1.png">
+<meta name="twitter:image" content="https://hellohezhili.com/2018/07/14/iOS编程进阶/四、内存管理/1.png">
 
 
 
@@ -415,7 +415,7 @@
 <li><strong>ARC技术</strong>：依赖编译器的静态分析，在编译时为对象插入保留、释放、自动释放等引用计数管理代码，并在运行时对引用计数管理代码做优化;</li>
 <li><strong>自动释放</strong>：自动释放标记使对象引用计数延迟-1，即自动释放池销毁时，对象在此自动释放池管理范围内被标记了几次，就会做几次引用计数-1；</li>
 </ul>
-<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><img src="/2018/07/14/iOS编程进阶/四、内存管理/4-1.png" alt="iOS内存管理"></p>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><img src="/2018/07/14/iOS编程进阶/四、内存管理/1.png" alt="iOS内存管理"></p>
 <h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><ul>
 <li>内存中静态数据不会发生变化，栈则由系统自动管理，编程中内存管理是对堆的分配和回收；</li>
 <li>iOS中使用引用计数来管理内存，又使用ARC来简化引用计数的编程；</li>
@@ -431,7 +431,7 @@
 <li>当出现内存问题时，Xcode自带的僵尸对象可以调试野指针问题，Instruments中的Leaks可以检查内存泄露问题，三方框架FBRetainCycleDetector可以检查对象的循环引用问题；</li>
 </ul>
 <h2 id="详情"><a href="#详情" class="headerlink" title="详情"></a>详情</h2><h3 id="1-内存模型"><a href="#1-内存模型" class="headerlink" title="1.内存模型"></a>1.内存模型</h3><p>程序在内存中运行时分静态数据和动态数据：静态数据只读，存储在代码段(.text)和数据段(.data + .bbs)，中这部分数据占用的内存在运行时不会发生变化，在程序终止后被清理；动态数据可读写，存储在栈(stack)和堆(heap)中，这部分数据占用的内存会随着程序运行而动态变化，其中栈的使用由系统管理，而堆的的使用则需要程序进行管理。</p>
-<p><img src="/2018/07/14/iOS编程进阶/四、内存管理/4-2.jpg" alt="内存模型"></p>
+<p><img src="/2018/07/14/iOS编程进阶/四、内存管理/2.jpg" alt="内存模型"></p>
 <p>栈由高位向低位增长，是因程序中函数运行而临时占用的内存，由系统的入栈和出栈操作来自动管理。堆由低位向高位增长，需要由程序自行管理，编程中的内存管理即是指对堆的分配与回收，运行中不再使用的内存却未回收便是内存泄露，还在使用的内存却被回收了便是野指针问题。</p>
 <blockquote>
 <p>栈的内存变化：每一个函数的调用就会向栈中压入一个函数的帧，函数帧中包括函数的形参、局部变量和返回地址等信息，有多少层函数调用就会压多少个帧，当函数执行结束时其函数帧就会出栈，并回到函数的返回地址继续执行，随着函数执行时函数帧的入栈与出栈，程序对栈的占用也随之发生变化。</p>
@@ -668,7 +668,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -690,7 +690,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

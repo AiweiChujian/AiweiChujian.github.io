@@ -96,19 +96,19 @@
 
 
 
-<meta name="description" content="[TOC]  Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件">
+<meta name="description" content="Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件可执行权限，">
 <meta name="keywords" content="Mach-O,加载,启动">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二、APP的加载过程">
 <meta property="og:url" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/index.html">
 <meta property="og:site_name" content="盒子里的猫">
-<meta property="og:description" content="[TOC]  Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件">
+<meta property="og:description" content="Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件可执行权限，">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/1.png">
-<meta property="og:updated_time" content="2021-08-11T01:42:22.704Z">
+<meta property="og:updated_time" content="2021-08-12T06:33:13.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二、APP的加载过程">
-<meta name="twitter:description" content="[TOC]  Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件">
+<meta name="twitter:description" content="Reference:iOS 底层 - 从头梳理 dyld 加载流程iOS进阶 – 程序启动那些事Dyld系列之一：_dyld_start之前DYLD动态链接器dyld与ObjC从 dyld 到 runtime  ExecutableAPP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用chmod+x命令来赋予一个文件可执行权限，">
 <meta name="twitter:image" content="https://hellohezhili.com/2018/01/07/APP工作原理/二、APP的加载过程/1.png">
 
 
@@ -404,8 +404,7 @@
       
 
       
-        <p>[TOC]</p>
-<blockquote>
+        <blockquote>
 <p><strong>Reference:</strong><br><a href="https://juejin.im/post/5e12ce8a5188253a6647c900#heading-14" target="_blank" rel="noopener">iOS 底层 - 从头梳理 dyld 加载流程</a><br><a href="https://catchzeng.com/2018/03/23/iOS进阶-程序启动那些事/" target="_blank" rel="noopener">iOS进阶 – 程序启动那些事</a><br><a href="https://blog.cnbluebox.com/blog/2017/06/30/dyld2/" target="_blank" rel="noopener">Dyld系列之一：_dyld_start之前</a><br><a href="https://juejin.im/post/5dd24f85f265da0bee500b10#heading-3" target="_blank" rel="noopener">DYLD动态链接器</a><br><a href="https://blog.cnbluebox.com/blog/2017/06/20/dyldyu-objc/" target="_blank" rel="noopener">dyld与ObjC</a><br><a href="https://wangdetong.github.io/2017/09/11/20170911从-dyld-到-runtime/" target="_blank" rel="noopener">从 dyld 到 runtime</a></p>
 </blockquote>
 <h2 id="Executable"><a href="#Executable" class="headerlink" title="Executable"></a>Executable</h2><p>APP的加载过程就是APP中可执行文件的加载过程，了解这个加载过程之前需要先了解iOS中的可执行文件。MacOS中可以使用<code>chmod+x</code>命令来赋予一个文件可执行权限，但实际上可以执行的文件只有两类，第一类是脚本文件，第二类是可执行二进制文件，可执行二进制文件又分为Mach-O和Fat Binary，它们之间的区别如下：</p>
@@ -698,7 +697,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -720,7 +719,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

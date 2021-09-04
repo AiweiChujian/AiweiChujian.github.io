@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://hellohezhili.com"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="mh9cQ2yLqXFEC_ZrY3D23g1Cdi1bUYHw4byhld6mqDE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="渲染,视图刷新,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Reference:绘制像素到屏幕上iOS 保持界面流畅的技巧iOS界面渲染流程分析iOS开发-视图渲染与性能优化  显示逻辑iOS的APP运行起来后，主线程的RunLoop可以被用户交互、定时任务、GPU通知等所唤醒，唤醒后处理事件，完成对视图的更改；在RunLoop再次休眠前，根据所做的更改，由CPU完成视图约束更新、布局和绘制；再通过OpenGL ES（或Metal）生成纹理，提交给GPU">
+<meta name="keywords" content="渲染,视图刷新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="八、视图的显示原理">
+<meta property="og:url" content="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/index.html">
+<meta property="og:site_name" content="盒子里的猫">
+<meta property="og:description" content="Reference:绘制像素到屏幕上iOS 保持界面流畅的技巧iOS界面渲染流程分析iOS开发-视图渲染与性能优化  显示逻辑iOS的APP运行起来后，主线程的RunLoop可以被用户交互、定时任务、GPU通知等所唤醒，唤醒后处理事件，完成对视图的更改；在RunLoop再次休眠前，根据所做的更改，由CPU完成视图约束更新、布局和绘制；再通过OpenGL ES（或Metal）生成纹理，提交给GPU">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/1.png">
+<meta property="og:image" content="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/2.png">
+<meta property="og:image" content="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/2.webp">
+<meta property="og:image" content="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/3.png">
+<meta property="og:updated_time" content="2021-09-03T11:02:25.346Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="八、视图的显示原理">
+<meta name="twitter:description" content="Reference:绘制像素到屏幕上iOS 保持界面流畅的技巧iOS界面渲染流程分析iOS开发-视图渲染与性能优化  显示逻辑iOS的APP运行起来后，主线程的RunLoop可以被用户交互、定时任务、GPU通知等所唤醒，唤醒后处理事件，完成对视图的更改；在RunLoop再次休眠前，根据所做的更改，由CPU完成视图约束更新、布局和绘制；再通过OpenGL ES（或Metal）生成纹理，提交给GPU">
+<meta name="twitter:image" content="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'AI_Wei'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/">
+
+
+
+
+
+  <title>八、视图的显示原理 | 盒子里的猫</title>
+  
+
+
+
+
+
+
+
+
+<link rel="alternate" href="/atom.xml" title="盒子里的猫" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">盒子里的猫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellohezhili.com/2018/12/25/APP工作原理/八、视图的显示原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AI_Wei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="盒子里的猫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">八、视图的显示原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-25T00:00:00+08:00">
+                2018-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/APP工作原理/" itemprop="url" rel="index">
+                    <span itemprop="name">APP工作原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>Reference:</strong><br><a href="https://objccn.io/issue-3-1/" target="_blank" rel="noopener">绘制像素到屏幕上</a><br><a href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/" target="_blank" rel="noopener">iOS 保持界面流畅的技巧</a><br><a href="https://mp.weixin.qq.com/s/drWXwnLcEw656wt3kD4PUA" target="_blank" rel="noopener">iOS界面渲染流程分析</a><br><a href="https://www.jianshu.com/p/748f9abafff8" target="_blank" rel="noopener">iOS开发-视图渲染与性能优化</a></p>
+</blockquote>
+<h2 id="显示逻辑"><a href="#显示逻辑" class="headerlink" title="显示逻辑"></a>显示逻辑</h2><p>iOS的APP运行起来后，主线程的RunLoop可以被用户交互、定时任务、GPU通知等所唤醒，唤醒后处理事件，完成对视图的更改；在RunLoop再次休眠前，根据所做的更改，由CPU完成视图约束更新、布局和绘制；再通过OpenGL ES（或Metal）生成纹理，提交给GPU；GPU对纹理进行合成渲染，将渲染结果提交到帧缓存区；最后屏幕根据自己的刷新率，定期获取帧缓存区中的数据进行显示。</p>
+<p><img src="/2018/12/25/APP工作原理/八、视图的显示原理/1.png" alt></p>
+<h3 id="垂直同步"><a href="#垂直同步" class="headerlink" title="垂直同步"></a>垂直同步</h3><p>屏幕都有一个固定的刷新率，屏幕会按照这个频率去将GPU帧缓存区（FrameBuffer）中的内容重新显示，<strong>目前iOS设备屏幕的刷新率都是60Hz（59.97Hz）</strong>。</p>
+<p>在一帧画面的显示过程中，如果帧缓存区的数据发生了替换，屏幕就会显示“撕裂”画面（一部分上一帧画面，一部分下一帧画面），GPU通过<strong>垂直同步机制</strong>（V-Sync）来解决这个问题：屏幕在完成一帧画面的显示后会发出一个VSync（垂直同步信号），VSync的产生频率和屏幕的刷新率一致，GPU收到VSync后再替换帧缓存区中的数据。</p>
+<p>GPU渲染一帧数据需要时间，如果在收到VSync之后才开始渲染需要立即显示的画面，显然就会有延时，所以便需要<strong>双缓冲机制</strong>：屏幕显示FrameBuffer中的内容时，GPU便开始向BackBuffer中准备下一帧的数据，当屏幕显示完成，GPU收到VSync后，下一帧已经渲染完成，GPU直接修改指针，完成FrameBuffer和BackBuffer的替换，并继续为BackBuffer准备新一帧的数据。</p>
+<p>iOS设备都使用双缓存，并开启垂直同步，iOS的GPU在收到VSync后，会通过<a href="https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/Mach/Mach.html" target="_blank" rel="noopener">IPC通信</a>唤醒APP主线程的RunLoop，在APP中CPU完成计算，然后在主线程RunLoop再次休眠前，将显示内容提交给GPU渲染，GPU最后再将渲染结果提交到帧缓存区供屏幕显示。</p>
+<h2 id="CPU处理"><a href="#CPU处理" class="headerlink" title="CPU处理"></a>CPU处理</h2><h3 id="参与模块"><a href="#参与模块" class="headerlink" title="参与模块"></a>参与模块</h3><p>APP运行期间，CPU负责管理视图层，并在显示时，为其生成GPU所需的纹理。CPU处理过程中，参与模块之间的架构如图：</p>
+<p><img src="/2018/12/25/APP工作原理/八、视图的显示原理/2.png" alt></p>
+<blockquote>
+<p>在iOS中，OpenGL ES将逐步被新的渲染引擎Metal所替换，Metal针对iOS设备做了高度优化，详情可参见<a href="https://objccn.io/issue-18-2/" target="_blank" rel="noopener">Metal</a>。</p>
+</blockquote>
+<h4 id="CALayer与UIView"><a href="#CALayer与UIView" class="headerlink" title="CALayer与UIView"></a>CALayer与UIView</h4><p>在CoreAnimation中，一个CALayer表示一个视图，管理着显示相关的信息，CALayer上的属性并不是用实例变量存储的，而是都保存在一个内部字典中；UIView是UIKit对CALayer的装饰，在显示之外主要是添加了支持用户交互相关的功能，UIView背后都有一个CALayer，UIView显示相关的属性和方法（比如 frame/bounds/transform等），都是对背后CALayer属性和方法的映射，通常通过UIView上更加便利的高级API来操作视图，在实现特殊显示需求时，则需要跨过UIView去操作其背后的CALayer。</p>
+<h3 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h3><p>在每一轮视图更新周期中，iOS系统内CPU处理的工作可分为以下五步：</p>
+<ol>
+<li><strong>Handle Events:</strong> 处理各种事件，完成视图的更改，记录需要更新的视图；</li>
+<li><strong>Layout:</strong> 根据所做的变更，完成视图层的约束更新与布局；</li>
+<li><strong>Display:</strong> 完成视图绘制（drawRect）和文本的绘制；</li>
+<li><strong>Prepare:</strong> 解码图片，将压缩的图片格式转为位图；</li>
+<li><strong>Commit:</strong>  根据视图层和内容内容生成纹理，提交给GPU合成渲染；</li>
+</ol>
+<p>APP通过主线程的RunLoop来Handle Events（<a href="/2018/03/02/APP工作原理/">四、事件处理机制（RunLoop）</a>），在更改视图的布局和显示内容时，系统不会立即更新视图，而是在RunLoop再次休眠前，集中对需要更新的视图更新约束和布局（<a href="/2018/12/18/APP工作原理/">七、UIView的布局与刷新</a>），再将视图的显示内容处理成位图，最终与根据视图生成的纹理一起，打包提交给GPU合成渲染。</p>
+<h3 id="内容处理"><a href="#内容处理" class="headerlink" title="内容处理"></a>内容处理</h3><p>在生成纹理时，视图的布局、颜色等基础信息可直接转换到纹理中，显示内容则需要由CPU处理成位图，再转换为CALayer的<code>contents</code>，最后生成位图纹理提交给GPU，需要处理的内容有三类：图形绘制、图像解码和文本绘制，同样的纹理在GPU中可以被复用，CPU只需要告知新的位置即可，所以<strong>如果显示内容没有变更，那么它们通常只在第一次显示时需要处理</strong>。</p>
+<h4 id="图形绘制"><a href="#图形绘制" class="headerlink" title="图形绘制"></a>图形绘制</h4><p>iOS中图形绘制通过CoreGraphics或者UIKit中的绘图API来完成，它们的底层都是基于<a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Introduction/Introduction.html" target="_blank" rel="noopener">Quartz 2D</a>的，图形绘制时，内容需要写入到一个上下文中（CGContext），可以通过<code>CGBitmapContextCreate</code>创建位图上下文，UIKit中维护着一个上下文栈，使用UIKit的绘图API时（如UIBezierPath等），绘制内容会被写入最顶层的上下文，可以通过<code>UIGraphicsGetCurrentContext</code>来获取最顶层的上下文，还提供了<code>UIGraphicsPushContext</code>和<code>UIGraphicsPopContext</code>来控制这个上下文栈，<code>UIGraphicsBeginImageContextWithOptions</code>函数则会创建一个位图上下文，并将其压入UIKit的上下文栈顶，需要注意的是，<strong>CoreGraphics创建的上下文是以左下角为原点，UIKit自动创建的上下文则以左上角为原点</strong>。</p>
+<p>自定义UIView的子类如果实现了<code>-drawRect:</code>方法，在绘制时，CoreAnimation会为视图的CALayer申请一个后备存储（CABackingStore），再为后备存储创建绘图上下文，UIKit会将其压入自己的上下文栈顶，<code>-drawRect:</code>中便是对UIKit的栈顶上下文进行绘制，完成绘制后，上下文中的数据会被保存到后备存储中，后备存储则被设置为视图CALayer的<code>contents</code>。</p>
+<h4 id="图像解码"><a href="#图像解码" class="headerlink" title="图像解码"></a>图像解码</h4><p>图像通常以JPEG或PNG的压缩格式保存在文件中，在根据图像文件生成UIImage，并赋给UIImageView显示时，系统完成了图像的加载，但要在第一次显示的纹理提交前（Prepare阶段）才对图像进行解码，得到位图数据，生成一个CGImage，作为UIImageView的CALayer的<code>contents</code>，系统对图像的加载和解码都在主线程中进行。</p>
+<blockquote>
+<p>JPEG是一种有损压缩，PNG是无损压缩，JPEG的解码比PNG复杂得多，在APP编译打包时，Xcode会对PNG进行优化，优化后的PNG可以被iOS读取，并且解压的速度更快。</p>
+</blockquote>
+<h4 id="文本绘制"><a href="#文本绘制" class="headerlink" title="文本绘制"></a>文本绘制</h4><p>文本在绘制前需要排版（TextLayout），UIKit中文本显示视图（UILabel和UITextView）的文本排版和绘制都在主线程中完成，其中TextLayout的计算开销较大，详情推荐阅读<a href="https://juejin.cn/post/6844903700922630151" target="_blank" rel="noopener">深入理解Autolayout与列表性能</a>，绘制则是由CoreText和CoreGraphics合作生成一张位图，与图形绘制相似，绘制好的位图数据被存放在一个后备存储（CABackingStore）中，作为文本显示视图的CALayer的<code>contents</code>。</p>
+<h2 id="GPU渲染"><a href="#GPU渲染" class="headerlink" title="GPU渲染"></a>GPU渲染</h2><h3 id="Tile-Based渲染"><a href="#Tile-Based渲染" class="headerlink" title="Tile-Based渲染"></a>Tile-Based渲染</h3><p>移动端GPU都使用了Tile-Based渲染技术，Full-Screen和Tile-Based在渲染时都会将屏幕分成多个Tile进行处理，但移动端中GPU对渲染缓存的访问开销更大，Tile-Based将顶点处理和像素处理分开进行，在一帧的顶点处理完成后，再一次性访问渲染缓存，按Tile顺序进行像素处理，减少了渲染时GPU对帧缓存区的操作次数，提升了性能的同时也减少了耗电。</p>
+<p><strong>Tile-Based的渲染流程：</strong></p>
+<p><img src="/2018/12/25/APP工作原理/八、视图的显示原理/2.webp" alt></p>
+<ol>
+<li><strong>Command Buffer:</strong> 接收渲染引擎（OpenGL ES或Metal）传递的渲染指令；</li>
+<li><strong>Tiler:</strong> 调用顶点着色器，进行顶点处理，将顶点数据分块（Tiling）；</li>
+<li><strong>Parameter Buffer:</strong> 接收顶点处理的结果和相应的渲染参数；</li>
+<li><strong>Renderer:</strong> 调用像素着色器（又叫片元着色器），进行像素处理；</li>
+<li><strong>Render Buffer:</strong> 缓存渲染完毕的数据；</li>
+</ol>
+<p>视图渲染需要将纹理合成显示，屏幕上每一个像素的颜色都需要进行混合计算，当源纹理是完全不透明的，目标像素的颜色就等于源纹理上的颜色，使用不透明的图层和没有alpha通道的位图，可以有效的减轻GPU渲染合成时的运算压力。</p>
+<h3 id="渲染等待"><a href="#渲染等待" class="headerlink" title="渲染等待"></a>渲染等待</h3><p>在Tile-Based的渲染中，每一帧的顶点处理和像素处理相对独立，再加上CPU处理，iOS会将它们安排在相邻的三帧中，一帧的渲染命令提交后，会在之后的第三帧显示。</p>
+<p><img src="/2018/12/25/APP工作原理/八、视图的显示原理/3.png" alt></p>
+<h3 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h3><p>离屏渲染（Offscreen Rendering）是将内容渲染到一个屏幕渲染缓存之外的缓存区，离屏渲染在普通渲染之后进行，再与前面的渲染结果合并（Compositing），离屏渲染的结果可以被复用，离屏缓存区的大小大概是屏幕缓存区的两倍。离屏渲染可以避免内容的重复渲染，但会触发多次的环境切换，开销本身就不小，开启离屏渲染是否会提示整体的渲染速度，需要根据具体的情况进行权衡。</p>
+<p>离屏渲染可以手动强制开启，也可以在一些视图设置后，由CoreAnimation自动开启。通过设置<code>shouldRasterize</code>将CALayer光栅化，可以强制对视图离屏渲染，光栅化是指将几何数据转换为像素数据，开启光栅化的CALayer会作为位图，并由离屏渲染进行处理。CALayer的Shadow（阴影）和Mask（遮罩）将自动触发离屏渲染，Mask实际上是一个拥有alpha值的位图，每个CALayer都可以有一个关联的Mask，有的视图的圆角便是通过Mask实现的，更多设置视图自动触发离屏渲染的实例可以参考文章<a href="https://www.jianshu.com/p/15b8b1844e9c" target="_blank" rel="noopener">iOS 阴影，圆角，避免离屏渲染</a>。</p>
+<h2 id="画面丢帧"><a href="#画面丢帧" class="headerlink" title="画面丢帧"></a>画面丢帧</h2><p>由于垂直同步机制，CPU或者GPU如果未在两个VSync之间（16.67ms）完成内容的提交，那一帧就会被丢弃，屏幕继续显示之前的内容，画面显示发生丢帧。FPS是屏幕每秒显示的帧数，iOS在显示动画时，理想值是60FPS，为了不让用户感觉到明显的卡顿，FPS应保证不低于30，可以借助CADiplayLink对FPS进行监控（参考<a href="https://github.com/ibireme/YYText/blob/master/Demo/YYTextDemo/YYFPSLabel.m" target="_blank" rel="noopener">YYText/YYFpsLabel</a>），当因为丢帧产生画面卡顿时，基于iOS视图的显示原理，可行的优化思路如下：</p>
+<ol>
+<li><strong>Handle Events:</strong> 不要在主线程中执行耗时过长的代码，尽量避免在一个周期中多次调整视图的frame/bounds/center等属性；</li>
+<li><strong>Layout:</strong> 减少视图的层级，使用清晰的约束，缓存布局和TextLayout的结果等；</li>
+<li><strong>Display:</strong> 自定义视图实现文本和绘图的异步绘制；</li>
+<li><strong>Prepare:</strong> 用解码效率更高的PNG替换JPEG，提前异步完成图片的解码；</li>
+<li><strong>Commit:</strong> 避免引入不必要的视图和视图层级；</li>
+<li><strong>普通渲染:</strong> 尽量使用不透明图层和不含alpha通道的图片，以减轻渲染时的合成计算；</li>
+<li><strong>离屏渲染:</strong> 动态列表中应避免触发离屏渲染，静态内容是否使用离屏渲染需要权衡；</li>
+</ol>
+<p>在优化视图显示速度，提升动画流畅度方面，iOS中一些成熟的第三方方案，可以作为直接的工具或重要的参考：</p>
+<ul>
+<li><strong><a href="https://github.com/nangege/Panda" target="_blank" rel="noopener">Panda</a>:</strong> 官方Autolayout的替代方案，优化了对Cassowary算法的使用，对布局和TextLayout进行缓存，支持异步绘制等，可以优化视图的约束跟新与布局阶段；</li>
+<li><strong><a href="https://github.com/ibireme/YYText/tree/master/YYText" target="_blank" rel="noopener">YYText</a>:</strong> 自定义的文本显示相关视图，异步绘制文本，并缓存文本排版和绘制的结果，可以优化视图的文本绘制阶段；</li>
+<li><strong><a href="https://github.com/facebookarchive/AsyncDisplayKit" target="_blank" rel="noopener">AsyncDisplayKit</a>:</strong> fackbook开源的异步显示框架，充分利用CPU的并行计算能力，延迟创建和更新视图，异步进行布局和绘制的计算，提前对部分图层合并绘制等，对视图显示各阶段均有优化，框架比较重量级，引入Flexbox布局，有一定的门槛，本身也建议仅在确实需要优化的页面使用。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over, thank you for reading
+-------------</div>
+    
+</div>
+
+      </div>
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渲染/" rel="tag"># 渲染</a>
+          
+            <a href="/tags/视图刷新/" rel="tag"># 视图刷新</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/22/APP架构/四、MVC设计模式/" rel="next" title="四、MVC设计模式">
+                <i class="fa fa-chevron-left"></i> 四、MVC设计模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/06/APP架构/五、MVVM设计模式/" rel="prev" title="五、MVVM设计模式">
+                五、MVVM设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzcyMy8yMDI2Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AI_Wei">
+            
+              <p class="site-author-name" itemprop="name">AI_Wei</p>
+              <p class="site-description motion-element" itemprop="description">自由源于自信，自信源于自律</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AiweiChujian" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:aiweichujian@gmail.com" target="_blank" title="G-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>G-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2804552143" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="/images/wechat.jpg" target="_blank" title="Wechat">
+                      
+                        <i class="fa fa-fw fa-wechat"></i>Wechat</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#显示逻辑"><span class="nav-text">显示逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直同步"><span class="nav-text">垂直同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU处理"><span class="nav-text">CPU处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参与模块"><span class="nav-text">参与模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CALayer与UIView"><span class="nav-text">CALayer与UIView</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理流程"><span class="nav-text">处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内容处理"><span class="nav-text">内容处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#图形绘制"><span class="nav-text">图形绘制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图像解码"><span class="nav-text">图像解码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文本绘制"><span class="nav-text">文本绘制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU渲染"><span class="nav-text">GPU渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tile-Based渲染"><span class="nav-text">Tile-Based渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染等待"><span class="nav-text">渲染等待</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离屏渲染"><span class="nav-text">离屏渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#画面丢帧"><span class="nav-text">画面丢帧</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AI_Wei</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+</body>
+</html>
